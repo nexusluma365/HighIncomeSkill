@@ -6,10 +6,11 @@ interface ErrorBoundaryProps {
 
 interface ErrorBoundaryState {
   hasError: boolean;
+  retryCount: number;
 }
 
 export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = { hasError: false };
+  state: ErrorBoundaryState = { hasError: false, retryCount: 0 };
 
   static getDerivedStateFromError() {
     return { hasError: true };
@@ -17,10 +18,42 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
 
   componentDidCatch(error: Error) {
     console.error('Funnel screen failed to render', error);
+    this.logError(error);
+
+    if (this.state.retryCount < 2) {
+      window.setTimeout(() => {
+        this.setState((state) => ({
+          hasError: false,
+          retryCount: state.retryCount + 1,
+        }));
+      }, 150);
+    }
+  }
+
+  logError(error: Error) {
+    try {
+      void fetch('/.netlify/functions/log-step', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventName: 'render_error',
+          page: window.location.pathname,
+          status: 'caught',
+          source: 'error_boundary',
+          metadata: {
+            message: error.message,
+            stack: error.stack,
+          },
+        }),
+        keepalive: true,
+      });
+    } catch {
+      // Never let error reporting create a second rendering problem.
+    }
   }
 
   render() {
-    if (this.state.hasError) {
+    if (this.state.hasError && this.state.retryCount >= 2) {
       return (
         <div className="flex min-h-[70vh] items-center justify-center px-5 py-12">
           <div className="w-full max-w-[620px] rounded-[8px] border border-[#d7e6f4] bg-white p-6 text-center shadow-[0_18px_44px_rgba(6,19,34,0.18)]">
