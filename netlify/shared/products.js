@@ -1,4 +1,6 @@
 const cents = (dollars) => Math.round(dollars * 100);
+const defaultR2Bucket = 'digitalskills';
+const defaultR2Prefix = 'digitalskillsproudct';
 
 const products = {
   workFromHomeBundle: {
@@ -9,8 +11,8 @@ const products = {
     currency: 'usd',
     value: '$1,279',
     fileName: process.env.PRODUCT_WORK_FROM_HOME_FILE_NAME || 'Complete Digital Skill Bundle.zip',
-    r2Bucket: process.env.PRODUCT_WORK_FROM_HOME_BUCKET || process.env.R2_BUCKET || '',
-    r2FileKey: process.env.PRODUCT_WORK_FROM_HOME_FILE_KEY || process.env.R2_FILE_KEY_BUNDLE || '',
+    r2Bucket: process.env.PRODUCT_WORK_FROM_HOME_BUCKET || process.env.R2_BUCKET || defaultR2Bucket,
+    r2FileKey: process.env.PRODUCT_WORK_FROM_HOME_FILE_KEY || process.env.R2_FILE_KEY_BUNDLE || `${defaultR2Prefix}/Complete Digital Skill Bundle.zip`,
   },
   aiAutomation: {
     key: 'aiAutomation',
@@ -20,8 +22,8 @@ const products = {
     currency: 'usd',
     value: '$297',
     fileName: process.env.PRODUCT_AI_AUTOMATION_FILE_NAME || 'Digital Skills Bundle + Automation .zip',
-    r2Bucket: process.env.PRODUCT_AI_AUTOMATION_BUCKET || process.env.R2_BUCKET2 || process.env.R2_BUCKET || '',
-    r2FileKey: process.env.PRODUCT_AI_AUTOMATION_FILE_KEY || process.env.R2_FILE_KEY_AI_ASSISTANT || '',
+    r2Bucket: process.env.PRODUCT_AI_AUTOMATION_BUCKET || process.env.R2_BUCKET2 || process.env.R2_BUCKET || defaultR2Bucket,
+    r2FileKey: process.env.PRODUCT_AI_AUTOMATION_FILE_KEY || process.env.R2_FILE_KEY_AI_ASSISTANT || `${defaultR2Prefix}/Digital Skills Bundle + Automation .zip`,
   },
   websiteSeo: {
     key: 'websiteSeo',
@@ -31,8 +33,8 @@ const products = {
     currency: 'usd',
     value: '$47',
     fileName: process.env.PRODUCT_WEBSITE_SEO_FILE_NAME || 'Digital Skills Bundle + Website Template SEO.zip',
-    r2Bucket: process.env.PRODUCT_WEBSITE_SEO_BUCKET || process.env.R2_BUCKET3 || process.env.R2_BUCKET2 || process.env.R2_BUCKET || '',
-    r2FileKey: process.env.PRODUCT_WEBSITE_SEO_FILE_KEY || process.env.R2_FILE_KEY_WEBSITE_VOICE || '',
+    r2Bucket: process.env.PRODUCT_WEBSITE_SEO_BUCKET || process.env.R2_BUCKET3 || process.env.R2_BUCKET2 || process.env.R2_BUCKET || defaultR2Bucket,
+    r2FileKey: process.env.PRODUCT_WEBSITE_SEO_FILE_KEY || process.env.R2_FILE_KEY_WEBSITE_VOICE || `${defaultR2Prefix}/Digital Skills Bundle + Website Template SEO.zip`,
   },
 };
 
