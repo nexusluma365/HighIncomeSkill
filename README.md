@@ -181,13 +181,22 @@ GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
 
 The `PRODUCT_*_BUCKET`, `PRODUCT_*_FILE_KEY`, and `DOWNLOAD_TOKEN_SECRET` values are optional. If omitted, the code uses your existing R2 names from the screenshot and uses `STRIPE_SECRET_KEY` to sign short-lived download tokens.
 
-Product mapping:
+R2 product file mapping:
 
 | Product | Price | Bucket fallback | File key fallback |
 | --- | ---: | --- | --- |
-| Work From Home Bundle | `$97` | `R2_BUCKET` | `R2_FILE_KEY_BUNDLE` |
-| AI Automation Toolkit | `$297` | `R2_BUCKET2` | `R2_FILE_KEY_AI_ASSISTANT` |
-| Website + SEO Template | `$47` | `R2_BUCKET3` | `R2_FILE_KEY_WEBSITE_VOICE` |
+| AI & Digital Skills Bundle | `$97` | `R2_BUCKET` | `R2_FILE_KEY_BUNDLE` |
+| AI Automation System | `$297` | `R2_BUCKET2` | `R2_FILE_KEY_AI_ASSISTANT` |
+| Website + SEO Client Path | `$47` | `R2_BUCKET3` | `R2_FILE_KEY_WEBSITE_VOICE` |
+
+Checkout delivery mapping:
+
+| Selected checkout options | Delivered file |
+| --- | --- |
+| Base bundle only | `R2_FILE_KEY_BUNDLE` |
+| Website + SEO only, or base bundle plus Website + SEO | `R2_FILE_KEY_WEBSITE_VOICE` |
+| AI Automation only, or base bundle plus AI Automation | `R2_FILE_KEY_AI_ASSISTANT` |
+| Website + SEO and AI Automation together | `R2_FILE_KEY_BUNDLE` |
 
 Download behavior:
 

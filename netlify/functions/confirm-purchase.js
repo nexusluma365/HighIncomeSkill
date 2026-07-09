@@ -1,4 +1,4 @@
-const { getProduct, getProducts, calculateCheckoutAmount } = require('../shared/products');
+const { getProducts, calculateCheckoutAmount, resolveDownloadProduct } = require('../shared/products');
 const { appendSheetRow, jsonResponse } = require('../shared/google-sheets');
 const { signDownloadToken } = require('../shared/download-token');
 
@@ -57,9 +57,9 @@ exports.handler = async (event) => {
     if (selectedKeys.some((key) => !metadataKeySet.has(key)) || paidAmount < expectedAmount) {
       return jsonResponse(403, { error: 'Payment does not match the selected product' });
     }
-    const missingProduct = selectedProducts.find((item) => !item.r2Bucket || !item.r2FileKey);
-    if (missingProduct) {
-      return jsonResponse(500, { error: `Missing Cloudflare R2 file settings for ${missingProduct.name}` });
+    const downloadProduct = resolveDownloadProduct(selectedKeys);
+    if (!downloadProduct.r2Bucket || !downloadProduct.r2FileKey) {
+      return jsonResponse(500, { error: `Missing Cloudflare R2 file settings for ${downloadProduct.name}` });
     }
     const cartName = selectedProducts.map((item) => item.shortName || item.name).join(' + ');
 
@@ -74,25 +74,25 @@ exports.handler = async (event) => {
       userAgent: event.headers['user-agent'] || '',
       ip: event.headers['x-nf-client-connection-ip'] || event.headers['client-ip'] || '',
       metadata: {
+        downloadProductKey: downloadProduct.key,
+        downloadProductName: downloadProduct.name,
         stripeAmountReceived: paidAmount,
         stripeCurrency: intent.currency,
       },
     }).catch((error) => console.error('sheet append failed', error));
 
-    const downloads = selectedProducts.map((product) => {
-      const downloadToken = signDownloadToken({
-        productKey: product.key,
-        paymentIntentId: intent.id,
-        amount: paidAmount,
-      });
-
-      return {
-        productKey: product.key,
-        productName: product.name,
-        fileName: product.fileName,
-        downloadUrl: `/.netlify/functions/download-product?token=${encodeURIComponent(downloadToken)}`,
-      };
+    const downloadToken = signDownloadToken({
+      productKey: downloadProduct.key,
+      paymentIntentId: intent.id,
+      amount: paidAmount,
     });
+
+    const downloads = [{
+      productKey: downloadProduct.key,
+      productName: downloadProduct.name,
+      fileName: downloadProduct.fileName,
+      downloadUrl: `/.netlify/functions/download-product?token=${encodeURIComponent(downloadToken)}`,
+    }];
 
     return jsonResponse(200, {
       downloadUrl: downloads[0]?.downloadUrl,

@@ -8,7 +8,7 @@ const products = {
     amount: cents(97),
     currency: 'usd',
     value: '$1,279',
-    fileName: process.env.PRODUCT_WORK_FROM_HOME_FILE_NAME || 'AI Digital Skills Bundle.zip',
+    fileName: process.env.PRODUCT_WORK_FROM_HOME_FILE_NAME || 'Complete Digital Skill Bundle.zip',
     r2Bucket: process.env.PRODUCT_WORK_FROM_HOME_BUCKET || process.env.R2_BUCKET || '',
     r2FileKey: process.env.PRODUCT_WORK_FROM_HOME_FILE_KEY || process.env.R2_FILE_KEY_BUNDLE || '',
   },
@@ -19,7 +19,7 @@ const products = {
     amount: cents(297),
     currency: 'usd',
     value: '$297',
-    fileName: process.env.PRODUCT_AI_AUTOMATION_FILE_NAME || 'AI Automation Toolkit.zip',
+    fileName: process.env.PRODUCT_AI_AUTOMATION_FILE_NAME || 'Digital Skills Bundle + Automation .zip',
     r2Bucket: process.env.PRODUCT_AI_AUTOMATION_BUCKET || process.env.R2_BUCKET2 || process.env.R2_BUCKET || '',
     r2FileKey: process.env.PRODUCT_AI_AUTOMATION_FILE_KEY || process.env.R2_FILE_KEY_AI_ASSISTANT || '',
   },
@@ -30,7 +30,7 @@ const products = {
     amount: cents(47),
     currency: 'usd',
     value: '$47',
-    fileName: process.env.PRODUCT_WEBSITE_SEO_FILE_NAME || 'Website SEO Template.zip',
+    fileName: process.env.PRODUCT_WEBSITE_SEO_FILE_NAME || 'Digital Skills Bundle + Website Template SEO.zip',
     r2Bucket: process.env.PRODUCT_WEBSITE_SEO_BUCKET || process.env.R2_BUCKET3 || process.env.R2_BUCKET2 || process.env.R2_BUCKET || '',
     r2FileKey: process.env.PRODUCT_WEBSITE_SEO_FILE_KEY || process.env.R2_FILE_KEY_WEBSITE_VOICE || '',
   },
@@ -59,6 +59,26 @@ function calculateCheckoutAmount(productKeys) {
   return bundleBase - savings;
 }
 
+function resolveDownloadProduct(productKeys) {
+  const keySet = new Set(productKeys.filter(Boolean));
+  const hasWebsiteSeo = keySet.has('websiteSeo');
+  const hasAiAutomation = keySet.has('aiAutomation');
+
+  if (hasWebsiteSeo && hasAiAutomation) {
+    return products.workFromHomeBundle;
+  }
+
+  if (hasWebsiteSeo) {
+    return products.websiteSeo;
+  }
+
+  if (hasAiAutomation) {
+    return products.aiAutomation;
+  }
+
+  return products.workFromHomeBundle;
+}
+
 function formatPrice(product) {
   return `$${(product.amount / 100).toFixed(2)}`;
 }
@@ -68,5 +88,6 @@ module.exports = {
   getProduct,
   getProducts,
   calculateCheckoutAmount,
+  resolveDownloadProduct,
   formatPrice,
 };

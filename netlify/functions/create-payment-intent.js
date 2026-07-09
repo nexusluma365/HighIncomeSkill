@@ -1,4 +1,4 @@
-const { getProduct, getProducts, calculateCheckoutAmount } = require('../shared/products');
+const { getProducts, calculateCheckoutAmount, resolveDownloadProduct } = require('../shared/products');
 const { appendSheetRow, jsonResponse } = require('../shared/google-sheets');
 
 async function stripeRequest(path, params) {
@@ -44,11 +44,14 @@ exports.handler = async (event) => {
       : product.name;
     const productKeys = selectedProducts.map((item) => item.key);
     const amount = calculateCheckoutAmount(productKeys);
+    const downloadProduct = resolveDownloadProduct(productKeys);
 
     const metadata = {
       productKey: product.key,
       productName: cartName,
       productKeys: productKeys.join(','),
+      downloadProductKey: downloadProduct.key,
+      downloadProductName: downloadProduct.name,
       customerName: body.name || '',
       customerEmail: body.email || '',
     };
@@ -62,6 +65,8 @@ exports.handler = async (event) => {
       'metadata[productKey]': metadata.productKey,
       'metadata[productName]': metadata.productName,
       'metadata[productKeys]': metadata.productKeys,
+      'metadata[downloadProductKey]': metadata.downloadProductKey,
+      'metadata[downloadProductName]': metadata.downloadProductName,
       'metadata[customerName]': metadata.customerName,
       'metadata[customerEmail]': metadata.customerEmail,
     };
@@ -90,6 +95,7 @@ exports.handler = async (event) => {
       paymentIntentId: intent.id,
       productKey: product.key,
       productKeys,
+      downloadProductKey: downloadProduct.key,
     });
   } catch (error) {
     console.error('create-payment-intent failed', error);

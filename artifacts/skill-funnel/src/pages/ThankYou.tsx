@@ -14,22 +14,35 @@ const fallbackProducts: Record<string, DownloadItem> = {
   workFromHomeBundle: {
     productKey: 'workFromHomeBundle',
     productName: 'AI & Digital Skills Bundle',
-    fileName: 'AI Digital Skills Bundle.zip',
+    fileName: 'Complete Digital Skill Bundle.zip',
     downloadUrl: '#',
   },
   websiteSeo: {
     productKey: 'websiteSeo',
     productName: 'Website + SEO Client Path',
-    fileName: 'Website SEO Template.zip',
+    fileName: 'Digital Skills Bundle + Website Template SEO.zip',
     downloadUrl: '#',
   },
   aiAutomation: {
     productKey: 'aiAutomation',
     productName: 'AI Automation System',
-    fileName: 'AI Automation Toolkit.zip',
+    fileName: 'Digital Skills Bundle + Automation .zip',
     downloadUrl: '#',
   },
 };
+
+function resolveFallbackDownload(keys: string[]) {
+  const keySet = new Set(keys);
+  const hasWebsiteSeo = keySet.has('websiteSeo');
+  const hasAiAutomation = keySet.has('aiAutomation');
+
+  if (hasWebsiteSeo && hasAiAutomation) return fallbackProducts.workFromHomeBundle;
+  if (hasWebsiteSeo) return fallbackProducts.websiteSeo;
+  if (hasAiAutomation) return fallbackProducts.aiAutomation;
+  if (keySet.has('workFromHomeBundle')) return fallbackProducts.workFromHomeBundle;
+
+  return undefined;
+}
 
 function readStoredDownloads() {
   try {
@@ -45,7 +58,8 @@ function readStoredDownloads() {
     if (rawKeys) {
       const keys = JSON.parse(rawKeys);
       if (Array.isArray(keys)) {
-        return keys.map((key) => fallbackProducts[key]).filter(Boolean);
+        const download = resolveFallbackDownload(keys);
+        return download ? [download] : [];
       }
     }
   } catch {
@@ -76,7 +90,8 @@ export default function ThankYou() {
     if (purchaseDownloads.length > 0) return purchaseDownloads;
     const stored = readStoredDownloads();
     if (stored.length > 0) return stored;
-    return selectedProductKeys.map((key) => fallbackProducts[key]).filter(Boolean);
+    const download = resolveFallbackDownload(selectedProductKeys);
+    return download ? [download] : [];
   }, [purchaseDownloads, selectedProductKeys]);
 
   return (
