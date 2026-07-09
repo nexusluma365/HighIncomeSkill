@@ -548,10 +548,14 @@ export default function Upsell() {
                 <span className="text-sm font-bold text-[#a0a0aa]">Stripe secured</span>
               </div>
               <div
-                ref={cardHostRef}
-                className="min-h-[56px] rounded-[10px] border border-[#ececf2] bg-white px-4 py-[19px] shadow-sm outline-none transition focus-within:border-[#302d49] focus-within:ring-4 focus-within:ring-[#302d49]/10"
+                className="relative min-h-[56px] rounded-[10px] border border-[#ececf2] bg-white px-4 py-[19px] shadow-sm outline-none transition focus-within:border-[#302d49] focus-within:ring-4 focus-within:ring-[#302d49]/10"
               >
-                {!isReady && <div className="text-sm font-semibold text-[#b2b2bc]">Loading secure card field...</div>}
+                <div ref={cardHostRef} />
+                {!isReady && (
+                  <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#b2b2bc]">
+                    Loading secure card field...
+                  </div>
+                )}
               </div>
             </div>
 
