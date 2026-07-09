@@ -191,12 +191,12 @@ R2 product file mapping:
 
 Checkout delivery mapping:
 
-| Selected checkout options | Delivered file |
-| --- | --- |
-| Base bundle only | `R2_FILE_KEY_BUNDLE` |
-| Website + SEO only, or base bundle plus Website + SEO | `R2_FILE_KEY_WEBSITE_VOICE` |
-| AI Automation only, or base bundle plus AI Automation | `R2_FILE_KEY_AI_ASSISTANT` |
-| Website + SEO and AI Automation together | `R2_FILE_KEY_BUNDLE` |
+| Website + SEO checkbox | AI Automation checkbox | Total charged | Delivered file |
+| --- | --- | ---: | --- |
+| Unchecked | Unchecked | `$97` | `R2_FILE_KEY_BUNDLE` |
+| Checked | Unchecked | `$72` | `R2_FILE_KEY_WEBSITE_VOICE` |
+| Unchecked | Checked | `$72` | `R2_FILE_KEY_AI_ASSISTANT` |
+| Checked | Checked | `$47` | `R2_FILE_KEY_BUNDLE` |
 
 Download behavior:
 

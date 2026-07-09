@@ -65,8 +65,9 @@ function resolveDownloadProduct(productKeys) {
   const keySet = new Set(productKeys.filter(Boolean));
   const hasWebsiteSeo = keySet.has('websiteSeo');
   const hasAiAutomation = keySet.has('aiAutomation');
+  const selectedAddOnCount = [hasWebsiteSeo, hasAiAutomation].filter(Boolean).length;
 
-  if (hasWebsiteSeo && hasAiAutomation) {
+  if (selectedAddOnCount === 0 || selectedAddOnCount === 2) {
     return products.workFromHomeBundle;
   }
 
