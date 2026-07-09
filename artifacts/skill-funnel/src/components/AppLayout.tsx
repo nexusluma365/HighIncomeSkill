@@ -42,6 +42,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const progress = stepIndex > 0 ? stepIndex / 9 : 0;
   const isHome = location === '/';
   const isWideExperience = location === '/upsell' || location === '/thankyou';
+  const shouldUseScreenBoundary = location !== '/checkout' && location !== '/upsell';
+  const screen = shouldUseScreenBoundary ? <ErrorBoundary key={location}>{children}</ErrorBoundary> : children;
 
   return (
     <div className="min-h-[100dvh] w-full bg-[#061322] text-foreground flex flex-col items-center overflow-x-hidden font-sans">
@@ -71,7 +73,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                   : 'px-4 sm:px-8 py-6 sm:py-10 pb-32'
             }`}
           >
-            <ErrorBoundary key={location}>{children}</ErrorBoundary>
+            {screen}
           </motion.div>
         </AnimatePresence>
       </main>

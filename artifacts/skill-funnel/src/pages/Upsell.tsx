@@ -203,6 +203,7 @@ export default function Upsell() {
 
   useEffect(() => {
     let cancelled = false;
+    let mountedCard: StripeCardElement | null = null;
 
     getConfig()
       .then((config) => loadStripe(config.stripePublishableKey || ''))
@@ -222,7 +223,17 @@ export default function Upsell() {
             invalid: { color: '#b91c1c' },
           },
         });
-        card.mount(cardHostRef.current);
+        try {
+          card.mount(cardHostRef.current);
+        } catch (error) {
+          try {
+            card.destroy();
+          } catch {
+            // Ignore Stripe cleanup errors after a failed mount.
+          }
+          throw error;
+        }
+        mountedCard = card;
         setStripe(stripeClient);
         setCardElement(card);
         setIsReady(true);
@@ -230,21 +241,19 @@ export default function Upsell() {
       .catch((error) => {
         if (!cancelled) {
           setErrorMessage(error.message || 'Payment setup is unavailable.');
+          setIsReady(false);
         }
       });
 
     return () => {
       cancelled = true;
-      setCardElement((card) => {
-        if (card) {
-          try {
-            card.destroy();
-          } catch {
-            // Stripe may already have unmounted during hot reload.
-          }
+      if (mountedCard) {
+        try {
+          mountedCard.destroy();
+        } catch {
+          // Stripe may already have unmounted during navigation or hot reload.
         }
-        return null;
-      });
+      }
     };
   }, []);
 
