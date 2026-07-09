@@ -3,6 +3,7 @@ import { useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProgressBar from './ProgressBar';
 import { useFunnelPageTracking } from '@/hooks/useFunnelPageTracking';
+import ErrorBoundary from './ErrorBoundary';
 
 const routes = [
   '/',
@@ -70,7 +71,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                   : 'px-4 sm:px-8 py-6 sm:py-10 pb-32'
             }`}
           >
-            {children}
+            <ErrorBoundary key={location}>{children}</ErrorBoundary>
           </motion.div>
         </AnimatePresence>
       </main>

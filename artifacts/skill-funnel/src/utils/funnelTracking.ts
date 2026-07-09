@@ -60,7 +60,12 @@ export function buildFunnelTrackingPayload(funnel: FunnelTrackingState, extra: T
 }
 
 export function logFunnelEvent(eventName: string, payload: Record<string, unknown>) {
-  const body = JSON.stringify({ eventName, ...payload });
+  let body = '';
+  try {
+    body = JSON.stringify({ eventName, ...payload });
+  } catch {
+    return;
+  }
 
   void fetch('/.netlify/functions/log-step', {
     method: 'POST',
@@ -77,26 +82,30 @@ export function logFunnelEvent(eventName: string, payload: Record<string, unknow
 }
 
 function sendAppsScriptFallback(eventName: string, payload: Record<string, unknown>) {
-  const row = [
-    new Date().toISOString(),
-    eventName,
-    payload.name || '',
-    payload.email || '',
-    payload.productKey || '',
-    payload.productName || '',
-    payload.amount || '',
-    payload.paymentIntentId || '',
-    payload.status || '',
-    payload.page || '',
-    payload.source || '',
-    navigator.userAgent || '',
-    '',
-    JSON.stringify(payload.metadata || {}),
-  ];
-  const url = new URL(appsScriptFallbackUrl);
-  url.searchParams.set('data', JSON.stringify({ eventName, headers: sheetHeaders, row, payload }));
+  try {
+    const row = [
+      new Date().toISOString(),
+      eventName,
+      payload.name || '',
+      payload.email || '',
+      payload.productKey || '',
+      payload.productName || '',
+      payload.amount || '',
+      payload.paymentIntentId || '',
+      payload.status || '',
+      payload.page || '',
+      payload.source || '',
+      navigator.userAgent || '',
+      '',
+      JSON.stringify(payload.metadata || {}),
+    ];
+    const url = new URL(appsScriptFallbackUrl);
+    url.searchParams.set('data', JSON.stringify({ eventName, headers: sheetHeaders, row, payload }));
 
-  const img = new Image();
-  img.referrerPolicy = 'no-referrer';
-  img.src = url.toString();
+    const img = new Image();
+    img.referrerPolicy = 'no-referrer';
+    img.src = url.toString();
+  } catch {
+    // Tracking should never interrupt the funnel.
+  }
 }
