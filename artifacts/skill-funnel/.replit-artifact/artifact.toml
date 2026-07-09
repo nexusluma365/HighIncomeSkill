@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "High-Income Skills Funnel"
+version = "1.0.0"
+id = "artifacts/skill-funnel"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22548
+
+[services.development]
+run = "pnpm --filter @workspace/skill-funnel run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/skill-funnel", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/skill-funnel/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22548"
+BASE_PATH = "/"

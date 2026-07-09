@@ -1,0 +1,707 @@
+You are a Senior React Engineer, Senior UX/UI Designer, SaaS Product Designer, Consumer Psychologist, and Conversion Rate Optimization expert.
+
+Your mission is NOT to build a website.
+
+Your mission is to build a premium app-style onboarding funnel that feels like a modern SaaS application.
+
+Think:
+
+• Headway
+• Duolingo
+• BetterHelp
+• Stripe
+• Linear
+• Notion
+• Calm
+
+NOT:
+
+• Wordpress
+• Landing page
+• Long scrolling sales page
+
+=========================================================
+PROJECT
+=========================================================
+
+Build a production-ready React application using:
+
+• React 19
+• Vite
+• TypeScript
+• TailwindCSS
+• Framer Motion
+• React Router
+• Context API
+• Lucide Icons
+
+The application should feel incredibly smooth.
+
+Everything should be component driven.
+
+The design should look premium.
+
+=========================================================
+DESIGN SYSTEM
+=========================================================
+
+Style:
+
+Minimal
+
+Luxury
+
+Premium SaaS
+
+Apple inspired
+
+Rounded corners
+
+Glassmorphism
+
+Large spacing
+
+Soft shadows
+
+Blur backgrounds
+
+Smooth animations
+
+Gradient buttons
+
+Dark theme
+
+Color Palette
+
+Background:
+#090909
+
+Card:
+#141414
+
+Primary:
+#3B82F6
+
+Accent:
+#7C3AED
+
+Text:
+White
+
+Secondary Text:
+#A0A0A0
+
+Border:
+rgba(255,255,255,.08)
+
+Radius
+
+24px
+
+Buttons
+
+Large
+
+Full width on mobile
+
+Sticky CTA on mobile
+
+Progress bar
+
+Top of every screen
+
+Animated between pages
+
+Page transitions
+
+Slide + Fade
+
+=========================================================
+APPLICATION STRUCTURE
+=========================================================
+
+Use this folder structure
+
+src/
+
+components/
+    AppLayout.tsx
+    Button.tsx
+    ProgressBar.tsx
+    OptionCard.tsx
+    QuestionCard.tsx
+    ValueCard.tsx
+    TestimonialCard.tsx
+    MetricCard.tsx
+    Accordion.tsx
+    SectionTitle.tsx
+    CheckoutCard.tsx
+
+pages/
+    Hero.tsx
+    GoalQuestion.tsx
+    ChallengeQuestion.tsx
+    Personalized.tsx
+    Pain.tsx
+    Future.tsx
+    Lesson.tsx
+    Authority.tsx
+    SystemReveal.tsx
+    ValueStack.tsx
+    FAQ.tsx
+    Offer.tsx
+    Checkout.tsx
+    Upsell.tsx
+    ThankYou.tsx
+
+context/
+    FunnelContext.tsx
+
+hooks/
+    useFunnel.ts
+
+data/
+    questions.ts
+    testimonials.ts
+    products.ts
+    faqs.ts
+
+utils/
+    personalization.ts
+
+=========================================================
+STATE MANAGEMENT
+=========================================================
+
+Use Context API.
+
+Store
+
+goal
+
+challenge
+
+answers
+
+progress
+
+selected package
+
+upsell accepted
+
+Allow future personalization.
+
+=========================================================
+FUNNEL FLOW
+=========================================================
+
+Hero
+
+↓
+
+Question 1
+
+↓
+
+Question 2
+
+↓
+
+Personalized Response
+
+↓
+
+Pain
+
+↓
+
+Desired Future
+
+↓
+
+Teach One Lesson
+
+↓
+
+Authority
+
+↓
+
+Reveal System
+
+↓
+
+Value Stack
+
+↓
+
+FAQ
+
+↓
+
+Offer
+
+↓
+
+Checkout
+
+↓
+
+Upsell
+
+↓
+
+Thank You
+
+Each screen should have ONE objective.
+
+One headline.
+
+One CTA.
+
+No clutter.
+
+=========================================================
+SCREEN DETAILS
+=========================================================
+
+SCREEN 1
+
+Headline
+
+Learn High-Income Digital Skills That Let You Work From Anywhere
+
+Subheadline
+
+Learn practical digital skills businesses already pay for—even if you're starting from scratch.
+
+CTA
+
+Start My Skill Path
+
+---------------------------------------------------------
+
+SCREEN 2
+
+Question
+
+What best describes you?
+
+Cards
+
+🏠
+I want to work from home
+
+💰
+I want another income source
+
+🤖
+I want to learn AI
+
+💻
+I want to build websites
+
+🚀
+I want to start a business
+
+---------------------------------------------------------
+
+SCREEN 3
+
+Question
+
+What is your biggest challenge?
+
+Cards
+
+I don't know where to start
+
+I don't have skills yet
+
+I need more income
+
+I don't know how to find clients
+
+I feel stuck
+
+---------------------------------------------------------
+
+SCREEN 4
+
+Personalize response based on answers.
+
+Example
+
+You're not behind.
+
+You're simply missing a roadmap.
+
+Most people never get shown which digital skills actually make money.
+
+This system changes that.
+
+---------------------------------------------------------
+
+SCREEN 5
+
+Pain
+
+Cards
+
+Still relying on one paycheck
+
+Watching AI change jobs
+
+Trying random YouTube videos
+
+No clear roadmap
+
+Feeling stuck
+
+---------------------------------------------------------
+
+SCREEN 6
+
+Future
+
+Cards
+
+Work anywhere
+
+Laptop lifestyle
+
+Build websites
+
+Use AI
+
+Help businesses
+
+Earn online
+
+Confidence
+
+Freedom
+
+---------------------------------------------------------
+
+SCREEN 7
+
+Teach
+
+Headline
+
+Working From Home Isn't A Job.
+
+Body
+
+Working remotely isn't the skill.
+
+The skill is solving business problems.
+
+Businesses pay for solutions.
+
+Not locations.
+
+---------------------------------------------------------
+
+SCREEN 8
+
+Authority
+
+Animated statistics
+
+Projects Completed
+
+Client Systems Built
+
+Businesses Helped
+
+Revenue Generated
+
+Below
+
+Screenshots
+
+Testimonials
+
+Results
+
+---------------------------------------------------------
+
+SCREEN 9
+
+Reveal Product
+
+Complete High-Income Skills System
+
+Description
+
+A complete roadmap with everything needed to launch faster.
+
+Include
+
+Skill Roadmap
+
+Website Templates
+
+AI Prompt Library
+
+Automation Blueprints
+
+Proposal Templates
+
+Client Scripts
+
+Funnels
+
+Sales Assets
+
+Launch Checklist
+
+---------------------------------------------------------
+
+SCREEN 10
+
+Value Stack
+
+Use premium cards.
+
+Every card has
+
+Title
+
+Description
+
+Benefit
+
+Animated on scroll.
+
+---------------------------------------------------------
+
+SCREEN 11
+
+FAQ
+
+Accordion style.
+
+Questions
+
+Can beginners do this?
+
+Do I need coding?
+
+How long does it take?
+
+What if I don't know where to start?
+
+Will AI replace this?
+
+Can I use only a laptop?
+
+---------------------------------------------------------
+
+SCREEN 12
+
+Offer
+
+Large centered pricing card.
+
+Product
+
+Complete High-Income Skills System
+
+List everything included.
+
+Primary CTA
+
+Get Instant Access
+
+No navigation.
+
+---------------------------------------------------------
+
+CHECKOUT
+
+Premium checkout UI.
+
+Stripe ready.
+
+Apple Pay section.
+
+Google Pay section.
+
+Secure Checkout badge.
+
+Money Back Guarantee.
+
+Minimal distractions.
+
+---------------------------------------------------------
+
+UPSELL
+
+Headline
+
+Complete Business Accelerator
+
+Subheadline
+
+The exact systems we use to build, launch, market and scale.
+
+Includes
+
+Advanced AI Library
+
+Marketing Campaigns
+
+Premium Funnels
+
+Client Acquisition System
+
+Content Engine
+
+Scaling Resources
+
+Lifetime Updates
+
+Buttons
+
+Upgrade My System
+
+No Thanks Continue
+
+---------------------------------------------------------
+
+THANK YOU
+
+Confetti animation.
+
+Welcome message.
+
+Download buttons.
+
+Course roadmap.
+
+Support.
+
+Community.
+
+Next Steps.
+
+=========================================================
+PSYCHOLOGY
+=========================================================
+
+Every screen answers ONE question.
+
+Why should I care?
+
+↓
+
+Is this for me?
+
+↓
+
+What problem do I have?
+
+↓
+
+What future could I create?
+
+↓
+
+Can I trust this?
+
+↓
+
+What do I get?
+
+↓
+
+Is it worth it?
+
+↓
+
+What if I fail?
+
+↓
+
+Am I ready?
+
+Never overwhelm.
+
+Never create long paragraphs.
+
+Never create giant sections.
+
+Every page should feel like the obvious next step.
+
+=========================================================
+ANIMATIONS
+=========================================================
+
+Use Framer Motion.
+
+Animate
+
+Cards
+
+Progress
+
+Page transitions
+
+Buttons
+
+Hover
+
+Success checkmarks
+
+Counters
+
+Fade in
+
+Slide up
+
+Scale
+
+Keep everything buttery smooth.
+
+=========================================================
+MOBILE FIRST
+=========================================================
+
+The application should look like a native mobile app.
+
+Desktop should simply scale beautifully.
+
+Touch friendly.
+
+Large buttons.
+
+Sticky CTA.
+
+Perfect spacing.
+
+=========================================================
+QUALITY
+=========================================================
+
+Write production-quality code.
+
+No placeholder code.
+
+No TODOs.
+
+No dummy layouts.
+
+Build reusable components.
+
+Organize code cleanly.
+
+Use best React practices.
+
+Optimize performance.
+
+Comment complex logic.
+
+The finished application should look polished enough that someone would believe it was designed by a $50,000 UI/UX agency.

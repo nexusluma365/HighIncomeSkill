@@ -1,0 +1,9 @@
+[build]
+  command = "PORT=5173 BASE_PATH=/ pnpm --filter @workspace/skill-funnel run build"
+  publish = "artifacts/skill-funnel/dist/public"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
