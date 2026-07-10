@@ -2,6 +2,8 @@ const { getProducts, calculateCheckoutAmount, resolveDownloadProduct, getDownloa
 const { appendSheetRow, jsonResponse } = require('../shared/google-sheets');
 const { signDownloadToken } = require('../shared/download-token');
 
+const downloadTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
+
 async function getPaymentIntent(paymentIntentId) {
   if (!process.env.STRIPE_SECRET_KEY) {
     throw new Error('Missing STRIPE_SECRET_KEY');
@@ -88,6 +90,7 @@ exports.handler = async (event) => {
       paymentIntentId: intent.id,
       amount: paidAmount,
       sessionId: body.sessionId || intent.metadata?.sessionId || '',
+      exp: Date.now() + downloadTokenTtlMs,
     });
 
     const downloads = [{

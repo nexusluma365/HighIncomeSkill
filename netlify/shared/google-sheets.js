@@ -146,7 +146,7 @@ async function appendSheetRow(eventName, payload = {}) {
     return { skipped: true, reason: 'Google Sheets env vars are not configured' };
   }
 
-  if (!hasDirectSheetsConfig() && (process.env.GOOGLE_APPS_SCRIPT_URL || defaultAppsScriptUrl)) {
+  if (process.env.GOOGLE_APPS_SCRIPT_URL || defaultAppsScriptUrl) {
     return appendViaAppsScript(eventName, payload);
   }
 
