@@ -1,4 +1,4 @@
-const { getProducts, calculateCheckoutAmount, resolveDownloadProduct } = require('../shared/products');
+const { getProducts, calculateCheckoutAmount, resolveDownloadProduct, getDownloadProductName } = require('../shared/products');
 const { appendSheetRow, jsonResponse } = require('../shared/google-sheets');
 const { signDownloadToken } = require('../shared/download-token');
 
@@ -59,8 +59,9 @@ exports.handler = async (event) => {
     }
     const downloadProduct = resolveDownloadProduct(selectedKeys);
     if (!downloadProduct.r2Bucket || !downloadProduct.r2FileKey) {
-      return jsonResponse(500, { error: `Missing Cloudflare R2 file settings for ${downloadProduct.name}` });
+      return jsonResponse(500, { error: 'Your purchase was confirmed, but the download could not be prepared. Please contact support with your receipt.' });
     }
+    const downloadProductName = getDownloadProductName(selectedKeys, downloadProduct);
     const cartName = selectedProducts.map((item) => item.shortName || item.name).join(' + ');
 
     await appendSheetRow('purchase_confirmed', {
@@ -75,7 +76,7 @@ exports.handler = async (event) => {
       ip: event.headers['x-nf-client-connection-ip'] || event.headers['client-ip'] || '',
       metadata: {
         downloadProductKey: downloadProduct.key,
-        downloadProductName: downloadProduct.name,
+        downloadProductName,
         stripeAmountReceived: paidAmount,
         stripeCurrency: intent.currency,
       },
@@ -89,7 +90,7 @@ exports.handler = async (event) => {
 
     const downloads = [{
       productKey: downloadProduct.key,
-      productName: downloadProduct.name,
+      productName: downloadProductName,
       fileName: downloadProduct.fileName,
       downloadUrl: `/.netlify/functions/download-product?token=${encodeURIComponent(downloadToken)}`,
     }];
@@ -102,6 +103,6 @@ exports.handler = async (event) => {
     });
   } catch (error) {
     console.error('confirm-purchase failed', error);
-    return jsonResponse(500, { error: error.message || 'Unable to confirm purchase' });
+    return jsonResponse(500, { error: 'Unable to confirm your download. Please refresh or contact support with your receipt.' });
   }
 };

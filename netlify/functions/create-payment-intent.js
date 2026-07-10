@@ -1,4 +1,4 @@
-const { getProducts, calculateCheckoutAmount, resolveDownloadProduct } = require('../shared/products');
+const { getProducts, calculateCheckoutAmount, resolveDownloadProduct, getDownloadProductName } = require('../shared/products');
 const { appendSheetRow, jsonResponse } = require('../shared/google-sheets');
 
 async function stripeRequest(path, params) {
@@ -45,13 +45,14 @@ exports.handler = async (event) => {
     const productKeys = selectedProducts.map((item) => item.key);
     const amount = calculateCheckoutAmount(productKeys);
     const downloadProduct = resolveDownloadProduct(productKeys);
+    const downloadProductName = getDownloadProductName(productKeys, downloadProduct);
 
     const metadata = {
       productKey: product.key,
       productName: cartName,
       productKeys: productKeys.join(','),
       downloadProductKey: downloadProduct.key,
-      downloadProductName: downloadProduct.name,
+      downloadProductName,
       customerName: body.name || '',
       customerEmail: body.email || '',
     };
@@ -99,6 +100,6 @@ exports.handler = async (event) => {
     });
   } catch (error) {
     console.error('create-payment-intent failed', error);
-    return jsonResponse(500, { error: error.message || 'Payment setup failed' });
+    return jsonResponse(500, { error: 'Payment setup failed. Please try again or contact support.' });
   }
 };

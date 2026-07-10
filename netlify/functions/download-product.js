@@ -45,6 +45,6 @@ exports.handler = async (event) => {
     };
   } catch (error) {
     console.error('download-product failed', error);
-    return textResponse(403, error.message || 'Download link is invalid or expired.');
+    return textResponse(403, 'This download link is unavailable. Please return to your purchase page or contact support with your receipt.');
   }
 };

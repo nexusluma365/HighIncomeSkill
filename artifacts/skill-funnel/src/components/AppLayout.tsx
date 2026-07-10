@@ -14,7 +14,6 @@ const routes = [
   '/system',
   '/value',
   '/offer',
-  '/checkout',
   '/upsell',
   '/thankyou',
   '/goal',
@@ -32,17 +31,11 @@ export default function AppLayout({ children }: AppLayoutProps) {
   useFunnelPageTracking();
   
   const stepIndex = routes.indexOf(location);
-  // Total steps 14 (index 1 to 14, where 14 is thankyou, 12 is checkout, 0 is hero)
-  // We'll calculate progress only on steps that should have it
-  // Exclude hero (0), checkout (12), upsell (13), thankyou (14) if desired, but 
-  // prompt says "No progress bar on this screen" for hero & upsell, and "Actually keep progress bar since it shows they're close to done" for checkout.
-  // So: Hero=0(no bar), Upsell=13(no bar). All others have a bar. ThankYou=14(no bar? prompt says "Progress = currentStep / 14. Show a thin animated bar at the top."). Let's just show it if not in [0, 13, 14].
-  
   const showProgressBar = stepIndex > 0 && stepIndex <= 9;
   const progress = stepIndex > 0 ? stepIndex / 9 : 0;
   const isHome = location === '/';
   const isWideExperience = location === '/upsell' || location === '/thankyou';
-  const shouldUseScreenBoundary = location !== '/checkout' && location !== '/upsell';
+  const shouldUseScreenBoundary = location !== '/upsell';
   const screen = shouldUseScreenBoundary ? <ErrorBoundary key={location}>{children}</ErrorBoundary> : children;
 
   return (

@@ -39,24 +39,21 @@ The funnel routes are defined in `artifacts/skill-funnel/src/App.tsx` using `wou
 | `/system` | Reveals the product system |
 | `/value` | Builds perceived value |
 | `/faq` | Handles common objections |
-| `/offer` | Presents the main $47 offer |
-| `/checkout` | Simulated checkout screen |
-| `/upsell` | Presents the $27 accelerator upsell |
+| `/offer` | Presents the roadmap recommendation |
+| `/upsell` | Handles secure checkout and product selection |
 | `/thankyou` | Final confirmation page |
 
 Funnel state is held in React context at `artifacts/skill-funnel/src/context/FunnelContext.tsx`. It tracks the selected goal, selected challenge, and whether the upsell was accepted. The copy personalization rules live in `artifacts/skill-funnel/src/utils/personalization.ts`.
 
 ## Products
 
-Product data is currently static in `artifacts/skill-funnel/src/data/products.ts`.
+Product display data is defined in the funnel app, while live checkout pricing and download mapping are handled by Netlify Functions.
 
-- Main product: `Complete High-Income Skills System`
-- Main price: `$47`
-- Displayed value: `$1573`
-- Upsell: `Complete Business Accelerator`
-- Upsell price: `$27`
-
-The checkout and purchase actions are simulated in the frontend. There is no real payment processor wired in yet.
+- Main product: `AI & Digital Skills Bundle`
+- Website + SEO path: `Website + SEO Client Path`
+- Automation path: `AI Automation System`
+- Secure payment: Stripe PaymentIntents through Netlify Functions
+- Delivery: post-payment download button on the thank-you page
 
 ## Stack
 
@@ -220,7 +217,6 @@ Rows are appended for lead capture, free-offer continuation, checkout opens, Str
 
 ## Current Limitations
 
-- The React funnel under `artifacts/skill-funnel` still has simulated checkout screens.
 - The API server only exposes a health check.
 - The database package is configured but has no application tables.
 - Several app artifacts appear to be generated or recently added, so review Git status before committing.

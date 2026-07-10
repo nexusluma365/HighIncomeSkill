@@ -61,17 +61,17 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
               One moment
             </p>
             <h1 className="mt-3 text-4xl font-black uppercase leading-tight text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
-              Checkout is refreshing
+              One Moment While This Reloads
             </h1>
             <p className="mx-auto mt-4 max-w-[460px] text-sm font-semibold leading-relaxed text-[#425d78]">
-              Something loaded out of order. Refresh the page and continue from the checkout.
+              Something loaded out of order. Refresh the page and continue from where you left off.
             </p>
             <button
               type="button"
               onClick={() => window.location.reload()}
               className="mt-6 inline-flex min-h-[52px] items-center justify-center rounded-[4px] bg-[#0f7ee8] px-8 text-base font-black uppercase tracking-[0.06em] text-white shadow-[0_8px_24px_rgba(15,126,232,0.35)] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]"
             >
-              Refresh Checkout
+              Refresh Page
             </button>
           </div>
         </div>

@@ -10,56 +10,13 @@ interface DownloadItem {
   downloadUrl: string;
 }
 
-const fallbackProducts: Record<string, DownloadItem> = {
-  workFromHomeBundle: {
-    productKey: 'workFromHomeBundle',
-    productName: 'AI & Digital Skills Bundle',
-    fileName: 'Complete Digital Skill Bundle.zip',
-    downloadUrl: '#',
-  },
-  websiteSeo: {
-    productKey: 'websiteSeo',
-    productName: 'Website + SEO Client Path',
-    fileName: 'Digital Skills Bundle + Website Template SEO.zip',
-    downloadUrl: '#',
-  },
-  aiAutomation: {
-    productKey: 'aiAutomation',
-    productName: 'AI Automation System',
-    fileName: 'Digital Skills Bundle + Automation .zip',
-    downloadUrl: '#',
-  },
-};
-
-function resolveFallbackDownload(keys: string[]) {
-  const keySet = new Set(keys);
-  const hasWebsiteSeo = keySet.has('websiteSeo');
-  const hasAiAutomation = keySet.has('aiAutomation');
-
-  if (hasWebsiteSeo && hasAiAutomation) return fallbackProducts.workFromHomeBundle;
-  if (hasWebsiteSeo) return fallbackProducts.websiteSeo;
-  if (hasAiAutomation) return fallbackProducts.aiAutomation;
-  if (keySet.has('workFromHomeBundle')) return fallbackProducts.workFromHomeBundle;
-
-  return undefined;
-}
-
 function readStoredDownloads() {
   try {
     const rawDownloads = sessionStorage.getItem('purchase_downloads');
     if (rawDownloads) {
       const parsed = JSON.parse(rawDownloads);
       if (Array.isArray(parsed)) {
-        return parsed as DownloadItem[];
-      }
-    }
-
-    const rawKeys = sessionStorage.getItem('selected_product_keys');
-    if (rawKeys) {
-      const keys = JSON.parse(rawKeys);
-      if (Array.isArray(keys)) {
-        const download = resolveFallbackDownload(keys);
-        return download ? [download] : [];
+        return (parsed as DownloadItem[]).filter((item) => item.downloadUrl && item.downloadUrl !== '#');
       }
     }
   } catch {
@@ -70,7 +27,7 @@ function readStoredDownloads() {
 }
 
 export default function ThankYou() {
-  const { purchaseDownloads, selectedProductKeys } = useFunnel();
+  const { purchaseDownloads } = useFunnel();
   const [confettiPieces, setConfettiPieces] = useState<
     { id: number; left: string; delay: number; duration: number; color: string }[]
   >([]);
@@ -87,12 +44,12 @@ export default function ThankYou() {
   }, []);
 
   const downloads = useMemo(() => {
-    if (purchaseDownloads.length > 0) return purchaseDownloads;
+    const confirmedDownloads = purchaseDownloads.filter((item) => item.downloadUrl && item.downloadUrl !== '#');
+    if (confirmedDownloads.length > 0) return confirmedDownloads;
     const stored = readStoredDownloads();
     if (stored.length > 0) return stored;
-    const download = resolveFallbackDownload(selectedProductKeys);
-    return download ? [download] : [];
-  }, [purchaseDownloads, selectedProductKeys]);
+    return [];
+  }, [purchaseDownloads]);
 
   return (
     <div className="relative flex min-h-screen flex-col pb-12 pt-8">
@@ -126,7 +83,7 @@ export default function ThankYou() {
             Thank You For Your Purchase
           </h1>
           <p className="mx-auto mt-5 max-w-[620px] text-lg font-semibold leading-relaxed text-[#425d78]">
-            Your selected digital product downloads are ready. Keep a copy on your computer for your records.
+            Your selected digital product download is ready. Keep a copy on your computer for your records.
           </p>
         </div>
 
@@ -159,7 +116,7 @@ export default function ThankYou() {
             <div className="rounded-[8px] border border-[#d7e6f4] bg-[#f8fbff] p-6 text-center">
               <p className="font-black text-[#07192f]">Your purchase is confirmed.</p>
               <p className="mt-2 text-sm font-semibold text-[#425d78]">
-                If your download buttons do not appear, check your email receipt or refresh this page after payment finishes.
+                If your download button does not appear, refresh this page after payment finishes or contact support with your receipt.
               </p>
             </div>
           )}
@@ -167,7 +124,7 @@ export default function ThankYou() {
           <div className="mt-6 flex items-start gap-3 rounded-[8px] border border-[#d7e6f4] bg-[#f8fbff] p-5">
             <Sparkles className="mt-0.5 shrink-0 text-[#0f7ee8]" size={24} />
             <p className="text-sm font-semibold leading-relaxed text-[#425d78]">
-              Each button is matched to the option you selected at checkout. The download is delivered through your site and backed by Cloudflare R2.
+              Your download is matched to the option you selected at checkout. Save it somewhere you can easily find it when you are ready to begin.
             </p>
           </div>
         </div>

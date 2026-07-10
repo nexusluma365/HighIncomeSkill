@@ -82,6 +82,18 @@ function resolveDownloadProduct(productKeys) {
   return products.workFromHomeBundle;
 }
 
+function getDownloadProductName(productKeys, product) {
+  const keySet = new Set(productKeys.filter(Boolean));
+  const hasWebsiteSeo = keySet.has('websiteSeo');
+  const hasAiAutomation = keySet.has('aiAutomation');
+
+  if (hasWebsiteSeo && hasAiAutomation) {
+    return 'Complete Digital Skills System Including Website + SEO and AI Automation';
+  }
+
+  return product.name;
+}
+
 function formatPrice(product) {
   return `$${(product.amount / 100).toFixed(2)}`;
 }
@@ -92,5 +104,6 @@ module.exports = {
   getProducts,
   calculateCheckoutAmount,
   resolveDownloadProduct,
+  getDownloadProductName,
   formatPrice,
 };

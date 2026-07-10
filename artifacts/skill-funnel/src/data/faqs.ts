@@ -29,6 +29,6 @@ export const faqs = [
   },
   {
     question: "What happens after purchase?",
-    answer: "After successful payment, your download buttons appear on the thank-you page so you can save the digital products directly to your computer."
+    answer: "After successful payment, your download button appears on the thank-you page so you can save the digital product directly to your computer."
   }
 ];

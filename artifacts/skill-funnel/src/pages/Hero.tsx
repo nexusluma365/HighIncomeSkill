@@ -173,7 +173,7 @@ const videoFaqs = [
   {
     question: 'What happens after purchase?',
     answer:
-      'After payment is confirmed, your download buttons appear so you can save the digital products to your computer.',
+      'After payment is confirmed, your download button appears so you can save the digital product to your computer.',
   },
 ];
 

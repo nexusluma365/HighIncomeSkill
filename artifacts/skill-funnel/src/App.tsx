@@ -18,7 +18,6 @@ import SystemReveal from '@/pages/SystemReveal';
 import ValueStack from '@/pages/ValueStack';
 import FAQ from '@/pages/FAQ';
 import Offer from '@/pages/Offer';
-import Checkout from '@/pages/Checkout';
 import Upsell from '@/pages/Upsell';
 import ThankYou from '@/pages/ThankYou';
 import NotFound from '@/pages/not-found';
@@ -42,7 +41,6 @@ function Router() {
           <Route path="/value" component={ValueStack} />
           <Route path="/faq" component={FAQ} />
           <Route path="/offer" component={Offer} />
-          <Route path="/checkout" component={Checkout} />
           <Route path="/upsell" component={Upsell} />
           <Route path="/thankyou" component={ThankYou} />
           <Route component={NotFound} />

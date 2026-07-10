@@ -19,7 +19,7 @@ export default function Offer() {
         ]}
       />
 
-      <Button href="/checkout" sticky>
+      <Button href="/upsell" sticky>
         Yes, Take Me To My Roadmap
       </Button>
     </div>
