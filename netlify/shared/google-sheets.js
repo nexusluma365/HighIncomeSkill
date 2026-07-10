@@ -78,20 +78,15 @@ function buildSheetRow(eventName, payload = {}) {
 }
 
 async function appendViaAppsScript(eventName, payload = {}) {
-  const url = new URL(process.env.GOOGLE_APPS_SCRIPT_URL);
-  url.searchParams.set(
-    'data',
-    JSON.stringify({
+  const response = await fetch(process.env.GOOGLE_APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({
       eventName,
       headers: sheetHeaders,
       row: buildSheetRow(eventName, payload),
       payload,
     }),
-  );
-
-  const response = await fetch(url.toString(), {
-    method: 'GET',
-    headers: { Accept: 'application/json' },
   });
 
   const data = await response.json().catch(() => ({}));
@@ -155,7 +150,7 @@ async function appendSheetRow(eventName, payload = {}) {
   }
 
   const accessToken = await getAccessToken();
-  const sheetName = process.env.GOOGLE_SHEETS_TAB || 'Funnel Events';
+  const sheetName = process.env.GOOGLE_SHEETS_TAB || 'Q1';
   const spreadsheetId = process.env.GOOGLE_SHEETS_ID;
   await ensureSheetHeaders({ accessToken, spreadsheetId, sheetName });
 

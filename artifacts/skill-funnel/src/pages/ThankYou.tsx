@@ -140,7 +140,7 @@ export default function ThankYou() {
           <div className="mt-6 flex items-start gap-3 rounded-[8px] border border-[#d7e6f4] bg-[#f8fbff] p-5">
             <Sparkles className="mt-0.5 shrink-0 text-[#0f7ee8]" size={24} />
             <p className="text-sm font-semibold leading-relaxed text-[#425d78]">
-              Your download is matched to the option you selected at checkout. Save it somewhere you can easily find it when you are ready to begin.
+              Click the download button above, save the zip file to your computer, then open it and start with the first file inside. Your roadmap is ready when you are.
             </p>
           </div>
         </div>

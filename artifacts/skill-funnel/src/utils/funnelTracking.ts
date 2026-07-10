@@ -44,7 +44,7 @@ export function buildFunnelTrackingPayload(funnel: FunnelTrackingState, extra: T
 export function logFunnelEvent(eventName: string, payload: Record<string, unknown>) {
   let body: string | Blob = '';
   try {
-    body = JSON.stringify({ eventName, ...payload });
+    body = JSON.stringify({ eventName, payload, ...payload });
   } catch {
     return;
   }

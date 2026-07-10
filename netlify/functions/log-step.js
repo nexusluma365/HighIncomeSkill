@@ -8,8 +8,11 @@ exports.handler = async (event) => {
   try {
     const body = JSON.parse(event.body || '{}');
     const eventName = String(body.eventName || 'unknown_step').slice(0, 80);
+    const trackedPayload = body.payload && typeof body.payload === 'object' && !Array.isArray(body.payload)
+      ? { ...body.payload }
+      : { ...body };
     const payload = {
-      ...body,
+      ...trackedPayload,
       userAgent: event.headers['user-agent'] || '',
       ip: event.headers['x-nf-client-connection-ip'] || event.headers['client-ip'] || '',
     };

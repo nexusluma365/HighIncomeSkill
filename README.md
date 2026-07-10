@@ -213,7 +213,9 @@ Google Sheets setup:
 2. Create a Google Cloud service account with Sheets API access.
 3. Share the sheet with `GOOGLE_SERVICE_ACCOUNT_EMAIL` as an editor.
 4. Paste the service account private key into `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`. Keep the escaped `\n` line breaks.
-5. Create a tab named `Funnel Events` or set `GOOGLE_SHEETS_TAB` to your preferred tab name.
+5. Create a tab named `Q1` or set `GOOGLE_SHEETS_TAB` to your preferred tab name.
+
+If you are using the Google Apps Script webhook instead of service account auth, add the deployed web app URL to `GOOGLE_APPS_SCRIPT_URL`. The app sends each funnel event as a POST body with `eventName`, `payload`, and a ready-to-append `row`, matching the Apps Script format used by the `Q1` sheet.
 
 Rows are appended for lead capture, free-offer continuation, checkout opens, Stripe PaymentIntent creation, confirmed purchases, download preparation, and download clicks.
 
