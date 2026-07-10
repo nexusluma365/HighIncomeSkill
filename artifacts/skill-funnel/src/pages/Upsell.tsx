@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { Check, LockKeyhole, X } from 'lucide-react';
 import productImage from '@/assets/media/product-image.png';
 import { useFunnel } from '@/hooks/useFunnel';
-import { buildFunnelTrackingPayload, logFunnelEvent } from '@/utils/funnelTracking';
+import { buildFunnelTrackingPayload, getFunnelSessionId, logFunnelEvent } from '@/utils/funnelTracking';
 
 type ProductKey = 'workFromHomeBundle' | 'aiAutomation' | 'websiteSeo';
 
@@ -306,6 +306,7 @@ export default function Upsell() {
     }
     setIsPaying(true);
     setErrorMessage('');
+    const sessionId = getFunnelSessionId();
     sessionStorage.removeItem('payment_confirmed');
     sessionStorage.removeItem('purchase_downloads');
     sessionStorage.removeItem('selected_product_keys');
@@ -329,6 +330,7 @@ export default function Upsell() {
           productKeys: selected,
           name: visitorName || undefined,
           email: visitorEmail || undefined,
+          sessionId,
         }),
       });
       const createData = await createResponse.json().catch(() => ({}));
@@ -384,6 +386,7 @@ export default function Upsell() {
         body: JSON.stringify({
           productKeys: selected,
           paymentIntentId: paymentIntent.id,
+          sessionId,
         }),
       });
       const confirmData = await confirmResponse.json().catch(() => ({}));

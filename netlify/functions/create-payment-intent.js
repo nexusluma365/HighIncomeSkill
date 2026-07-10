@@ -55,6 +55,7 @@ exports.handler = async (event) => {
       downloadProductName,
       customerName: body.name || '',
       customerEmail: body.email || '',
+      sessionId: body.sessionId || '',
     };
 
     const params = {
@@ -70,6 +71,7 @@ exports.handler = async (event) => {
       'metadata[downloadProductName]': metadata.downloadProductName,
       'metadata[customerName]': metadata.customerName,
       'metadata[customerEmail]': metadata.customerEmail,
+      'metadata[sessionId]': metadata.sessionId,
     };
 
     if (!params.receipt_email) {
@@ -79,6 +81,7 @@ exports.handler = async (event) => {
     const intent = await stripeRequest('payment_intents', params);
 
     await appendSheetRow('payment_intent_created', {
+      sessionId: body.sessionId || '',
       name: body.name || '',
       email: body.email || '',
       productKey: productKeys.join(','),

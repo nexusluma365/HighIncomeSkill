@@ -65,6 +65,7 @@ exports.handler = async (event) => {
     const cartName = selectedProducts.map((item) => item.shortName || item.name).join(' + ');
 
     await appendSheetRow('purchase_confirmed', {
+      sessionId: body.sessionId || intent.metadata?.sessionId || '',
       name: intent.metadata?.customerName || '',
       email: intent.metadata?.customerEmail || intent.receipt_email || '',
       productKey: selectedKeys.join(','),
@@ -86,6 +87,7 @@ exports.handler = async (event) => {
       productKey: downloadProduct.key,
       paymentIntentId: intent.id,
       amount: paidAmount,
+      sessionId: body.sessionId || intent.metadata?.sessionId || '',
     });
 
     const downloads = [{

@@ -8,6 +8,7 @@ const tokenCache = {
 const sheetHeaderCache = new Set();
 const sheetHeaders = [
   'Timestamp',
+  'Session ID',
   'Event',
   'Name',
   'Email',
@@ -61,6 +62,7 @@ function hasDirectSheetsConfig() {
 function buildSheetRow(eventName, payload = {}) {
   return [
     new Date().toISOString(),
+    payload.sessionId || payload.metadata?.sessionId || '',
     eventName,
     payload.name || '',
     payload.email || '',
@@ -180,7 +182,7 @@ async function ensureSheetHeaders({ accessToken, spreadsheetId, sheetName }) {
   const cacheKey = `${spreadsheetId}:${sheetName}`;
   if (sheetHeaderCache.has(cacheKey)) return;
 
-  const headerRange = encodeURIComponent(`${sheetName}!A1:N1`);
+  const headerRange = encodeURIComponent(`${sheetName}!A1:${columnLetter(sheetHeaders.length)}1`);
   const getUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${headerRange}`;
   const getResponse = await fetch(getUrl, {
     headers: {
@@ -213,6 +215,19 @@ async function ensureSheetHeaders({ accessToken, spreadsheetId, sheetName }) {
   }
 
   sheetHeaderCache.add(cacheKey);
+}
+
+function columnLetter(columnNumber) {
+  let dividend = columnNumber;
+  let columnName = '';
+
+  while (dividend > 0) {
+    const modulo = (dividend - 1) % 26;
+    columnName = String.fromCharCode(65 + modulo) + columnName;
+    dividend = Math.floor((dividend - modulo) / 26);
+  }
+
+  return columnName;
 }
 
 module.exports = {

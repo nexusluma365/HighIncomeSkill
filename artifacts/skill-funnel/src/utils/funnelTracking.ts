@@ -19,8 +19,27 @@ interface TrackingExtra {
   metadata?: Record<string, unknown>;
 }
 
+export function getFunnelSessionId() {
+  const storageKey = 'nexus_luma_funnel_session_id';
+  try {
+    const existing = sessionStorage.getItem(storageKey);
+    if (existing) return existing;
+
+    const generated = crypto.randomUUID
+      ? crypto.randomUUID()
+      : `session_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    sessionStorage.setItem(storageKey, generated);
+    return generated;
+  } catch {
+    return `session_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+  }
+}
+
 export function buildFunnelTrackingPayload(funnel: FunnelTrackingState, extra: TrackingExtra = {}) {
+  const sessionId = getFunnelSessionId();
+
   return {
+    sessionId,
     name: funnel.visitorName || '',
     email: funnel.visitorEmail || '',
     productKey: extra.productKey || funnel.selectedProductKeys?.join(',') || '',
@@ -30,6 +49,7 @@ export function buildFunnelTrackingPayload(funnel: FunnelTrackingState, extra: T
     page: extra.page || '',
     source: extra.source || 'skill_funnel',
     metadata: {
+      sessionId,
       goalId: funnel.goalId || '',
       challengeId: funnel.challengeId || '',
       workFromHomeInterested: funnel.workFromHomeInterested ?? '',

@@ -27,6 +27,7 @@ exports.handler = async (event) => {
     const signedUrl = createR2SignedDownloadUrl(product, { expires: 300 });
 
     await appendSheetRow('download_ready', {
+      sessionId: payload.sessionId || '',
       productKey: product.key,
       productName: product.name,
       paymentIntentId: payload.paymentIntentId || '',
