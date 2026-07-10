@@ -176,6 +176,8 @@ GOOGLE_SERVICE_ACCOUNT_EMAIL
 GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
 ```
 
+`STRIPE_SECRET_KEY` is required in Netlify. `STRIPE_PUBLISHABLE_KEY` is optional because the app includes the current publishable test key as a safe client-side fallback. Set `STRIPE_PUBLISHABLE_KEY` only if you want to override it.
+
 The `PRODUCT_*_BUCKET`, `PRODUCT_*_FILE_KEY`, and `DOWNLOAD_TOKEN_SECRET` values are optional. If omitted, the code uses your existing R2 names from the screenshot and uses `STRIPE_SECRET_KEY` to sign short-lived download tokens. Legacy `PRODUCT_WORK_FROM_HOME_*` values are still accepted as fallbacks, but new setup should use `PRODUCT_WORK_FROM_ANYWHERE_*`.
 
 R2 product file mapping:
