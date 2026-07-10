@@ -31,10 +31,6 @@ export default function Future() {
         banner="personal path"
         name="Let's Build Your Path"
         description="Every journey starts with a first step. Let's begin by getting to know you."
-        points={[
-          'Your roadmap is built one step at a time.',
-          "You'll always know what comes next.",
-        ]}
       >
         <label className="mx-auto block w-full max-w-[560px] text-left">
           <span className="mb-2 block text-sm font-black uppercase tracking-[0.08em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">

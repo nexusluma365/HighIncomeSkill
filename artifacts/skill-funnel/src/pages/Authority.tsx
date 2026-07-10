@@ -34,10 +34,6 @@ export default function Authority() {
         banner="save your path"
         name="Where Should I Send Your Game Plan?"
         description={workFromHomeInterested ? interestedCopy : missedCopy}
-        points={[
-          'Use the email you check most often.',
-          'This keeps your roadmap and next steps in one place.',
-        ]}
       >
         <label className="mx-auto block w-full max-w-[560px] text-left">
           <span className="mb-2 block text-sm font-black uppercase tracking-[0.08em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
