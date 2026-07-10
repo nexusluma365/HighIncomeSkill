@@ -6,6 +6,7 @@ const tokenCache = {
 };
 
 const sheetHeaderCache = new Set();
+const defaultAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbzZ6ofGWFiE5oNvnikYiK4tz8462wjpj_uKOEiid1AhPQko6HEMuSiL9M8OfLNon3ek/exec';
 const sheetHeaders = [
   'Timestamp',
   'Session ID',
@@ -48,7 +49,7 @@ function getPrivateKey() {
 }
 
 function sheetsConfigured() {
-  return Boolean(process.env.GOOGLE_APPS_SCRIPT_URL) || hasDirectSheetsConfig();
+  return Boolean(process.env.GOOGLE_APPS_SCRIPT_URL || defaultAppsScriptUrl) || hasDirectSheetsConfig();
 }
 
 function hasDirectSheetsConfig() {
@@ -80,7 +81,7 @@ function buildSheetRow(eventName, payload = {}) {
 }
 
 async function appendViaAppsScript(eventName, payload = {}) {
-  const response = await fetch(process.env.GOOGLE_APPS_SCRIPT_URL, {
+  const response = await fetch(process.env.GOOGLE_APPS_SCRIPT_URL || defaultAppsScriptUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({
@@ -147,7 +148,7 @@ async function appendSheetRow(eventName, payload = {}) {
     return { skipped: true, reason: 'Google Sheets env vars are not configured' };
   }
 
-  if (!hasDirectSheetsConfig() && process.env.GOOGLE_APPS_SCRIPT_URL) {
+  if (!hasDirectSheetsConfig() && (process.env.GOOGLE_APPS_SCRIPT_URL || defaultAppsScriptUrl)) {
     return appendViaAppsScript(eventName, payload);
   }
 
