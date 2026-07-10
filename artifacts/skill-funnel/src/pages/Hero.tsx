@@ -292,7 +292,7 @@ export default function Hero() {
     <div className="overflow-hidden bg-white text-[#07192f]">
       <header className="flex items-center justify-center bg-[#020812] px-6 py-4 text-center">
         <div className="text-2xl font-black uppercase tracking-[0.05em] text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
-          Work From <span className="text-[#5ab8ff]">Home</span>
+          Work From <span className="text-[#5ab8ff]">Anywhere</span>
         </div>
       </header>
 

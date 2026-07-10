@@ -27,7 +27,7 @@ export default function Lesson() {
       <LeadStepCard
         banner="flexible path"
         name="Is A Flexible Path What You Want?"
-        description={`${visitorName ? `Alright, ${visitorName}. ` : ''}If you want skills you can build from home, on your schedule, with a laptop and a phone, this is the direction. Choose this path if you want your roadmap focused on flexibility and building from anywhere.`}
+        description={`${visitorName ? `Alright, ${visitorName}. ` : ''}If you want skills you can build from anywhere, on your schedule, with a laptop and a phone, this is the direction. Choose this path if you want your roadmap focused on flexibility and building from anywhere.`}
         points={[
           'Learn at your own pace.',
           'Build wherever life takes you.',

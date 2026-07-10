@@ -6,7 +6,6 @@ const tokenCache = {
 };
 
 const sheetHeaderCache = new Set();
-const defaultAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbzlDP7jZEH4hIodDxcjWAwl-KQOhq51ELzEoOx-IxyXRzk0a1lEEbV366vmmGsberHp/exec';
 const sheetHeaders = [
   'Timestamp',
   'Event',
@@ -48,7 +47,11 @@ function getPrivateKey() {
 }
 
 function sheetsConfigured() {
-  return Boolean(process.env.GOOGLE_APPS_SCRIPT_URL || defaultAppsScriptUrl) || Boolean(
+  return Boolean(process.env.GOOGLE_APPS_SCRIPT_URL) || hasDirectSheetsConfig();
+}
+
+function hasDirectSheetsConfig() {
+  return Boolean(
     process.env.GOOGLE_SHEETS_ID &&
       process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
       process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
@@ -75,7 +78,7 @@ function buildSheetRow(eventName, payload = {}) {
 }
 
 async function appendViaAppsScript(eventName, payload = {}) {
-  const url = new URL(process.env.GOOGLE_APPS_SCRIPT_URL || defaultAppsScriptUrl);
+  const url = new URL(process.env.GOOGLE_APPS_SCRIPT_URL);
   url.searchParams.set(
     'data',
     JSON.stringify({
@@ -147,12 +150,12 @@ async function appendSheetRow(eventName, payload = {}) {
     return { skipped: true, reason: 'Google Sheets env vars are not configured' };
   }
 
-  if (process.env.GOOGLE_APPS_SCRIPT_URL || defaultAppsScriptUrl) {
+  if (!hasDirectSheetsConfig() && process.env.GOOGLE_APPS_SCRIPT_URL) {
     return appendViaAppsScript(eventName, payload);
   }
 
   const accessToken = await getAccessToken();
-  const sheetName = process.env.GOOGLE_SHEETS_TAB || 'Q1';
+  const sheetName = process.env.GOOGLE_SHEETS_TAB || 'Funnel Events';
   const spreadsheetId = process.env.GOOGLE_SHEETS_ID;
   await ensureSheetHeaders({ accessToken, spreadsheetId, sheetName });
 

@@ -5,14 +5,14 @@ const defaultR2Prefix = 'digitalskillsproudct';
 const products = {
   workFromHomeBundle: {
     key: 'workFromHomeBundle',
-    name: 'Work From Home Bundle',
-    shortName: 'Work From Home',
+    name: 'Work From Anywhere Bundle',
+    shortName: 'Work From Anywhere',
     amount: cents(97),
     currency: 'usd',
     value: '$1,279',
-    fileName: process.env.PRODUCT_WORK_FROM_HOME_FILE_NAME || 'Complete Digital Skill Bundle.zip',
-    r2Bucket: process.env.PRODUCT_WORK_FROM_HOME_BUCKET || process.env.R2_BUCKET || defaultR2Bucket,
-    r2FileKey: process.env.PRODUCT_WORK_FROM_HOME_FILE_KEY || process.env.R2_FILE_KEY_BUNDLE || `${defaultR2Prefix}/Complete Digital Skill Bundle.zip`,
+    fileName: process.env.PRODUCT_WORK_FROM_ANYWHERE_FILE_NAME || process.env.PRODUCT_WORK_FROM_HOME_FILE_NAME || 'Complete Digital Skill Bundle.zip',
+    r2Bucket: process.env.PRODUCT_WORK_FROM_ANYWHERE_BUCKET || process.env.PRODUCT_WORK_FROM_HOME_BUCKET || process.env.R2_BUCKET || defaultR2Bucket,
+    r2FileKey: process.env.PRODUCT_WORK_FROM_ANYWHERE_FILE_KEY || process.env.PRODUCT_WORK_FROM_HOME_FILE_KEY || process.env.R2_FILE_KEY_BUNDLE || `${defaultR2Prefix}/Complete Digital Skill Bundle.zip`,
   },
   aiAutomation: {
     key: 'aiAutomation',
@@ -88,7 +88,7 @@ function getDownloadProductName(productKeys, product) {
   const hasAiAutomation = keySet.has('aiAutomation');
 
   if (hasWebsiteSeo && hasAiAutomation) {
-    return 'Complete Work From Home System Including Website + SEO and AI Automation';
+    return 'Complete Work From Anywhere System Including Website + SEO and AI Automation';
   }
 
   return product.name;

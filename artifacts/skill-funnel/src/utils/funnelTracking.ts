@@ -19,24 +19,6 @@ interface TrackingExtra {
   metadata?: Record<string, unknown>;
 }
 
-const appsScriptFallbackUrl = 'https://script.google.com/macros/s/AKfycbzlDP7jZEH4hIodDxcjWAwl-KQOhq51ELzEoOx-IxyXRzk0a1lEEbV366vmmGsberHp/exec';
-const sheetHeaders = [
-  'Timestamp',
-  'Event',
-  'Name',
-  'Email',
-  'Product Key',
-  'Product Name',
-  'Amount',
-  'Payment Intent ID',
-  'Status',
-  'Page',
-  'Source',
-  'User Agent',
-  'IP',
-  'Metadata',
-];
-
 export function buildFunnelTrackingPayload(funnel: FunnelTrackingState, extra: TrackingExtra = {}) {
   return {
     name: funnel.visitorName || '',
@@ -60,11 +42,19 @@ export function buildFunnelTrackingPayload(funnel: FunnelTrackingState, extra: T
 }
 
 export function logFunnelEvent(eventName: string, payload: Record<string, unknown>) {
-  let body = '';
+  let body: string | Blob = '';
   try {
     body = JSON.stringify({ eventName, ...payload });
   } catch {
     return;
+  }
+
+  if (navigator.sendBeacon) {
+    const sent = navigator.sendBeacon(
+      '/.netlify/functions/log-step',
+      new Blob([body], { type: 'application/json' }),
+    );
+    if (sent) return;
   }
 
   void fetch('/.netlify/functions/log-step', {
@@ -72,40 +62,7 @@ export function logFunnelEvent(eventName: string, payload: Record<string, unknow
     headers: { 'Content-Type': 'application/json' },
     body,
     keepalive: true,
-  })
-    .then((response) => {
-      if (!response.ok) sendAppsScriptFallback(eventName, payload);
-    })
-    .catch(() => {
-      sendAppsScriptFallback(eventName, payload);
-    });
-}
-
-function sendAppsScriptFallback(eventName: string, payload: Record<string, unknown>) {
-  try {
-    const row = [
-      new Date().toISOString(),
-      eventName,
-      payload.name || '',
-      payload.email || '',
-      payload.productKey || '',
-      payload.productName || '',
-      payload.amount || '',
-      payload.paymentIntentId || '',
-      payload.status || '',
-      payload.page || '',
-      payload.source || '',
-      navigator.userAgent || '',
-      '',
-      JSON.stringify(payload.metadata || {}),
-    ];
-    const url = new URL(appsScriptFallbackUrl);
-    url.searchParams.set('data', JSON.stringify({ eventName, headers: sheetHeaders, row, payload }));
-
-    const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = url.toString();
-  } catch {
+  }).catch(() => {
     // Tracking should never interrupt the funnel.
-  }
+  });
 }

@@ -12,13 +12,14 @@ export default function Authority() {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    if (visitorEmail.trim()) {
+    const trimmedEmail = visitorEmail.trim();
+    if (trimmedEmail) {
       logFunnelEvent(
         'email_submitted',
-        buildFunnelTrackingPayload(funnel, {
+        buildFunnelTrackingPayload({ ...funnel, visitorEmail: trimmedEmail }, {
           page: '/authority',
           status: 'submitted',
-          metadata: { visitorEmail: visitorEmail.trim() },
+          metadata: { visitorEmail: trimmedEmail },
         }),
       );
       setLocation('/system');

@@ -49,7 +49,7 @@ Funnel state is held in React context at `artifacts/skill-funnel/src/context/Fun
 
 Product display data is defined in the funnel app, while live checkout pricing and download mapping are handled by Netlify Functions.
 
-- Main product: `Work From Home Bundle`
+- Main product: `Work From Anywhere Bundle`
 - Website + SEO path: `Website + SEO Client Path`
 - Automation path: `AI Automation System`
 - Secure payment: Stripe PaymentIntents through Netlify Functions
@@ -159,9 +159,9 @@ R2_FILE_KEY_BUNDLE
 R2_FILE_KEY_AI_ASSISTANT
 R2_FILE_KEY_WEBSITE_VOICE
 
-PRODUCT_WORK_FROM_HOME_BUCKET
-PRODUCT_WORK_FROM_HOME_FILE_KEY
-PRODUCT_WORK_FROM_HOME_FILE_NAME
+PRODUCT_WORK_FROM_ANYWHERE_BUCKET
+PRODUCT_WORK_FROM_ANYWHERE_FILE_KEY
+PRODUCT_WORK_FROM_ANYWHERE_FILE_NAME
 PRODUCT_AI_AUTOMATION_BUCKET
 PRODUCT_AI_AUTOMATION_FILE_KEY
 PRODUCT_AI_AUTOMATION_FILE_NAME
@@ -176,13 +176,13 @@ GOOGLE_SERVICE_ACCOUNT_EMAIL
 GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
 ```
 
-The `PRODUCT_*_BUCKET`, `PRODUCT_*_FILE_KEY`, and `DOWNLOAD_TOKEN_SECRET` values are optional. If omitted, the code uses your existing R2 names from the screenshot and uses `STRIPE_SECRET_KEY` to sign short-lived download tokens.
+The `PRODUCT_*_BUCKET`, `PRODUCT_*_FILE_KEY`, and `DOWNLOAD_TOKEN_SECRET` values are optional. If omitted, the code uses your existing R2 names from the screenshot and uses `STRIPE_SECRET_KEY` to sign short-lived download tokens. Legacy `PRODUCT_WORK_FROM_HOME_*` values are still accepted as fallbacks, but new setup should use `PRODUCT_WORK_FROM_ANYWHERE_*`.
 
 R2 product file mapping:
 
 | Product | Price | Bucket fallback | File key fallback |
 | --- | ---: | --- | --- |
-| Work From Home Bundle | `$97` | `R2_BUCKET` | `R2_FILE_KEY_BUNDLE` |
+| Work From Anywhere Bundle | `$97` | `R2_BUCKET` | `R2_FILE_KEY_BUNDLE` |
 | AI Automation System | `$297` | `R2_BUCKET2` | `R2_FILE_KEY_AI_ASSISTANT` |
 | Website + SEO Client Path | `$47` | `R2_BUCKET3` | `R2_FILE_KEY_WEBSITE_VOICE` |
 

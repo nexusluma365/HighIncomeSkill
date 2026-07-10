@@ -12,13 +12,14 @@ export default function Future() {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    if (visitorName.trim()) {
+    const trimmedName = visitorName.trim();
+    if (trimmedName) {
       logFunnelEvent(
         'name_submitted',
-        buildFunnelTrackingPayload(funnel, {
+        buildFunnelTrackingPayload({ ...funnel, visitorName: trimmedName }, {
           page: '/future',
           status: 'submitted',
-          metadata: { visitorName: visitorName.trim() },
+          metadata: { visitorName: trimmedName },
         }),
       );
       setLocation('/lesson');

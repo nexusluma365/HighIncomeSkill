@@ -52,10 +52,10 @@ declare global {
 const checkoutProducts: CheckoutProduct[] = [
   {
     key: 'workFromHomeBundle',
-    name: 'Work From Home Bundle',
+    name: 'Work From Anywhere Bundle',
     price: 97,
     fileName: 'Complete Digital Skill Bundle.zip',
-    description: 'Start learning practical digital skills companies already pay for, with a roadmap, templates, scripts, prompts, and an action plan you can use from home.',
+    description: 'Start learning practical digital skills companies already pay for, with a roadmap, templates, scripts, prompts, and an action plan you can use from anywhere.',
   },
   {
     key: 'websiteSeo',
@@ -92,7 +92,7 @@ function buildSelectedOfferSummary(selectedKeys: ProductKey[]) {
   const hasAiAutomation = selectedKeys.includes('aiAutomation');
 
   const parts = [
-    'Instant access to the Work From Home Bundle: roadmap, templates, scripts, prompts, and a clear action plan.',
+    'Instant access to the Work From Anywhere Bundle: roadmap, templates, scripts, prompts, and a clear action plan.',
   ];
 
   if (hasWebsiteSeo) {
@@ -433,7 +433,7 @@ export default function Upsell() {
           <div className="p-5 sm:p-6 lg:p-8">
             <h1 className="text-3xl font-black tracking-[-0.04em] text-black sm:text-4xl">Cart</h1>
             <p className="mt-2 max-w-[480px] text-sm font-semibold leading-relaxed text-[#7d7d88]">
-              Your Work From Home Bundle is ready. Add Website + SEO and AI Automation to build a stronger remote-skill toolkit and unlock the full $50 instant bundle savings.
+              Your Work From Anywhere Bundle is ready. Add Website + SEO and AI Automation to build a stronger remote-skill toolkit and unlock the full $50 instant bundle savings.
             </p>
 
             <div className="mt-5 grid gap-3">
@@ -505,7 +505,7 @@ export default function Upsell() {
                 <div>
                   <div className="text-base font-black text-[#1f1f27]">Total Due Today</div>
                   <p className="mt-1 max-w-[280px] text-xs leading-snug text-[#a0a0aa] sm:text-sm">
-                    Work From Home Bundle with your selected instant-access digital resources.
+                    Work From Anywhere Bundle with your selected instant-access digital resources.
                   </p>
                 </div>
                 <div className="text-lg font-black text-[#1f1f27] sm:text-xl">{formatMoney(total)}</div>
