@@ -7,7 +7,7 @@ import { buildFunnelTrackingPayload, logFunnelEvent } from '@/utils/funnelTracki
 export default function SystemReveal() {
   const [, setLocation] = useLocation();
   const funnel = useFunnel();
-  const { visitorName, setAddOnAccepted } = funnel;
+  const { setAddOnAccepted } = funnel;
 
   const choose = (accepted: boolean) => {
     setAddOnAccepted(accepted);
@@ -28,18 +28,18 @@ export default function SystemReveal() {
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
         banner="client path"
-        name="Do You Want The Website + SEO Path Included?"
-        description={`${visitorName || 'You'}, websites are digital real estate. They help businesses get found, explain their offer, capture attention, and turn visitors into leads. This path shows you a service people already understand, so you can connect your digital skills to a real business problem.`}
+        name="Want To Learn How Businesses Get Found Online?"
+        description="Every business wants more customers. This path shows you how websites, search visibility, and simple systems work together to help businesses grow."
         points={[
-          'Learn how websites, SEO, lead capture, and simple client systems help businesses get discovered online.',
-          'Build a skill path you can use from anywhere with a laptop, internet access, and a clear offer.',
-          'Choose this path if you want to understand how visibility, attention, and client opportunities connect.',
+          'Build websites people actually use.',
+          'Understand how customers find businesses online.',
+          'Learn skills that connect to real businesses.',
         ]}
         footer={
           <div className="grid gap-3 sm:grid-cols-2">
-            <Button onClick={() => choose(true)}>Yes, Include Website + SEO</Button>
+            <Button onClick={() => choose(true)}>Yes, Include This Path</Button>
             <Button onClick={() => choose(false)} variant="secondary">
-              Keep Guiding Me
+              Keep My Core Roadmap
             </Button>
           </div>
         }

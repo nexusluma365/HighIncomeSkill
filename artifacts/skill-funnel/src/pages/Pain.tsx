@@ -7,17 +7,17 @@ export default function Pain() {
       <LeadStepCard
         banner="keep going"
         name="This Is Where The Shift Starts"
-        description="The fact that you made it here matters. It means you are paying attention, you are open to something better, and some part of you is ready to stop letting confusion decide what happens next."
+        description="The fact that you made it here matters. It means you are paying attention, you are open to something better, and you are ready for a clearer way to start building skills that can change what is possible."
         points={[
           'You do not need to have it all figured out before you begin.',
-          'You only need the next clear step and the willingness to take it.',
-          'This roadmap is here to help you move with more direction, not more pressure.',
-          'If that sounds like where you are right now, keep moving forward.',
+          'You only need one clear next step and the willingness to take it.',
+          'A focused roadmap can turn scattered ideas into something you can actually follow.',
+          'Keep going and you will see the path, the pieces, and the offer that fits.',
         ]}
       />
 
       <Button href="/future" sticky>
-        Yes, Keep Me Moving
+        I Am Ready For The Next Step
       </Button>
     </div>
   );

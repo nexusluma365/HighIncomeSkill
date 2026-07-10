@@ -27,12 +27,12 @@ export default function Personalized() {
         />
         <div className="mx-auto my-8 h-px max-w-[420px] bg-[#82bdd6]/35" />
         <p className="mx-auto max-w-[430px] text-sm sm:text-base font-semibold leading-relaxed text-[#425d78]">
-          From here, I am going to walk you through why the old path feels so heavy, what waiting can cost, and how one clear roadmap can help you move with more confidence.
+          From here, you will see why the old path can feel so heavy, what waiting can cost, and how one clear roadmap can make your next move easier to take.
         </p>
       </motion.div>
       
       <Button href="/pain" sticky>
-        Keep Guiding Me
+        Keep Going
       </Button>
     </div>
   );

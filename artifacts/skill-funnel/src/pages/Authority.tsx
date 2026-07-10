@@ -25,18 +25,18 @@ export default function Authority() {
     }
   };
 
-  const interestedCopy = `Perfect, ${visitorName || 'that'} tells me you may be serious about building something flexible and useful. What is the best email to keep your next step organized?`;
-  const missedCopy = `No pressure, ${visitorName || 'friend'}. Even if you are keeping the path simple right now, you can still move forward one step at a time. What is the best email to keep your next step organized?`;
+  const interestedCopy = `${visitorName ? `Perfect, ${visitorName}. ` : 'Perfect. '}You are looking at a path that can turn simple digital skills into something practical, flexible, and useful. Where should your next step go?`;
+  const missedCopy = `${visitorName ? `No pressure, ${visitorName}. ` : 'No pressure. '}Keeping the path simple still moves you forward. Where should your next step go?`;
 
   return (
     <form onSubmit={handleSubmit} className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
         banner="save your path"
-        name={workFromHomeInterested ? 'Where Should I Send Your Next Step?' : 'Where Should I Save Your Path?'}
+        name={workFromHomeInterested ? 'Where Should Your Next Step Go?' : 'Where Should Your Path Be Saved?'}
         description={workFromHomeInterested ? interestedCopy : missedCopy}
         points={[
           'Use the email you check most often.',
-          'This keeps your personalized path connected as you move into the final recommendation.',
+          'Your next step will be easier to follow when everything is connected in one place.',
         ]}
       >
         <label className="mx-auto block w-full max-w-[560px] text-left">
@@ -54,7 +54,7 @@ export default function Authority() {
       </LeadStepCard>
 
       <Button type="submit" sticky disabled={!visitorEmail.trim()}>
-        Show Me My Recommendation
+        Show Me My Roadmap
       </Button>
     </form>
   );

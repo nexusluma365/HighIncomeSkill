@@ -7,7 +7,7 @@ import { buildFunnelTrackingPayload, logFunnelEvent } from '@/utils/funnelTracki
 export default function ValueStack() {
   const [, setLocation] = useLocation();
   const funnel = useFunnel();
-  const { visitorName, setUpsellAccepted } = funnel;
+  const { setUpsellAccepted } = funnel;
 
   const choose = (accepted: boolean) => {
     setUpsellAccepted(accepted);
@@ -28,18 +28,18 @@ export default function ValueStack() {
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
         banner="automation path"
-        name="Do You Want The AI Automation Path Included?"
-        description={`${visitorName || 'You'}, automation is how digital work starts to gain leverage. Imagine using AI, prompts, and simple systems to save time, follow up faster, deliver more consistently, and create workflows that keep moving even when you are not doing every step by hand.`}
+        name="Want To Learn How People Get More Done In Less Time?"
+        description="Automation helps remove repetitive work so people can spend more time creating, helping clients, and building new opportunities."
         points={[
-          'Learn how AI tools can help turn repeated tasks into faster workflows.',
-          'Understand automations for follow-up, appointment reminders, lead routing, and simple business systems.',
-          'Choose this path if you want to see how people create leverage beyond trading every hour for money.',
+          'Save time with smarter workflows.',
+          'Learn practical automations.',
+          'Build systems businesses already use.',
         ]}
         footer={
           <div className="grid gap-3 sm:grid-cols-2">
-            <Button onClick={() => choose(true)}>Yes, Include AI Automation</Button>
+            <Button onClick={() => choose(true)}>Yes, Include This Path</Button>
             <Button onClick={() => choose(false)} variant="secondary">
-              Keep Guiding Me
+              Keep My Core Roadmap
             </Button>
           </div>
         }
