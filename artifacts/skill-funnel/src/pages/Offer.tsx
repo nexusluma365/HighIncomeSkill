@@ -7,9 +7,9 @@ export default function Offer() {
       <LeadStepCard
         banner="instant access"
         name="Your Roadmap Is Ready"
-        description="Everything you've selected now comes together into one clear place to start. No guessing. No jumping between random videos. Just one roadmap you can follow at your own pace."
+        description="Your choices now come together in one clear place to start. No guessing. No jumping between random videos. Just one roadmap you can unlock and follow at your own pace."
         points={[
-          'Your roadmap is ready whenever you are.',
+          'Your roadmap is ready to unlock.',
           'Everything is organized step by step.',
           'Learn from anywhere with a laptop and a phone.',
           'Build skills you can continue growing over time.',

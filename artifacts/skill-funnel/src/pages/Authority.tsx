@@ -25,23 +25,23 @@ export default function Authority() {
     }
   };
 
-  const interestedCopy = `${visitorName ? `Perfect, ${visitorName}. ` : 'Perfect. '}You are looking at a path that can turn simple digital skills into something practical, flexible, and useful. Where should your next step go?`;
-  const missedCopy = `${visitorName ? `No pressure, ${visitorName}. ` : 'No pressure. '}Keeping the path simple still moves you forward. Where should your next step go?`;
+  const interestedCopy = `${visitorName ? `Good, ${visitorName}. ` : ''}So we can continue mapping out the right game plan for you, enter the email where you want your roadmap and next steps sent.`;
+  const missedCopy = `${visitorName ? `Good, ${visitorName}. ` : ''}So we can keep your path organized and show you the right next step, enter the email where you want your roadmap sent.`;
 
   return (
     <form onSubmit={handleSubmit} className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
         banner="save your path"
-        name={workFromHomeInterested ? 'Where Should Your Next Step Go?' : 'Where Should Your Path Be Saved?'}
+        name="Where Should I Send Your Game Plan?"
         description={workFromHomeInterested ? interestedCopy : missedCopy}
         points={[
           'Use the email you check most often.',
-          'Your next step will be easier to follow when everything is connected in one place.',
+          'This keeps your roadmap and next steps in one place.',
         ]}
       >
         <label className="mx-auto block w-full max-w-[560px] text-left">
           <span className="mb-2 block text-sm font-black uppercase tracking-[0.08em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
-            What is your email?
+            What email should I use?
           </span>
           <input
             type="email"

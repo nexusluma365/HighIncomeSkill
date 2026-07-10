@@ -26,8 +26,8 @@ export default function Lesson() {
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
         banner="flexible path"
-        name="If You Could Build From Anywhere..."
-        description={`${visitorName ? `Alright, ${visitorName}. ` : ''}What would that mean for you? Imagine building something that isn't tied to one place. One laptop. One phone. One clear place to begin. You're closer than you think.`}
+        name="Is A Flexible Path What You Want?"
+        description={`${visitorName ? `Alright, ${visitorName}. ` : ''}If you want skills you can build from home, on your schedule, with a laptop and a phone, this is the direction. Choose this path if you want your roadmap focused on flexibility and building from anywhere.`}
         points={[
           'Learn at your own pace.',
           'Build wherever life takes you.',

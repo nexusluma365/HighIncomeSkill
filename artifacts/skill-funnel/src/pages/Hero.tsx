@@ -355,16 +355,16 @@ export default function Hero() {
         />
         <div className="mx-auto mt-8 max-w-[760px] space-y-6 text-lg font-semibold leading-[1.8] text-[#b8d5ee]">
           <p>I grew up in a single-parent home, watching my mom do the best she could to provide for us on one income.</p>
-          <p>We did not have much, but we always had enough to be thankful for. Seeing how hard she worked made me dream of a different life, not just for me, but for her too.</p>
+          <p>We did not have much, but we always had enough to be thankful for. Watching how hard she worked made me dream of a different life, not just for me, but for her too.</p>
           <p>When she bought me my first computer, I was hooked.</p>
           <p>I spent hours playing games, making music, and browsing the internet back when AOL was how everyone got online. Looking back, I had no idea that computer would end up changing the direction of my life.</p>
           <p>As the years went by, I started noticing a shift.</p>
-          <p>More businesses were moving online. More people were building careers through the internet. Digital products were already around us, even if most of us did not call them that. The shows people watched, the music people bought, the downloads people used, and the websites people visited were all part of a world where attention could become a product.</p>
-          <p>Technology kept evolving, and so did the opportunities. YouTube, websites, ebooks, streaming, online courses, automated services, templates, and digital tools made it possible for regular people to build in ways that used to feel out of reach.</p>
-          <p>Fast forward to today, and we are living in a world where valuable skills can create opportunities that simply did not exist when I was growing up. With a laptop, a phone, internet access, and the willingness to learn, people are building businesses, helping companies, selling digital products, and creating income from almost anywhere.</p>
-          <p>That journey is what inspired me to put together this roadmap.</p>
-          <p>I wanted to create the guide I wish someone had handed me years ago, a clear path to learning valuable skills, building something meaningful, and creating opportunities that can change the direction of your life.</p>
-          <p className="font-black text-white">If you are ready to bet on yourself, I&apos;ll show you where to start.</p>
+          <p>More businesses were moving online. More people were building careers through the internet. Digital products were already around us, even if most of us did not call them that yet. Music, videos, websites, downloads, and online tools were showing me that the internet was becoming more than entertainment. It was becoming opportunity.</p>
+          <p>Technology kept evolving, and so did the possibilities. Websites, ebooks, streaming, online courses, automation, templates, and AI tools made it possible for regular people to learn valuable skills and build things from almost anywhere.</p>
+          <p>Fast forward to today, and those skills matter more than ever. With a laptop, a phone, internet access, and the willingness to learn, people are helping businesses, creating digital products, building systems, and opening doors that simply did not exist when I was growing up.</p>
+          <p>That is why I built this roadmap.</p>
+          <p>I wanted to create the guide I wish someone had handed me years ago: a clear place to start, a simple order to follow, and a practical way to understand the skills people are using in the digital world right now.</p>
+          <p className="font-black text-white">If you are ready to take the first step, I will show you where to start.</p>
         </div>
         <div className="mx-auto mt-8 flex justify-center">
           <CtaButton>YES, SHOW ME WHERE TO START</CtaButton>

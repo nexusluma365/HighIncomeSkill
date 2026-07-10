@@ -29,7 +29,7 @@ export default function SystemReveal() {
       <LeadStepCard
         banner="client path"
         name="Want To Learn How Businesses Get Found Online?"
-        description="Every business wants more customers. This path shows you how websites, search visibility, and simple systems work together to help businesses grow."
+        description="Every business wants more customers. Include this path if you want to understand how websites, search visibility, and simple systems help people find a business and take the next step."
         points={[
           'Build websites people actually use.',
           'Understand how customers find businesses online.',

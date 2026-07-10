@@ -29,7 +29,7 @@ export default function ValueStack() {
       <LeadStepCard
         banner="automation path"
         name="Want To Learn How People Get More Done In Less Time?"
-        description="Automation helps remove repetitive work so people can spend more time creating, helping clients, and building new opportunities."
+        description="Include this path if you want to understand how simple automations can remove repetitive work, save time, and help businesses follow up without doing every step by hand."
         points={[
           'Save time with smarter workflows.',
           'Learn practical automations.',
