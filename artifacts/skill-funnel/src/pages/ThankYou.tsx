@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Download, LockKeyhole, ShieldCheck, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useFunnel } from '@/hooks/useFunnel';
@@ -32,6 +32,7 @@ function readStoredDownloads() {
 
 export default function ThankYou() {
   const { purchaseDownloads } = useFunnel();
+  const downloadFrameRef = useRef<HTMLIFrameElement | null>(null);
   const [confettiPieces, setConfettiPieces] = useState<
     { id: number; left: string; delay: number; duration: number; color: string }[]
   >([]);
@@ -56,14 +57,16 @@ export default function ThankYou() {
   }, [purchaseDownloads]);
   const hasConfirmedDownloads = downloads.length > 0;
   const openDownload = (downloadUrl: string) => {
-    const opened = window.open(downloadUrl, '_blank', 'noopener,noreferrer');
-    if (!opened) {
+    if (downloadFrameRef.current) {
+      downloadFrameRef.current.src = downloadUrl;
+    } else {
       window.location.href = downloadUrl;
     }
   };
 
   return (
     <div className="relative flex min-h-screen flex-col pb-12 pt-8">
+      <iframe ref={downloadFrameRef} title="Secure download" className="hidden" />
       {hasConfirmedDownloads && confettiPieces.map((piece) => (
         <motion.div
           key={piece.id}

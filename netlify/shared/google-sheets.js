@@ -81,17 +81,26 @@ function buildSheetRow(eventName, payload = {}) {
 }
 
 async function appendViaAppsScript(eventName, payload = {}) {
+  const body = JSON.stringify({
+    eventName,
+    payload,
+  });
   const response = await fetch(process.env.GOOGLE_APPS_SCRIPT_URL || defaultAppsScriptUrl, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({
-      eventName,
-      payload,
-    }),
+    redirect: 'manual',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8', Accept: 'application/json' },
+    body,
   });
 
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok || data.ok === false) {
+  const resultResponse = response.status >= 300 && response.status < 400 && response.headers.get('location')
+    ? await fetch(response.headers.get('location'), {
+      method: 'GET',
+      headers: { Accept: 'application/json' },
+    })
+    : response;
+
+  const data = await resultResponse.json().catch(() => ({}));
+  if (!resultResponse.ok || data.ok === false) {
     throw new Error(data.error || data.message || 'Unable to append row with Google Apps Script');
   }
 

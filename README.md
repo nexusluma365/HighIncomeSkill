@@ -146,18 +146,12 @@ The React/Vite funnel in `artifacts/skill-funnel` is ready to host on Netlify. N
 Add these environment variables in Netlify:
 
 ```text
-STRIPE_PUBLISHABLE_KEY
 STRIPE_SECRET_KEY
+STRIPE_PUBLISHABLE_KEY
 
 R2_ACCOUNT_ID
 R2_ACCESS_KEY_ID
 R2_SECRET_ACCESS_KEY
-R2_BUCKET
-R2_BUCKET2
-R2_BUCKET3
-R2_FILE_KEY_BUNDLE
-R2_FILE_KEY_AI_ASSISTANT
-R2_FILE_KEY_WEBSITE_VOICE
 
 PRODUCT_WORK_FROM_ANYWHERE_BUCKET
 PRODUCT_WORK_FROM_ANYWHERE_FILE_KEY
@@ -170,6 +164,7 @@ PRODUCT_WEBSITE_SEO_FILE_KEY
 PRODUCT_WEBSITE_SEO_FILE_NAME
 DOWNLOAD_TOKEN_SECRET
 
+GOOGLE_APPS_SCRIPT_URL
 GOOGLE_SHEETS_ID
 GOOGLE_SHEETS_TAB
 GOOGLE_SERVICE_ACCOUNT_EMAIL
@@ -178,28 +173,30 @@ GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
 
 `STRIPE_SECRET_KEY` is required in Netlify. `STRIPE_PUBLISHABLE_KEY` is optional because the app includes the current publishable test key as a safe client-side fallback. Set `STRIPE_PUBLISHABLE_KEY` only if you want to override it.
 
-The `PRODUCT_*_BUCKET`, `PRODUCT_*_FILE_KEY`, and `DOWNLOAD_TOKEN_SECRET` values are optional. If omitted, the code uses your existing R2 names from the screenshot and uses `STRIPE_SECRET_KEY` to sign short-lived download tokens. Legacy `PRODUCT_WORK_FROM_HOME_*` values are still accepted as fallbacks, but new setup should use `PRODUCT_WORK_FROM_ANYWHERE_*`.
+The `PRODUCT_*_BUCKET`, `PRODUCT_*_FILE_KEY`, and `DOWNLOAD_TOKEN_SECRET` values are optional. If omitted, the code uses your existing R2 names from the screenshot and uses `STRIPE_SECRET_KEY` to sign download tokens. Legacy `PRODUCT_WORK_FROM_HOME_*` values are still accepted as fallbacks, but new setup should use `PRODUCT_WORK_FROM_ANYWHERE_*`.
 
-R2 product file mapping:
+Exact R2 product file mapping:
 
-| Product | Price | Bucket fallback | File key fallback |
-| --- | ---: | --- | --- |
-| Work From Anywhere Bundle | `$97` | `R2_BUCKET` | `R2_FILE_KEY_BUNDLE` |
-| AI Automation System | `$297` | `R2_BUCKET2` | `R2_FILE_KEY_AI_ASSISTANT` |
-| Website + SEO Client Path | `$47` | `R2_BUCKET3` | `R2_FILE_KEY_WEBSITE_VOICE` |
+| Product | Bucket env | Bucket value | File key env | File key value | File name env | File name value |
+| --- | --- | --- | --- | --- | --- | --- |
+| Complete Work From Anywhere Bundle | `PRODUCT_WORK_FROM_ANYWHERE_BUCKET` | `digitalskills` | `PRODUCT_WORK_FROM_ANYWHERE_FILE_KEY` | `digitalskillsproudct/Complete Digital Skill Bundle.zip` | `PRODUCT_WORK_FROM_ANYWHERE_FILE_NAME` | `Complete Digital Skill Bundle.zip` |
+| AI Automation System | `PRODUCT_AI_AUTOMATION_BUCKET` | `digitalskills` | `PRODUCT_AI_AUTOMATION_FILE_KEY` | `digitalskillsproudct/Digital Skills Bundle + Automation .zip` | `PRODUCT_AI_AUTOMATION_FILE_NAME` | `Digital Skills Bundle + Automation .zip` |
+| Website + SEO Client Path | `PRODUCT_WEBSITE_SEO_BUCKET` | `digitalskills` | `PRODUCT_WEBSITE_SEO_FILE_KEY` | `digitalskillsproudct/Digital Skills Bundle + Website Template SEO.zip` | `PRODUCT_WEBSITE_SEO_FILE_NAME` | `Digital Skills Bundle + Website Template SEO.zip` |
+
+The app also accepts file keys without the folder prefix. For example, `Digital Skills Bundle + Automation .zip` is automatically normalized to `digitalskillsproudct/Digital Skills Bundle + Automation .zip`.
 
 Checkout delivery mapping:
 
 | Website + SEO checkbox | AI Automation checkbox | Total charged | Delivered file |
 | --- | --- | ---: | --- |
-| Unchecked | Unchecked | `$97` | `R2_FILE_KEY_BUNDLE` |
-| Checked | Unchecked | `$72` | `R2_FILE_KEY_WEBSITE_VOICE` |
-| Unchecked | Checked | `$72` | `R2_FILE_KEY_AI_ASSISTANT` |
-| Checked | Checked | `$47` | `R2_FILE_KEY_BUNDLE` |
+| Unchecked | Unchecked | `$97` | `Complete Digital Skill Bundle.zip` |
+| Checked | Unchecked | `$72` | `Digital Skills Bundle + Website Template SEO.zip` |
+| Unchecked | Checked | `$72` | `Digital Skills Bundle + Automation .zip` |
+| Checked | Checked | `$47` | `Complete Digital Skill Bundle.zip` |
 
 Download behavior:
 
-After Stripe confirms payment, the page shows a download button without sending the user to another page. That button points to an on-site Netlify Function:
+After Stripe confirms payment, the page shows a download button without sending the user to another page. The thank-you page loads the on-site Netlify download Function in a hidden iframe so the file download starts while the buyer stays on the same page:
 
 ```text
 /.netlify/functions/download-product?token=...
@@ -209,13 +206,23 @@ The Function verifies the paid product token, creates a temporary Cloudflare R2 
 
 Google Sheets setup:
 
+The preferred setup is the Apps Script webhook:
+
+```text
+GOOGLE_APPS_SCRIPT_URL=https://script.google.com/macros/s/AKfycbx2R1Nv2wbqLtHsHVREHO6pA1L7mVk3iNcgkILc8WLT756KaJP7atMQCadTSkjOA5zM/exec
+```
+
+The current deployed Apps Script URL is built in, but setting `GOOGLE_APPS_SCRIPT_URL` in Netlify is recommended so the live site cannot accidentally use an older deployment.
+
+If you use the direct Google Sheets API instead of Apps Script:
+
 1. Create or choose a Google Sheet and copy its spreadsheet ID into `GOOGLE_SHEETS_ID`.
 2. Create a Google Cloud service account with Sheets API access.
 3. Share the sheet with `GOOGLE_SERVICE_ACCOUNT_EMAIL` as an editor.
 4. Paste the service account private key into `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`. Keep the escaped `\n` line breaks.
 5. Create a tab named `Q1` or set `GOOGLE_SHEETS_TAB` to your preferred tab name.
 
-If you are using the Google Apps Script webhook instead of service account auth, replace your Apps Script code with `google-apps-script/session-row-logger.gs` and deploy a new web app version. The current deployed Apps Script URL is built in; set `GOOGLE_APPS_SCRIPT_URL` only if you need to override it. The script keeps each visitor session on one row and updates separate columns for each step. If the `Q1` tab still has the old vertical event-log headers, the script archives those rows to `Q1 Legacy Event Rows` and resets `Q1` to the new horizontal session layout.
+If you are using the Google Apps Script webhook instead of service account auth, replace your Apps Script code with `google-apps-script/session-row-logger.gs` and deploy a new web app version. The script keeps each visitor session on one row and updates separate columns for each step. If the `Q1` tab still has the old vertical event-log headers, the script archives those rows to `Q1 Legacy Event Rows` and resets `Q1` to the new horizontal session layout.
 
 With the Apps Script webhook, each visitor session is kept on one row and each step updates its own column. With direct service account Sheets logging, rows are appended for lead capture, free-offer continuation, checkout opens, Stripe PaymentIntent creation, confirmed purchases, download preparation, and download clicks.
 
