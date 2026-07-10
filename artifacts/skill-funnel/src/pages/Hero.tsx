@@ -327,8 +327,8 @@ export default function Hero() {
         </div>
       </section>
 
-      <section className="bg-black px-5 pb-10 text-center sm:px-8 sm:pb-14">
-        <div className="mt-8">
+      <section className="bg-black px-5 py-10 text-center sm:px-8 sm:py-14">
+        <div>
           <div className="mx-auto mb-5 max-w-[760px]">
             <h2 className="text-3xl font-black uppercase tracking-[0.02em] text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">Watch This First</h2>
             <p className="mt-2 text-sm font-semibold leading-relaxed text-[#b8d5ee]">
