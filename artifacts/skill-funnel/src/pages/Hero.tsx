@@ -325,7 +325,9 @@ export default function Hero() {
             </div>
           ))}
         </div>
+      </section>
 
+      <section className="bg-black px-5 pb-10 text-center sm:px-8 sm:pb-14">
         <div className="mt-8">
           <div className="mx-auto mb-5 max-w-[760px]">
             <h2 className="text-3xl font-black uppercase tracking-[0.02em] text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">Watch This First</h2>
@@ -346,7 +348,7 @@ export default function Hero() {
 
       <section className="bg-black px-5 py-12 text-center sm:px-8 sm:py-16">
         <SectionHeading
-          kicker="WHO AM I?"
+          kicker="Why I Built This Roadmap"
           title="The Story That Changed"
           accent="My Direction"
           dark
@@ -390,6 +392,79 @@ export default function Hero() {
         </div>
       </section>
 
+      <section className="bg-black px-5 py-12 text-white sm:px-8 sm:py-16">
+        <SectionHeading
+          kicker="The Digital Shift"
+          title="This Is Bigger Than"
+          accent="Learning A Skill"
+          copy="Digital skills are connected to the way attention, business, entertainment, and money already move. The question is not whether the digital world is real. The question is whether you are ready to learn how to participate in it."
+          dark
+        />
+
+        <div className="mx-auto mt-9 grid max-w-[1040px] gap-4 md:grid-cols-3">
+          {digitalWorldCards.map((item) => (
+            <article key={item.title} className="rounded-[8px] border border-[#2f74ad]/50 bg-white/7 p-5 text-left">
+              <h3 className="text-xl font-black uppercase leading-tight text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
+                {item.title}
+              </h3>
+              <p className="mt-4 text-sm font-semibold leading-relaxed text-[#b8d5ee]">
+                {item.copy}
+              </p>
+            </article>
+          ))}
+        </div>
+
+        <div className="mx-auto mt-8 max-w-[900px] space-y-3">
+          {transformationBullets.map((item) => (
+            <div key={item} className="flex items-start gap-3 rounded-[8px] border border-[#2f74ad]/50 bg-white/7 p-5 text-left text-sm font-bold leading-relaxed text-[#d7ecff]">
+              <CheckCircle2 className="mt-0.5 shrink-0 text-[#5ab8ff]" size={20} />
+              <p>{item}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mx-auto mt-8 flex justify-center">
+          <CtaButton>YES, I WANT DIGITAL SKILLS</CtaButton>
+        </div>
+      </section>
+
+      <section className="bg-[#f5f8fb] px-5 py-12 sm:px-8 sm:py-16">
+        <SectionHeading
+          kicker="What Is Included"
+          title="Here's What You'll Learn"
+          accent="Along The Way"
+          copy="This is not just information. It is a guided path into the skills people use to build websites, create digital products, automate simple work, grow attention, and turn what they know into something people can buy, book, watch, download, or use."
+        />
+
+        <div className="mx-auto mt-8 grid max-w-[980px] gap-3 md:grid-cols-3">
+          {learnItems.map((item) => (
+            <div key={item.title} className="flex min-h-[176px] items-start gap-3 rounded-[8px] border border-[#d7e6f4] bg-white p-4 text-sm font-bold leading-relaxed text-[#425d78] shadow-[0_8px_20px_rgba(6,19,34,0.06)]">
+              <CheckCircle2 className="mt-0.5 shrink-0 text-[#0f7ee8]" size={18} />
+              <p>
+                <span className="block font-black uppercase text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">{item.title}</span>
+                {item.copy}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mx-auto mt-8 flex justify-center">
+          <CtaButton>SHOW ME EVERYTHING INCLUDED</CtaButton>
+        </div>
+      </section>
+
+      <div className="flex flex-wrap items-center justify-center gap-4 border-y border-[#d7e6f4] bg-[#f5f8fb] px-6 py-5">
+        <ShieldCheck size={38} className="text-[#0f7ee8]" />
+        <div>
+          <strong className="block text-base font-black uppercase tracking-[0.04em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
+            Clear Roadmap. Beginner Friendly. Action Focused.
+          </strong>
+          <span className="text-sm font-semibold text-[#425d78]">
+            Built from 2+ years of testing and working with tools businesses use every day. Beginner-friendly. Action-focused. No fluff.
+          </span>
+        </div>
+      </div>
+
       <section className="border-t-[5px] border-[#020812] bg-black px-5 py-12 text-white sm:px-8 sm:py-16">
         <div className="mx-auto grid max-w-[1040px] gap-10 lg:grid-cols-[1fr_0.78fr]">
           <div>
@@ -429,42 +504,6 @@ export default function Hero() {
               })}
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="bg-black px-5 py-12 text-white sm:px-8 sm:py-16">
-        <SectionHeading
-          kicker="The Digital Shift"
-          title="This Is Bigger Than"
-          accent="Learning A Skill"
-          copy="Digital skills are connected to the way attention, business, entertainment, and money already move. The question is not whether the digital world is real. The question is whether you are ready to learn how to participate in it."
-          dark
-        />
-
-        <div className="mx-auto mt-9 grid max-w-[1040px] gap-4 md:grid-cols-3">
-          {digitalWorldCards.map((item) => (
-            <article key={item.title} className="rounded-[8px] border border-[#2f74ad]/50 bg-white/7 p-5 text-left">
-              <h3 className="text-xl font-black uppercase leading-tight text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
-                {item.title}
-              </h3>
-              <p className="mt-4 text-sm font-semibold leading-relaxed text-[#b8d5ee]">
-                {item.copy}
-              </p>
-            </article>
-          ))}
-        </div>
-
-        <div className="mx-auto mt-8 max-w-[900px] space-y-3">
-          {transformationBullets.map((item) => (
-            <div key={item} className="flex items-start gap-3 rounded-[8px] border border-[#2f74ad]/50 bg-white/7 p-5 text-left text-sm font-bold leading-relaxed text-[#d7ecff]">
-              <CheckCircle2 className="mt-0.5 shrink-0 text-[#5ab8ff]" size={20} />
-              <p>{item}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mx-auto mt-8 flex justify-center">
-          <CtaButton>YES, I WANT DIGITAL SKILLS</CtaButton>
         </div>
       </section>
 
@@ -552,61 +591,6 @@ export default function Hero() {
         </div>
       </section>
 
-      <section className="bg-[#f5f8fb] px-5 py-12 sm:px-8 sm:py-16">
-        <SectionHeading
-          kicker="What Is Included"
-          title="Here's What You'll Learn"
-          accent="Along The Way"
-          copy="This is not just information. It is a guided path into the skills people use to build websites, create digital products, automate simple work, grow attention, and turn what they know into something people can buy, book, watch, download, or use."
-        />
-
-        <div className="mx-auto mt-8 grid max-w-[980px] gap-3 md:grid-cols-3">
-          {learnItems.map((item) => (
-            <div key={item.title} className="flex min-h-[176px] items-start gap-3 rounded-[8px] border border-[#d7e6f4] bg-white p-4 text-sm font-bold leading-relaxed text-[#425d78] shadow-[0_8px_20px_rgba(6,19,34,0.06)]">
-              <CheckCircle2 className="mt-0.5 shrink-0 text-[#0f7ee8]" size={18} />
-              <p>
-                <span className="block font-black uppercase text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">{item.title}</span>
-                {item.copy}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mx-auto mt-8 flex justify-center">
-          <CtaButton>SHOW ME EVERYTHING INCLUDED</CtaButton>
-        </div>
-      </section>
-
-      <div className="flex flex-wrap items-center justify-center gap-4 border-y border-[#d7e6f4] bg-[#f5f8fb] px-6 py-5">
-        <ShieldCheck size={38} className="text-[#0f7ee8]" />
-        <div>
-          <strong className="block text-base font-black uppercase tracking-[0.04em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
-            Clear Roadmap. Beginner Friendly. Action Focused.
-          </strong>
-          <span className="text-sm font-semibold text-[#425d78]">
-            Built from 2+ years of testing and working with tools businesses use every day. Beginner-friendly. Action-focused. No fluff.
-          </span>
-        </div>
-      </div>
-
-      <section className="bg-white px-5 py-12 text-center sm:px-8 sm:py-16">
-        <SectionHeading
-          kicker="Who This Is For"
-          title="This Was Built"
-          accent="For You If..."
-        />
-        <div className="mx-auto mt-8 max-w-[760px] space-y-6 text-lg font-semibold leading-[1.8] text-[#425d78]">
-          {skillMatterBullets.map((item) => (
-            <p key={item}>✓ {item}</p>
-          ))}
-          <p className="font-black text-[#07192f]">You do not have to know everything today.</p>
-          <p>You only have to be willing to begin.</p>
-        </div>
-        <div className="mx-auto mt-8 flex justify-center">
-          <CtaButton>YES...THIS IS FOR ME</CtaButton>
-        </div>
-      </section>
-
       <section className="bg-[#f5f8fb] px-5 py-12 text-center sm:px-8 sm:py-16">
         <SectionHeading
           kicker="I AM"
@@ -646,6 +630,24 @@ export default function Hero() {
         </div>
         <div className="mx-auto mt-8 flex justify-center">
           <CtaButton>I&apos;M READY TO START TODAY</CtaButton>
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-12 text-center sm:px-8 sm:py-16">
+        <SectionHeading
+          kicker="Who This Is For"
+          title="This Was Built"
+          accent="For You If..."
+        />
+        <div className="mx-auto mt-8 max-w-[760px] space-y-6 text-lg font-semibold leading-[1.8] text-[#425d78]">
+          {skillMatterBullets.map((item) => (
+            <p key={item}>✓ {item}</p>
+          ))}
+          <p className="font-black text-[#07192f]">You do not have to know everything today.</p>
+          <p>You only have to be willing to begin.</p>
+        </div>
+        <div className="mx-auto mt-8 flex justify-center">
+          <CtaButton>YES...THIS IS FOR ME</CtaButton>
         </div>
       </section>
 
@@ -714,7 +716,9 @@ export default function Hero() {
             ))}
           </div>
         </div>
+      </section>
 
+      <section className="bg-white px-5 pb-12 text-center sm:px-8 sm:pb-16">
         <div className="mx-auto mt-12 max-w-[820px] rounded-[8px] border border-[#d7e6f4] bg-[#f8fbff] p-6 text-center shadow-[0_18px_44px_rgba(6,19,34,0.1)] sm:p-10">
           <h2 className="text-4xl font-black uppercase leading-tight text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
             Every New Opportunity Begins With One Decision.
