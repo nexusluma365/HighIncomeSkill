@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Download, LockKeyhole, ShieldCheck, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useFunnel } from '@/hooks/useFunnel';
@@ -32,7 +32,6 @@ function readStoredDownloads() {
 
 export default function ThankYou() {
   const { purchaseDownloads } = useFunnel();
-  const downloadFrameRef = useRef<HTMLIFrameElement | null>(null);
   const [confettiPieces, setConfettiPieces] = useState<
     { id: number; left: string; delay: number; duration: number; color: string }[]
   >([]);
@@ -56,17 +55,9 @@ export default function ThankYou() {
     return [];
   }, [purchaseDownloads]);
   const hasConfirmedDownloads = downloads.length > 0;
-  const openDownload = (downloadUrl: string) => {
-    if (downloadFrameRef.current) {
-      downloadFrameRef.current.src = downloadUrl;
-    } else {
-      window.location.href = downloadUrl;
-    }
-  };
 
   return (
     <div className="relative flex min-h-screen flex-col pb-12 pt-8">
-      <iframe ref={downloadFrameRef} title="Secure download" className="hidden" />
       {hasConfirmedDownloads && confettiPieces.map((piece) => (
         <motion.div
           key={piece.id}
@@ -124,11 +115,12 @@ export default function ThankYou() {
         <div className="p-6 sm:p-10">
           <div className="grid gap-4">
             {downloads.map((item) => (
-              <button
+              <a
                 key={item.productKey}
-                type="button"
-                onClick={() => openDownload(item.downloadUrl)}
-                className="group flex min-h-[96px] w-full items-center gap-4 rounded-[8px] bg-[#0f7ee8] px-4 py-5 text-left text-white shadow-[0_16px_34px_rgba(15,126,232,0.26)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] sm:justify-between sm:gap-5 sm:px-6"
+                href={item.downloadUrl}
+                download={item.fileName}
+                className="group flex min-h-[96px] w-full cursor-pointer items-center gap-4 rounded-[8px] bg-[#0f7ee8] px-4 py-5 text-left text-white shadow-[0_16px_34px_rgba(15,126,232,0.26)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] sm:justify-between sm:gap-5 sm:px-6"
+                aria-label={`Download ${item.productName}`}
               >
                 <span className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[8px] bg-white/16 sm:h-14 sm:w-14">
@@ -143,7 +135,7 @@ export default function ThankYou() {
                   </span>
                 </span>
                 <span className="hidden text-4xl font-black transition group-hover:translate-x-1 sm:block">→</span>
-              </button>
+              </a>
             ))}
           </div>
 
