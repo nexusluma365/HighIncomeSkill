@@ -86,8 +86,6 @@ async function appendViaAppsScript(eventName, payload = {}) {
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({
       eventName,
-      headers: sheetHeaders,
-      row: buildSheetRow(eventName, payload),
       payload,
     }),
   });

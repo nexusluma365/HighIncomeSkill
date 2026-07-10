@@ -215,7 +215,7 @@ Google Sheets setup:
 4. Paste the service account private key into `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`. Keep the escaped `\n` line breaks.
 5. Create a tab named `Q1` or set `GOOGLE_SHEETS_TAB` to your preferred tab name.
 
-If you are using the Google Apps Script webhook instead of service account auth, replace your Apps Script code with `google-apps-script/session-row-logger.gs` and deploy it as a web app. The current deployed Apps Script URL is built in; set `GOOGLE_APPS_SCRIPT_URL` only if you need to override it. The script keeps each visitor session on one row and updates separate columns for each step.
+If you are using the Google Apps Script webhook instead of service account auth, replace your Apps Script code with `google-apps-script/session-row-logger.gs` and deploy a new web app version. The current deployed Apps Script URL is built in; set `GOOGLE_APPS_SCRIPT_URL` only if you need to override it. The script keeps each visitor session on one row and updates separate columns for each step. If the `Q1` tab still has the old vertical event-log headers, the script archives those rows to `Q1 Legacy Event Rows` and resets `Q1` to the new horizontal session layout.
 
 With the Apps Script webhook, each visitor session is kept on one row and each step updates its own column. With direct service account Sheets logging, rows are appended for lead capture, free-offer continuation, checkout opens, Stripe PaymentIntent creation, confirmed purchases, download preparation, and download clicks.
 

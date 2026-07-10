@@ -1,4 +1,6 @@
 const SHEET_NAME = 'Q1';
+const ARCHIVE_SHEET_NAME = 'Q1 Legacy Event Rows';
+const SCRIPT_VERSION = 'session-row-logger-v2';
 
 const HEADERS = [
   'Created At',
@@ -60,7 +62,8 @@ function doPost(e) {
 function doGet() {
   return json_({
     ok: true,
-    message: 'Nexus Luma funnel session logger is live.'
+    version: SCRIPT_VERSION,
+    message: 'Nexus Luma funnel session logger is live. Each session updates one row.'
   });
 }
 
@@ -79,14 +82,42 @@ function setupFunnelSheet() {
 }
 
 function setupHeaders_(sheet) {
-  const firstRow = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
-  const hasHeaders = firstRow.some(value => String(value || '').trim());
+  const firstRow = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), HEADERS.length)).getValues()[0];
+  const currentHeaders = firstRow.map(value => String(value || '').trim());
+  const hasHeaders = currentHeaders.some(Boolean);
+  const hasSessionLayout = currentHeaders[0] === HEADERS[0] &&
+    currentHeaders[1] === HEADERS[1] &&
+    currentHeaders[2] === HEADERS[2];
 
-  if (!hasHeaders) {
-    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
-    sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
-    sheet.setFrozenRows(1);
+  if (hasHeaders && !hasSessionLayout) {
+    archiveLegacyRows_(sheet);
   }
+
+  sheet.getRange(1, 1, 1, sheet.getMaxColumns()).clearContent().setFontWeight('normal');
+  sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
+  sheet.setFrozenRows(1);
+}
+
+function archiveLegacyRows_(sheet) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let archive = ss.getSheetByName(ARCHIVE_SHEET_NAME);
+
+  if (!archive) {
+    archive = ss.insertSheet(ARCHIVE_SHEET_NAME);
+  }
+
+  const lastRow = sheet.getLastRow();
+  const lastColumn = sheet.getLastColumn();
+
+  if (lastRow > 0 && lastColumn > 0) {
+    const archiveStartRow = archive.getLastRow() + 1;
+    archive.getRange(archiveStartRow, 1).setValue(`Archived from ${SHEET_NAME} at ${new Date().toISOString()}`);
+    const values = sheet.getRange(1, 1, lastRow, lastColumn).getValues();
+    archive.getRange(archiveStartRow + 1, 1, values.length, values[0].length).setValues(values);
+  }
+
+  sheet.clear();
 }
 
 function normalizePayload_(data) {
