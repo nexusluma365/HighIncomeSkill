@@ -55,6 +55,12 @@ export default function ThankYou() {
     return [];
   }, [purchaseDownloads]);
   const hasConfirmedDownloads = downloads.length > 0;
+  const openDownload = (downloadUrl: string) => {
+    const opened = window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+    if (!opened) {
+      window.location.href = downloadUrl;
+    }
+  };
 
   return (
     <div className="relative flex min-h-screen flex-col pb-12 pt-8">
@@ -115,25 +121,26 @@ export default function ThankYou() {
         <div className="p-6 sm:p-10">
           <div className="grid gap-4">
             {downloads.map((item) => (
-              <a
+              <button
                 key={item.productKey}
-                href={item.downloadUrl}
-                download={item.fileName}
-                className="group flex min-h-[96px] items-center justify-between gap-5 rounded-[8px] bg-[#0f7ee8] px-6 py-5 text-white shadow-[0_16px_34px_rgba(15,126,232,0.26)] transition hover:-translate-y-0.5 hover:bg-[#1594ff]"
+                type="button"
+                onClick={() => openDownload(item.downloadUrl)}
+                className="group flex min-h-[96px] w-full items-center gap-4 rounded-[8px] bg-[#0f7ee8] px-4 py-5 text-left text-white shadow-[0_16px_34px_rgba(15,126,232,0.26)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] sm:justify-between sm:gap-5 sm:px-6"
               >
-                <span className="flex min-w-0 items-center gap-4">
-                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-[8px] bg-white/16">
-                    <Download size={30} />
+                <span className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[8px] bg-white/16 sm:h-14 sm:w-14">
+                    <Download size={28} />
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-2xl font-black uppercase leading-tight [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-3xl">
-                      Download {item.productName}
+                    <span className="block text-2xl font-black uppercase leading-[1.05] tracking-[0.01em] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-3xl">
+                      Start Download
                     </span>
-                    <span className="mt-1 block truncate text-sm font-bold text-[#d7ecff]">{item.fileName}</span>
+                    <span className="mt-1 block text-sm font-bold leading-snug text-[#d7ecff] sm:text-base">{item.productName}</span>
+                    <span className="mt-1 block break-words text-xs font-semibold leading-snug text-[#c7e6ff] sm:text-sm">{item.fileName}</span>
                   </span>
                 </span>
                 <span className="hidden text-4xl font-black transition group-hover:translate-x-1 sm:block">→</span>
-              </a>
+              </button>
             ))}
           </div>
 

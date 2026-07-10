@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'wouter';
-import { Check, LockKeyhole, X } from 'lucide-react';
+import { Check, LoaderCircle, LockKeyhole, X } from 'lucide-react';
 import productImage from '@/assets/media/product-image.png';
 import { useFunnel } from '@/hooks/useFunnel';
 import { buildFunnelTrackingPayload, getFunnelSessionId, logFunnelEvent } from '@/utils/funnelTracking';
@@ -589,13 +589,32 @@ export default function Upsell() {
               </div>
             )}
 
+            {isPaying && (
+              <div className="mt-5 flex items-center gap-3 rounded-[10px] border border-[#b8daf8] bg-[#eef7ff] p-4 text-left text-[#1f4d78]">
+                <LoaderCircle className="h-5 w-5 shrink-0 animate-spin text-[#0f7ee8]" />
+                <div>
+                  <p className="text-sm font-black text-[#07192f]">Processing your secure payment</p>
+                  <p className="mt-1 text-xs font-semibold leading-relaxed text-[#425d78]">
+                    Please keep this page open. Your download will appear as soon as Stripe confirms the payment.
+                  </p>
+                </div>
+              </div>
+            )}
+
             <button
               type="button"
               onClick={submitPayment}
               disabled={isPaying || selectedProducts.length === 0}
-              className="mt-5 h-12 w-full rounded-[6px] bg-[#302d49] text-base font-semibold text-white transition hover:bg-[#25223a] disabled:pointer-events-none disabled:opacity-60"
+              className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-[6px] bg-[#302d49] text-base font-semibold text-white transition hover:bg-[#25223a] disabled:pointer-events-none disabled:opacity-75"
             >
-              {isPaying ? 'Processing...' : 'Get Instant Access'}
+              {isPaying ? (
+                <>
+                  <LoaderCircle className="h-5 w-5 animate-spin" />
+                  Processing Payment
+                </>
+              ) : (
+                'Get Instant Access'
+              )}
             </button>
 
             <div className="mt-4 rounded-[8px] border border-[#ececf2] bg-[#f8f8fb] px-3 py-3 text-center">
