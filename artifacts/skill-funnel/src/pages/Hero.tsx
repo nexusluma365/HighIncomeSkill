@@ -428,12 +428,13 @@ export default function Hero() {
         </div>
       </section>
 
-      <section className="bg-[#f5f8fb] px-5 py-12 sm:px-8 sm:py-16">
+      <section className="bg-black px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading
           kicker="What Is Included"
           title="Here's What You'll Learn"
           accent="Along The Way"
           copy="This is not just information. It is a guided path into the skills people use to build websites, create digital products, automate simple work, grow attention, and turn what they know into something people can buy, book, watch, download, or use."
+          dark
         />
 
         <div className="mx-auto mt-8 grid max-w-[980px] gap-3 md:grid-cols-3">
@@ -453,13 +454,13 @@ export default function Hero() {
         </div>
       </section>
 
-      <div className="flex flex-wrap items-center justify-center gap-4 border-y border-[#d7e6f4] bg-[#f5f8fb] px-6 py-5">
+      <div className="flex flex-wrap items-center justify-center gap-4 border-y border-[#2f74ad]/50 bg-black px-6 py-5">
         <ShieldCheck size={38} className="text-[#0f7ee8]" />
         <div>
-          <strong className="block text-base font-black uppercase tracking-[0.04em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
+          <strong className="block text-base font-black uppercase tracking-[0.04em] text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
             Clear Roadmap. Beginner Friendly. Action Focused.
           </strong>
-          <span className="text-sm font-semibold text-[#425d78]">
+          <span className="text-sm font-semibold text-[#b8d5ee]">
             Built from 2+ years of testing and working with tools businesses use every day. Beginner-friendly. Action-focused. No fluff.
           </span>
         </div>
