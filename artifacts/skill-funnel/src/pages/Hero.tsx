@@ -346,7 +346,7 @@ export default function Hero() {
 
       <section className="bg-black px-5 py-12 text-center sm:px-8 sm:py-16">
         <SectionHeading
-          kicker="My Story"
+          kicker="WHO AM I?"
           title="The Story That Changed"
           accent="My Direction"
           dark
