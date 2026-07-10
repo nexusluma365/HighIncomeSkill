@@ -32,6 +32,7 @@ function readStoredDownloads() {
 
 export default function ThankYou() {
   const { purchaseDownloads } = useFunnel();
+  const [activeDownloadKey, setActiveDownloadKey] = useState('');
   const [confettiPieces, setConfettiPieces] = useState<
     { id: number; left: string; delay: number; duration: number; color: string }[]
   >([]);
@@ -55,6 +56,10 @@ export default function ThankYou() {
     return [];
   }, [purchaseDownloads]);
   const hasConfirmedDownloads = downloads.length > 0;
+  const beginDownload = (item: DownloadItem) => {
+    setActiveDownloadKey(item.productKey);
+    window.location.assign(item.downloadUrl);
+  };
 
   return (
     <div className="relative flex min-h-screen flex-col pb-12 pt-8">
@@ -115,11 +120,11 @@ export default function ThankYou() {
         <div className="p-6 sm:p-10">
           <div className="grid gap-4">
             {downloads.map((item) => (
-              <a
+              <button
                 key={item.productKey}
-                href={item.downloadUrl}
-                download={item.fileName}
-                className="group flex min-h-[96px] w-full cursor-pointer items-center gap-4 rounded-[8px] bg-[#0f7ee8] px-4 py-5 text-left text-white shadow-[0_16px_34px_rgba(15,126,232,0.26)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] sm:justify-between sm:gap-5 sm:px-6"
+                type="button"
+                onClick={() => beginDownload(item)}
+                className="group flex min-h-[96px] w-full cursor-pointer items-center gap-4 rounded-[8px] bg-[#0f7ee8] px-4 py-5 text-left text-white shadow-[0_16px_34px_rgba(15,126,232,0.26)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] active:translate-y-0 sm:justify-between sm:gap-5 sm:px-6"
                 aria-label={`Download ${item.productName}`}
               >
                 <span className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
@@ -128,14 +133,14 @@ export default function ThankYou() {
                   </span>
                   <span className="min-w-0">
                     <span className="block text-2xl font-black uppercase leading-[1.05] tracking-[0.01em] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-3xl">
-                      Start Download
+                      {activeDownloadKey === item.productKey ? 'Preparing Download' : 'Start Download'}
                     </span>
                     <span className="mt-1 block text-sm font-bold leading-snug text-[#d7ecff] sm:text-base">{item.productName}</span>
                     <span className="mt-1 block break-words text-xs font-semibold leading-snug text-[#c7e6ff] sm:text-sm">{item.fileName}</span>
                   </span>
                 </span>
                 <span className="hidden text-4xl font-black transition group-hover:translate-x-1 sm:block">→</span>
-              </a>
+              </button>
             ))}
           </div>
 
