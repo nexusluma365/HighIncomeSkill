@@ -5,8 +5,8 @@ const defaultR2Prefix = 'digitalskillsproudct';
 const products = {
   workFromHomeBundle: {
     key: 'workFromHomeBundle',
-    name: 'AI & Digital Skills Bundle',
-    shortName: 'Digital Skills Bundle',
+    name: 'Work From Home Bundle',
+    shortName: 'Work From Home',
     amount: cents(97),
     currency: 'usd',
     value: '$1,279',
@@ -88,7 +88,7 @@ function getDownloadProductName(productKeys, product) {
   const hasAiAutomation = keySet.has('aiAutomation');
 
   if (hasWebsiteSeo && hasAiAutomation) {
-    return 'Complete Digital Skills System Including Website + SEO and AI Automation';
+    return 'Complete Work From Home System Including Website + SEO and AI Automation';
   }
 
   return product.name;

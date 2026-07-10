@@ -49,7 +49,7 @@ Funnel state is held in React context at `artifacts/skill-funnel/src/context/Fun
 
 Product display data is defined in the funnel app, while live checkout pricing and download mapping are handled by Netlify Functions.
 
-- Main product: `AI & Digital Skills Bundle`
+- Main product: `Work From Home Bundle`
 - Website + SEO path: `Website + SEO Client Path`
 - Automation path: `AI Automation System`
 - Secure payment: Stripe PaymentIntents through Netlify Functions
@@ -182,7 +182,7 @@ R2 product file mapping:
 
 | Product | Price | Bucket fallback | File key fallback |
 | --- | ---: | --- | --- |
-| AI & Digital Skills Bundle | `$97` | `R2_BUCKET` | `R2_FILE_KEY_BUNDLE` |
+| Work From Home Bundle | `$97` | `R2_BUCKET` | `R2_FILE_KEY_BUNDLE` |
 | AI Automation System | `$297` | `R2_BUCKET2` | `R2_FILE_KEY_AI_ASSISTANT` |
 | Website + SEO Client Path | `$47` | `R2_BUCKET3` | `R2_FILE_KEY_WEBSITE_VOICE` |
 

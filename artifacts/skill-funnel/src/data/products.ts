@@ -1,6 +1,6 @@
 export const products = {
   main: {
-    name: "AI & Digital Skills Bundle",
+    name: "Work From Home Bundle",
     price: 47,
     value: 1573,
     features: [
@@ -31,7 +31,7 @@ export const products = {
     name: "Complete Business Accelerator",
     price: 27,
     features: [
-      "Everything in the AI & Digital Skills Bundle",
+      "Everything in the Work From Home Bundle",
       "Website + SEO Client Launch Kit",
       "Advanced AI automation library",
       "Premium Funnel Pages",
