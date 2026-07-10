@@ -6,7 +6,7 @@ const tokenCache = {
 };
 
 const sheetHeaderCache = new Set();
-const defaultAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbwfCXVCkE3eLX0khDz1u50ESjbp1Fsh5lGTK0xdcpMSc__jIePmTtyidCB0iNMZ34IV/exec';
+const defaultAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbx2R1Nv2wbqLtHsHVREHO6pA1L7mVk3iNcgkILc8WLT756KaJP7atMQCadTSkjOA5zM/exec';
 const sheetHeaders = [
   'Timestamp',
   'Session ID',
