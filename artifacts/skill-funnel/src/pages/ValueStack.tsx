@@ -28,18 +28,18 @@ export default function ValueStack() {
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
         banner="automation path"
-        name="Add AI Automation To Your Learning Plan?"
-        description={`${visitorName || 'You'}, imagine knowing how to use AI to save hours of work, connect simple systems, and help businesses follow up faster without doing everything manually. This is where your laptop starts feeling like leverage.`}
+        name="Do You Want The AI Automation Path Included?"
+        description={`${visitorName || 'You'}, automation is how digital work starts to gain leverage. Imagine using AI, prompts, and simple systems to save time, follow up faster, deliver more consistently, and create workflows that keep moving even when you are not doing every step by hand.`}
         points={[
-          'Learn how AI tools can help complete hours of work in minutes.',
-          'Understand automations for follow-up, appointment reminders, lead routing, and simple business workflows.',
-          'Start seeing yourself as someone who can build systems that keep working even when you are not sitting at the screen.',
+          'Learn how AI tools can help turn repeated tasks into faster workflows.',
+          'Understand automations for follow-up, appointment reminders, lead routing, and simple business systems.',
+          'Choose this path if you want to see how people create leverage beyond trading every hour for money.',
         ]}
         footer={
           <div className="grid gap-3 sm:grid-cols-2">
-            <Button onClick={() => choose(true)}>Yes, Add AI Automation</Button>
+            <Button onClick={() => choose(true)}>Yes, Include AI Automation</Button>
             <Button onClick={() => choose(false)} variant="secondary">
-              Skip Automation
+              Keep Guiding Me
             </Button>
           </div>
         }

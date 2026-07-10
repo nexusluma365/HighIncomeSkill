@@ -27,19 +27,19 @@ export default function SystemReveal() {
   return (
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
-        banner="recommended"
-        name="Add The Website + SEO Client Path To Your Learning Plan?"
-        description={`${visitorName || 'You'}, picture being able to help a real business look professional online, get found by more people, and turn visitors into leads. This path gives you a clear service businesses already understand instead of leaving you wondering what to offer first.`}
+        banner="client path"
+        name="Do You Want The Website + SEO Path Included?"
+        description={`${visitorName || 'You'}, websites are digital real estate. They help businesses get found, explain their offer, capture attention, and turn visitors into leads. This path shows you a service people already understand, so you can connect your digital skills to a real business problem.`}
         points={[
-          'Learn how websites, SEO, lead capture, and simple client systems work together.',
-          'Build a service path that can help local businesses get more visibility and more leads.',
-          'Start seeing yourself as someone who solves business problems, not someone waiting for permission.',
+          'Learn how websites, SEO, lead capture, and simple client systems help businesses get discovered online.',
+          'Build a skill path you can use from anywhere with a laptop, internet access, and a clear offer.',
+          'Choose this path if you want to understand how visibility, attention, and client opportunities connect.',
         ]}
         footer={
           <div className="grid gap-3 sm:grid-cols-2">
-            <Button onClick={() => choose(true)}>Yes, Add This To My Plan</Button>
+            <Button onClick={() => choose(true)}>Yes, Include Website + SEO</Button>
             <Button onClick={() => choose(false)} variant="secondary">
-              Skip This Path
+              Keep Guiding Me
             </Button>
           </div>
         }

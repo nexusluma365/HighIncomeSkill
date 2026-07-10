@@ -1,27 +1,31 @@
 export const faqs = [
   {
-    question: "Who is this for?",
-    answer: "It is for beginners who want a clear path into practical digital skills, especially if you feel stuck, overwhelmed, or unsure what to learn first."
+    question: "Is this beginner friendly?",
+    answer: "Yes. This was built for beginners who want a clear place to start and a simple roadmap to follow."
   },
   {
     question: "Do I need experience?",
-    answer: "No. The bundle is beginner-friendly and built to help you start with simple steps, templates, prompts, scripts, and examples."
+    answer: "No. You only need a willingness to learn and follow the roadmap one step at a time."
   },
   {
-    question: "What skills does it help me understand?",
-    answer: "You will see how website offers, SEO basics, AI automation, prompts, workflows, client paths, and action plans fit together."
+    question: "What equipment do I need?",
+    answer: "A computer, internet access, and time to work through the resources are enough to begin."
   },
   {
-    question: "Can I use this from home?",
-    answer: "Yes. The resources are digital and focused on skills you can learn and practice anywhere you have a computer and internet."
+    question: "What exactly will I learn?",
+    answer: "You will learn how AI, websites, SEO, automation, business foundations, and modern online tools fit together inside one roadmap."
   },
   {
-    question: "What if I am unsure what skill to pick?",
-    answer: "That is why the roadmap is included. It helps reduce the noise and gives you a first path to follow instead of guessing."
+    question: "Can I learn at my own pace?",
+    answer: "Yes. You get digital access, so you can move through it on your own schedule."
   },
   {
-    question: "Is this just another course?",
-    answer: "No. It is built as an action-focused digital bundle with templates, scripts, prompts, and resources you can use while building proof."
+    question: "How long do I have access?",
+    answer: "You get lifetime access to the digital products included with your purchase."
+  },
+  {
+    question: "Is payment secure?",
+    answer: "Yes. Payments are processed securely through Stripe. Your card information is not stored by this site."
   },
   {
     question: "What happens after purchase?",

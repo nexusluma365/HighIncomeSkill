@@ -27,12 +27,12 @@ export default function Personalized() {
         />
         <div className="mx-auto my-8 h-px max-w-[420px] bg-[#82bdd6]/35" />
         <p className="mx-auto max-w-[430px] text-sm sm:text-base font-semibold leading-relaxed text-[#425d78]">
-          Over the next few screens, you will see exactly why most beginners stay hidden and how this challenge helps you move.
+          From here, I am going to walk you through why the old path feels so heavy, what waiting can cost, and how one clear roadmap can help you move with more confidence.
         </p>
       </motion.div>
       
       <Button href="/pain" sticky>
-        Show Me The Roadmap
+        Keep Guiding Me
       </Button>
     </div>
   );

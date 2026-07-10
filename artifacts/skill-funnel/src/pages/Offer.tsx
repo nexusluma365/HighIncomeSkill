@@ -9,18 +9,18 @@ export default function Offer() {
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
         banner="instant access"
-        name="Your AI & Digital Skills Bundle Is Ready"
-        description={`${visitorName || 'You'}, your path is ready. The bundle gives you a clear roadmap for learning AI, website, automation, and digital service skills you can start building from home.`}
+        name="Your Roadmap Is Ready"
+        description={`${visitorName || 'You'}, this is the moment where the path gets simple. Digital skills are how people build offers, products, websites, automations, and income paths that can work from anywhere. You have chosen the support that fits you, and now you can start with one clear roadmap instead of trying to piece everything together alone.`}
         points={[
           visitorEmail ? `We have your best email: ${visitorEmail}` : 'Your email can be added on the next screen.',
-          workFromHomeInterested ? 'You showed interest in building practical digital skills from anywhere.' : 'You chose to stay updated before choosing the full AI and digital skills bundle.',
-          addOnAccepted ? 'You added Website + SEO as a possible client path.' : 'You kept the path focused on the core skills roadmap.',
-          upsellAccepted ? 'You added AI Automation as a leverage skill.' : 'You skipped AI Automation for now.',
+          workFromHomeInterested ? 'You said flexibility and freedom matter to you.' : 'You kept your path simple while still moving forward.',
+          addOnAccepted ? 'Website + SEO is included so you can understand online visibility, lead capture, and client value.' : 'Website + SEO will stay optional while your core digital skills roadmap stays clear.',
+          upsellAccepted ? 'AI Automation is included so you can understand leverage, workflows, and systems that save time.' : 'AI Automation will stay optional while your core digital skills roadmap stays clear.',
         ]}
       />
 
       <Button href="/checkout" sticky>
-        Get Instant Access
+        Yes, Take Me To My Roadmap
       </Button>
     </div>
   );

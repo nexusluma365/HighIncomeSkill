@@ -36,7 +36,7 @@ export default function Button({
 
   const wrapperClasses = cn(
     "w-full",
-    sticky && "fixed bottom-0 left-0 right-0 p-5 bg-[#061322] z-40 md:relative md:bg-transparent md:p-0"
+    sticky && "fixed bottom-0 left-0 right-0 p-5 bg-black z-40 md:relative md:bg-transparent md:p-0"
   );
 
   if (href) {

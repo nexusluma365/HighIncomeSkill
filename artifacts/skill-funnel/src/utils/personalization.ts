@@ -1,22 +1,22 @@
 export function getPersonalizedMessage(goalId?: string, challengeId?: string) {
-  let headline = "You are not behind. You are missing a clear stage plan.";
-  let body = "The difference is not talent. It is knowing which skill to practice, what to build, and how to present it with confidence.";
+  let headline = "You are not behind. You are standing at the beginning.";
+  let body = "The next chapter does not require you to have everything figured out today. It starts with one clear step, then another, until momentum begins to feel possible again.";
 
   if (goalId === 'home' && challengeId === 'start') {
-    headline = "Working from anywhere starts with one confident first move.";
-    body = "You do not need a perfect resume. You need a simple roadmap that tells you what to learn, what to make, and what to offer.";
+    headline = "Freedom starts with one clear first move.";
+    body = "Wanting more flexibility makes sense. You do not need to see the whole road today. You need a simple place to begin and a path that tells you what comes next.";
   } else if (goalId === 'ai' && challengeId === 'skills') {
-    headline = "AI can become your confidence multiplier.";
-    body = "You do not need years of experience to begin. You need a guided way to turn AI into useful work businesses understand.";
+    headline = "Confidence grows when the tools stop feeling confusing.";
+    body = "You do not need to be an expert before you start. You need a guided way to learn, practice, and see how modern tools fit into real opportunities.";
   } else if (goalId === 'income') {
-    headline = "A new income stream begins with a sellable skill.";
-    body = "The goal is not random learning. The goal is building something useful enough that a real business can say yes.";
+    headline = "Another opportunity can begin with one useful skill.";
+    body = "The goal is not random learning. The goal is building something meaningful enough that you can point to it and say, this is what I can do.";
   } else if (challengeId === 'clients') {
-    headline = "Finding clients feels easier when the offer is clear.";
-    body = "Once you know what problem you solve, scripts, templates, and simple outreach become much less intimidating.";
+    headline = "Turning skills into an offer gets easier when the path is clear.";
+    body = "You do not have to figure out every word alone. Once you understand what you can help with, the next step becomes less intimidating.";
   } else if (challengeId === 'stuck') {
     headline = "Momentum comes back when the next step is obvious.";
-    body = "This flow is built to reduce overthinking and move you from scattered learning into guided action.";
+    body = "Starting and stopping does not mean you are not capable. It usually means the path has been too scattered. This roadmap is here to make the next step easier to see.";
   }
 
   return { headline, body };

@@ -28,7 +28,12 @@ export default function ChallengeQuestion() {
   };
 
   return (
-    <QuestionCard question="What is keeping you from going live?">
+    <QuestionCard
+      eyebrow="Your Starting Point"
+      question="What has made it hardest to begin?"
+      subheadline="Most people do not need more pressure. They need the next step to feel clear enough to take."
+      encouragement="Your answer helps shape the encouragement you see next. You are still moving forward."
+    >
       {challengeOptions.map((option) => (
         <OptionCard
           key={option.id}

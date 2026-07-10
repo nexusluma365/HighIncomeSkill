@@ -28,12 +28,12 @@ export default function Future() {
   return (
     <form onSubmit={handleSubmit} className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
-        banner="quick question"
-        name="Who Am I Helping?"
-        description="I can see you are ready to make a change, and that is a major first step. But before I can truly point you in the right direction, I need to know who I am helping."
+        banner="personal path"
+        name="Who Am I Guiding?"
+        description="You have already taken the first step by deciding to look at a new direction. Before I show you the next part of the path, tell me who I am walking through this with."
         points={[
-          'This helps personalize the rest of your skill path.',
-          'Use the name you want us to call you inside this process.',
+          'This helps the next steps feel more personal and less generic.',
+          'Use the name you want to see as you move through this process.',
         ]}
       >
         <label className="mx-auto block w-full max-w-[560px] text-left">
@@ -50,7 +50,7 @@ export default function Future() {
       </LeadStepCard>
 
       <Button type="submit" sticky disabled={!visitorName.trim()}>
-        Continue
+        Continue My Path
       </Button>
     </form>
   );

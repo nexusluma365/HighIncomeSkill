@@ -142,9 +142,9 @@ Run codegen after changing the OpenAPI spec.
 
 `@workspace/db` is prepared for Drizzle/PostgreSQL, but there are no real tables exported yet. The schema index at `lib/db/src/schema/index.ts` is still a scaffold. Database commands require a valid `DATABASE_URL`.
 
-## Netlify Launch Setup For `ai-business-builder.html`
+## Netlify Launch Setup For `@workspace/skill-funnel`
 
-The standalone `ai-business-builder.html` page is ready to host on Netlify. Netlify serves `/` through `ai-business-builder.html`, and the checkout uses Netlify Functions for Stripe payment creation, purchase confirmation, Cloudflare R2 delivery, and Google Sheets logging.
+The React/Vite funnel in `artifacts/skill-funnel` is ready to host on Netlify. Netlify builds the app from that workspace, and the checkout uses Netlify Functions for Stripe payment creation, purchase confirmation, Cloudflare R2 delivery, and Google Sheets logging.
 
 Add these environment variables in Netlify:
 

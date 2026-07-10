@@ -10,8 +10,8 @@ export default function FAQ() {
     <div className="flex flex-col pb-6 pt-8">
       <div className="border border-[#d7e6f4] bg-white shadow-[0_18px_44px_rgba(6,19,34,0.18)] p-6 sm:p-8">
         <SectionTitle
-          headline="Questions before you go live?"
-          subheadline="Here is the short version so you can decide with confidence."
+          headline="Questions Before You Begin?"
+          subheadline="Here are the simple answers most people need before they take the first step."
         />
       
         <div className="flex flex-col gap-3 mt-8 mb-10">
@@ -29,7 +29,7 @@ export default function FAQ() {
       </div>
       
       <Button href="/offer" sticky>
-        I'm Ready — Show Me The Offer
+        YES, I'M READY TO START
       </Button>
     </div>
   );

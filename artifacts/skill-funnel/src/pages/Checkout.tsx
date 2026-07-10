@@ -10,8 +10,8 @@ export default function Checkout() {
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
         banner="final step"
-        name="Review Your Digital Access"
-        description="This is where your answers become a cleaner path forward. Review your details, then unlock the digital bundle and download your selected resources after payment."
+        name="Every New Opportunity Begins With One Decision"
+        description="Review your details, then take the step that turns this from something you are thinking about into something you can start using today. Your digital download appears after payment is confirmed."
       >
         <div className="mx-auto grid w-full max-w-[560px] gap-3">
           <div className="flex items-center gap-3 rounded-[8px] border border-[#d7e6f4] bg-[#f8fbff] p-4">
@@ -39,7 +39,7 @@ export default function Checkout() {
       </LeadStepCard>
 
       <Button href="/upsell" sticky>
-        Get Instant Access
+        Yes, I Am Ready To Start Today
       </Button>
     </div>
   );

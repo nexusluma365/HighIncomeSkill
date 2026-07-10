@@ -46,7 +46,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const screen = shouldUseScreenBoundary ? <ErrorBoundary key={location}>{children}</ErrorBoundary> : children;
 
   return (
-    <div className="min-h-[100dvh] w-full bg-[#061322] text-foreground flex flex-col items-center overflow-x-hidden font-sans">
+    <div className="min-h-[100dvh] w-full bg-black text-foreground flex flex-col items-center overflow-x-hidden font-sans">
       {showProgressBar && (
         <div className="w-full fixed top-0 left-0 z-50">
           <ProgressBar progress={progress} />

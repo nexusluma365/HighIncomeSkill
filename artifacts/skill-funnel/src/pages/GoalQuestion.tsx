@@ -28,7 +28,12 @@ export default function GoalQuestion() {
   };
 
   return (
-    <QuestionCard question="What do you want this challenge to unlock?">
+    <QuestionCard
+      eyebrow="Your Future"
+      question="What kind of change are you hoping this creates?"
+      subheadline="There is no wrong answer here. This just helps us point the roadmap toward the future you want most."
+      encouragement="Choose the answer that feels closest. The next step will help us understand what has been getting in the way."
+    >
       {goalOptions.map((option) => (
         <OptionCard
           key={option.id}

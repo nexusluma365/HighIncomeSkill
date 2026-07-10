@@ -124,7 +124,7 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    background: #061322;
+    background: #000;
     min-height: 100dvh;
   }
 
@@ -141,7 +141,7 @@
   overflow: hidden;
   pointer-events: none;
   contain: strict;
-  background: #061322;
+  background: #000;
 }
 
 #stars,
