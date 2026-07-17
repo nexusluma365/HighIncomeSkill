@@ -30,9 +30,9 @@ export default function ChallengeQuestion() {
   return (
     <QuestionCard
       eyebrow="Your Starting Point"
-      question="What has made it hardest to begin?"
-      subheadline="Most people do not need more pressure. They need the next step to feel clear enough to take."
-      encouragement="Choose the one that feels closest. Clarity starts by naming what has been slowing you down."
+      question="WHAT FEELS LIKE THE BIGGEST THING HOLDING YOU BACK?"
+      subheadline="Choose the one that feels closest. Each answer helps map out a gameplan for you."
+      encouragement="Once you name the obstacle, the roadmap can show you what to do next."
     >
       {challengeOptions.map((option) => (
         <OptionCard

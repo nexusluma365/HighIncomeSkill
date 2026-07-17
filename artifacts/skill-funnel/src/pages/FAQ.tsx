@@ -29,7 +29,7 @@ export default function FAQ() {
       </div>
       
       <Button href="/offer" sticky>
-        YES, I'M READY TO START
+        SHOW ME THE OFFER
       </Button>
     </div>
   );

@@ -7,19 +7,16 @@ import ErrorBoundary from './ErrorBoundary';
 
 const routes = [
   '/',
-  '/pain',
-  '/future',
-  '/lesson',
-  '/authority',
-  '/system',
-  '/value',
-  '/offer',
-  '/upsell',
-  '/thankyou',
+  '/ebook',
   '/goal',
   '/challenge',
   '/personalized',
-  '/faq'
+  '/pain',
+  '/future',
+  '/lesson',
+  '/training',
+  '/upsell',
+  '/thankyou',
 ];
 
 interface AppLayoutProps {
@@ -31,10 +28,11 @@ export default function AppLayout({ children }: AppLayoutProps) {
   useFunnelPageTracking();
   
   const stepIndex = routes.indexOf(location);
-  const showProgressBar = stepIndex > 0 && stepIndex <= 9;
-  const progress = stepIndex > 0 ? stepIndex / 9 : 0;
+  const finalProgressStep = routes.indexOf('/training');
+  const showProgressBar = stepIndex > 0 && stepIndex <= finalProgressStep;
+  const progress = stepIndex > 0 ? stepIndex / finalProgressStep : 0;
   const isHome = location === '/';
-  const isWideExperience = location === '/upsell' || location === '/thankyou';
+  const isWideExperience = location === '/upsell' || location === '/thankyou' || location === '/training';
   const shouldUseScreenBoundary = location !== '/upsell';
   const screen = shouldUseScreenBoundary ? <ErrorBoundary key={location}>{children}</ErrorBoundary> : children;
 

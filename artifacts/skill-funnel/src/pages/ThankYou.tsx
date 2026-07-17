@@ -110,10 +110,10 @@ export default function ThankYou() {
           </div>
           <p className="text-sm font-black uppercase tracking-[0.16em] text-[#0f7ee8]">Payment confirmed</p>
           <h1 className="mt-3 text-5xl font-black uppercase leading-none tracking-[-0.04em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-7xl">
-            Thank You For Your Purchase
+            WELCOME. YOU JUST MADE YOUR NEXT MOVE.
           </h1>
           <p className="mx-auto mt-5 max-w-[620px] text-lg font-semibold leading-relaxed text-[#425d78]">
-            Your selected digital product download is ready. Keep a copy on your computer for your records.
+            Your access is ready. Check your email for your receipt and login details.
           </p>
         </div>
 
@@ -133,7 +133,7 @@ export default function ThankYou() {
                   </span>
                   <span className="min-w-0">
                     <span className="block text-2xl font-black uppercase leading-[1.05] tracking-[0.01em] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-3xl">
-                      {activeDownloadKey === item.productKey ? 'Preparing Download' : 'Start Download'}
+                      {activeDownloadKey === item.productKey ? 'Preparing Access' : 'ACCESS MY WORK FROM ANYWHERE ROADMAP'}
                     </span>
                     <span className="mt-1 block text-sm font-bold leading-snug text-[#d7ecff] sm:text-base">{item.productName}</span>
                     <span className="mt-1 block break-words text-xs font-semibold leading-snug text-[#c7e6ff] sm:text-sm">{item.fileName}</span>

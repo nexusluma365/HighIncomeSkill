@@ -1,15 +1,13 @@
 export const goalOptions = [
-  { id: 'home', text: 'I want more freedom over where and how I work' },
-  { id: 'income', text: 'I want to create another opportunity for myself' },
-  { id: 'ai', text: 'I want to stop feeling behind with modern tools' },
-  { id: 'websites', text: 'I want to build something useful I can show' },
-  { id: 'business', text: 'I want a clear path to begin from where I am' }
+  { id: 'money', text: 'MORE MONEY\nI want another way to create value and earn.' },
+  { id: 'freedom', text: 'MORE FREEDOM\nI want a skill I can use from anywhere.' },
+  { id: 'relationships', text: 'BETTER RELATIONSHIPS\nI want to connect with people who open doors.' },
+  { id: 'direction', text: 'A CLEAR DIRECTION\nI want a roadmap that shows me where to start.' }
 ];
 
 export const challengeOptions = [
-  { id: 'start', text: 'I do not know where to start yet' },
-  { id: 'skills', text: 'I do not feel confident in my skills yet' },
-  { id: 'income', text: 'I need a clearer path to a real opportunity' },
-  { id: 'clients', text: 'I do not know how to turn skills into an offer' },
-  { id: 'stuck', text: 'I start, stop, and lose momentum' }
+  { id: 'skill', text: 'I DO NOT KNOW WHAT USEFUL SKILL TO START WITH' },
+  { id: 'people', text: 'I DO NOT KNOW HOW TO MEET THE RIGHT PEOPLE' },
+  { id: 'problem', text: 'I DO NOT KNOW HOW TO FIND AN EXPENSIVE PROBLEM' },
+  { id: 'plan', text: 'I HAVE TOO MUCH INFORMATION AND NO CLEAR ROADMAP' }
 ];

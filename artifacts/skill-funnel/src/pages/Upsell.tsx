@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'wouter';
 import { Check, LoaderCircle, LockKeyhole, X } from 'lucide-react';
-import productImage from '@/assets/media/product-image.png';
+import productImage from '@/assets/media/digital-bundle-combined.png';
 import { useFunnel } from '@/hooks/useFunnel';
 import { buildFunnelTrackingPayload, getFunnelSessionId, logFunnelEvent } from '@/utils/funnelTracking';
 

@@ -27,19 +27,20 @@ export default function SystemReveal() {
   return (
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
-        banner="client path"
-        name="Want To Learn How Businesses Get Found Online?"
-        description="Every business wants more customers. Include this path if you want to understand how websites, search visibility, and simple systems help people find a business and take the next step."
+        banner="your next step"
+        name="NOW TURN THE IDEA INTO SOMETHING USEFUL"
+        description="You have the relationship foundation. Now the roadmap shows what to build when someone has a problem: choose a useful skill, create proof, shape the solution, and begin helping real people."
         points={[
-          'Build websites people actually use.',
-          'Understand how customers find businesses online.',
-          'Learn skills that connect to real businesses.',
+          'Choose the useful skill that matches the problem.',
+          'Create proof that shows you can help.',
+          'Build the offer around the outcome they want.',
+          'Start becoming valuable through real solutions.',
         ]}
         footer={
           <div className="grid gap-3 sm:grid-cols-2">
-            <Button onClick={() => choose(true)}>Yes, Include This Path</Button>
+            <Button onClick={() => choose(true)}>SHOW ME WHAT IS INSIDE</Button>
             <Button onClick={() => choose(false)} variant="secondary">
-              Keep My Core Roadmap
+              CONTINUE
             </Button>
           </div>
         }

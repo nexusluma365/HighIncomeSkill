@@ -1,34 +1,30 @@
 export const faqs = [
   {
-    question: "Is this beginner friendly?",
-    answer: "Yes. This was built for beginners who want a clear place to start and a simple roadmap to follow."
+    question: "Is this for beginners?",
+    answer: "Yes. The roadmap starts with simple steps."
+  },
+  {
+    question: "Do I need a college degree?",
+    answer: "No. The focus is on useful skills and real problems."
   },
   {
     question: "Do I need experience?",
-    answer: "No. You only need a willingness to learn and follow the roadmap one step at a time."
+    answer: "No. You will learn how to begin and build proof."
   },
   {
-    question: "What equipment do I need?",
-    answer: "A computer, internet access, and time to work through the resources are enough to begin."
+    question: "What can I create?",
+    answer: "Websites, digital products, automations, offers and other useful solutions."
   },
   {
-    question: "What exactly will I learn?",
-    answer: "You will learn how AI, websites, SEO, automation, business foundations, and modern online tools fit together inside one roadmap."
+    question: "How does AI fit in?",
+    answer: "AI helps you research, create and work faster. It is a tool, not a guarantee."
   },
   {
-    question: "Can I learn at my own pace?",
-    answer: "Yes. You get digital access, so you can move through it on your own schedule."
+    question: "Will this guarantee that I make money?",
+    answer: "No. Results depend on your skill, effort, market and action."
   },
   {
-    question: "How long do I have access?",
-    answer: "You get lifetime access to the digital products included with your purchase."
-  },
-  {
-    question: "Is payment secure?",
-    answer: "Yes. Payments are processed securely through Stripe. Your card information is not stored by this site."
-  },
-  {
-    question: "What happens after purchase?",
-    answer: "After successful payment, your download button appears on the thank-you page so you can save the digital product directly to your computer."
+    question: "Can I work at my own pace?",
+    answer: "Yes."
   }
 ];

@@ -5,19 +5,18 @@ export default function Pain() {
   return (
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
-        banner="keep going"
-        name="This Is Where The Shift Starts"
-        description="The fact that you made it here matters. It means you are paying attention, you are open to something better, and you are ready for a clearer way to start building skills that can change what is possible."
+        banner="what changes next"
+        name="THE OLD WAY IS NOT THE ONLY WAY"
+        description="Most people try to change their life by working harder alone. But your answers point to something better: become valuable to the right people by solving a problem they already care about."
         points={[
-          'You do not need to have it all figured out before you begin.',
-          'You only need one clear next step and the willingness to take it.',
-          'A focused roadmap can turn scattered ideas into something you can actually follow.',
-          'Keep going and you will see the path, the pieces, and the offer that fits.',
+          'You do not need to chase everyone.',
+          'You need conversations with people who have real problems.',
+          'When you can help solve the problem, you become more valuable.',
         ]}
       />
 
       <Button href="/future" sticky>
-        I Am Ready For The Next Step
+        CONTINUE
       </Button>
     </div>
   );

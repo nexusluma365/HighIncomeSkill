@@ -5,19 +5,22 @@ export default function Offer() {
   return (
     <div className="flex min-h-full flex-col justify-between py-8">
       <LeadStepCard
-        banner="instant access"
-        name="Your Roadmap Is Ready"
-        description="Your choices now come together in one clear place to start. No guessing. No jumping between random videos. Just one roadmap you can unlock and follow at your own pace."
+        banner="THE WORK FROM ANYWHERE ROADMAP"
+        name="BUILD MORE WAYS TO EARN FROM ANYWHERE"
+        description="Learn how to find the right people, solve real problems and create digital solutions businesses already pay for. Better relationships help you find opportunity. Useful skills help you create value. AI helps you move faster. The roadmap shows you how to put it together."
         points={[
-          'Your roadmap is ready to unlock.',
-          'Everything is organized step by step.',
-          'Learn from anywhere with a laptop and a phone.',
-          'Build skills you can continue growing over time.',
+          'Beginner-friendly roadmap',
+          'Digital skills path',
+          'Offer-building guide',
+          'AI workflows',
+          'Digital product tools',
+          'Automation resources',
+          '30-day action plan',
         ]}
       />
 
       <Button href="/upsell" sticky>
-        Unlock My Roadmap
+        YES — I AM READY TO START
       </Button>
     </div>
   );

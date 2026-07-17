@@ -30,9 +30,9 @@ export default function GoalQuestion() {
   return (
     <QuestionCard
       eyebrow="Your Future"
-      question="What kind of change are you hoping this creates?"
-      subheadline="There is no wrong answer here. Pick the future that would make learning a new skill feel worth it."
-      encouragement="The next step will show what has been getting in the way, then the roadmap can meet you there."
+      question="WHAT WOULD CHANGE YOUR LIFE THE MOST RIGHT NOW?"
+      subheadline="Pick the answer that feels closest. The next steps will show how relationships, useful skills and real problems connect."
+      encouragement="This is not random. Your answer helps shape the roadmap toward becoming more valuable to the people you meet."
     >
       {goalOptions.map((option) => (
         <OptionCard

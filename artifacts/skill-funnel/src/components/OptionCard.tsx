@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface OptionCardProps {
@@ -10,18 +11,30 @@ interface OptionCardProps {
 export default function OptionCard({ text, selected, onClick }: OptionCardProps) {
   return (
     <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.985 }}
       onClick={onClick}
+      aria-pressed={selected}
       className={cn(
-        "w-full p-5 text-left rounded-[6px] border transition-all",
-        "flex items-center gap-4 text-base sm:text-lg font-bold leading-snug",
+        "group w-full rounded-[8px] border p-4 text-left transition-all duration-200 sm:p-5",
+        "flex items-center gap-4 whitespace-pre-line text-base font-bold leading-snug sm:text-lg",
+        "focus:outline-none focus:ring-4 focus:ring-[#0f7ee8]/20",
         selected 
-          ? "bg-[#eef7ff] border-[#0f7ee8] text-[#07192f] shadow-[0_14px_28px_rgba(15,126,232,0.14)]" 
-          : "bg-[#f8fbff] border-[#d7e6f4] text-[#425d78] hover:bg-[#eef7ff] hover:border-[#9cc8f2]"
+          ? "border-[#0f7ee8] bg-[#eaf6ff] text-[#07192f] shadow-[0_14px_28px_rgba(15,126,232,0.16)] ring-2 ring-[#0f7ee8]/15" 
+          : "border-[#d7e6f4] bg-white text-[#425d78] active:border-[#0f7ee8] active:bg-[#eaf6ff] md:hover:border-[#8fc7f8] md:hover:bg-[#f0f8ff] md:hover:text-[#07192f] md:hover:shadow-[0_12px_24px_rgba(15,126,232,0.1)]"
       )}
     >
-      {text}
+      <span
+        className={cn(
+          "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all",
+          selected
+            ? "border-[#0f7ee8] bg-[#0f7ee8] text-white"
+            : "border-[#b8d5ee] bg-[#f8fbff] text-transparent group-active:border-[#0f7ee8] group-active:bg-[#0f7ee8] md:group-hover:border-[#0f7ee8] md:group-hover:bg-[#0f7ee8] md:group-hover:text-white",
+        )}
+      >
+        <CheckCircle2 size={17} strokeWidth={3} />
+      </span>
+      <span>{text}</span>
     </motion.button>
   );
 }
