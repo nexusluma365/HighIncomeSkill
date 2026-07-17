@@ -46,7 +46,7 @@ function doPost(e) {
     const eventName = data.eventName || 'unknown_event';
     const payload = normalizePayload_(data);
     const sessionId = getSessionId_(payload);
-    const rowNumber = findOrCreateSessionRow_(sheet, sessionId);
+    const rowNumber = findOrCreateSessionRow_(sheet, sessionId, payload.email);
 
     updateSessionRow_(sheet, rowNumber, eventName, payload);
 
@@ -157,8 +157,9 @@ function getSessionId_(payload) {
     `session_${Date.now()}`;
 }
 
-function findOrCreateSessionRow_(sheet, sessionId) {
+function findOrCreateSessionRow_(sheet, sessionId, email) {
   const sessionColumn = headerIndex_('Session ID');
+  const emailColumn = headerIndex_('Email');
   const lastRow = sheet.getLastRow();
 
   if (lastRow > 1) {
@@ -166,6 +167,16 @@ function findOrCreateSessionRow_(sheet, sessionId) {
     for (let i = 0; i < values.length; i += 1) {
       if (String(values[i][0]) === String(sessionId)) {
         return i + 2;
+      }
+    }
+
+    const normalizedEmail = String(email || '').trim().toLowerCase();
+    if (normalizedEmail) {
+      const emailValues = sheet.getRange(2, emailColumn, lastRow - 1, 1).getValues();
+      for (let i = 0; i < emailValues.length; i += 1) {
+        if (String(emailValues[i][0] || '').trim().toLowerCase() === normalizedEmail) {
+          return i + 2;
+        }
       }
     }
   }

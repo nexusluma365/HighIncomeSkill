@@ -21,17 +21,27 @@ interface TrackingExtra {
 
 export function getFunnelSessionId() {
   const storageKey = 'nexus_luma_funnel_session_id';
+  const fallbackKey = '__nexusLumaFunnelSessionId';
+
   try {
-    const existing = sessionStorage.getItem(storageKey);
+    const existing =
+      localStorage.getItem(storageKey) ||
+      sessionStorage.getItem(storageKey);
     if (existing) return existing;
 
     const generated = crypto.randomUUID
       ? crypto.randomUUID()
       : `session_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    localStorage.setItem(storageKey, generated);
     sessionStorage.setItem(storageKey, generated);
     return generated;
   } catch {
-    return `session_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    const windowWithFallback = window as Window & { [fallbackKey]?: string };
+    if (windowWithFallback[fallbackKey]) return windowWithFallback[fallbackKey];
+
+    const generated = `session_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    windowWithFallback[fallbackKey] = generated;
+    return generated;
   }
 }
 
