@@ -24,7 +24,7 @@ export default function Personalized() {
           </div>
           <SectionTitle
             headline={path.headline}
-            subheadline="Your answer is not a dead end. It is the starting point for a better sequence."
+            subheadline={path.subheadline}
             centered={true}
           />
         </div>
