@@ -8,6 +8,7 @@ import AppLayout from '@/components/AppLayout';
 
 // Pages
 import RichRelationships from '@/pages/RichRelationships';
+import EbookCheckout from '@/pages/EbookCheckout';
 import Training from '@/pages/Training';
 import Hero from '@/pages/Hero';
 import HeroBackup from '@/pages/Hero.backup';
@@ -51,6 +52,7 @@ function Router() {
           <Route path="/" component={Hero} />
           <Route path="/backup" component={HeroBackup} />
           <Route path="/ebook" component={RichRelationships} />
+          <Route path="/ebook-checkout" component={EbookCheckout} />
           <Route path="/goal" component={GoalQuestion} />
           <Route path="/challenge" component={ChallengeQuestion} />
           <Route path="/personalized" component={Personalized} />

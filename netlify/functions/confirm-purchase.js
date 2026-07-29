@@ -4,6 +4,15 @@ const { signDownloadToken } = require('../shared/download-token');
 
 const downloadTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
 
+function getOrigin(event) {
+  const configured = process.env.URL || process.env.DEPLOY_PRIME_URL;
+  if (configured) return configured.replace(/\/$/, '');
+
+  const protocol = event.headers['x-forwarded-proto'] || 'https';
+  const host = event.headers.host || '';
+  return host ? `${protocol}://${host}` : '';
+}
+
 async function getPaymentIntent(paymentIntentId) {
   if (!process.env.STRIPE_SECRET_KEY) {
     throw new Error('Missing STRIPE_SECRET_KEY');
@@ -21,6 +30,61 @@ async function getPaymentIntent(paymentIntentId) {
   }
 
   return data;
+}
+
+async function sendPaidEbookEmail({ event, email, firstName, download }) {
+  if (!email) return false;
+  if (!process.env.RICH_RELATIONSHIPS_EMAIL_WEBHOOK_URL) {
+    throw new Error('Ebook email delivery is not configured yet.');
+  }
+
+  const origin = getOrigin(event);
+  const absoluteDownloadUrl = download.downloadUrl.startsWith('http')
+    ? download.downloadUrl
+    : `${origin}${download.downloadUrl}`;
+  const emailPayload = {
+    to: email,
+    subject: 'Your Rich Relationships Ebook Is Ready',
+    bodyText: [
+      firstName ? `Hi ${firstName},` : 'Hi,',
+      '',
+      'Your Rich Relationships ebook purchase is confirmed.',
+      '',
+      'DOWNLOAD RICH RELATIONSHIPS',
+      absoluteDownloadUrl,
+      '',
+      'You can also continue your journey here:',
+      `${origin}/goal`,
+    ].join('\n'),
+    buttons: [
+      {
+        label: 'DOWNLOAD RICH RELATIONSHIPS',
+        url: absoluteDownloadUrl,
+      },
+      {
+        label: 'CONTINUE YOUR JOURNEY',
+        url: `${origin}/goal`,
+      },
+    ],
+  };
+
+  const response = await fetch(process.env.RICH_RELATIONSHIPS_EMAIL_WEBHOOK_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(process.env.RICH_RELATIONSHIPS_EMAIL_WEBHOOK_SECRET
+        ? { Authorization: `Bearer ${process.env.RICH_RELATIONSHIPS_EMAIL_WEBHOOK_SECRET}` }
+        : {}),
+    },
+    body: JSON.stringify(emailPayload),
+  });
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || data.ok === false) {
+    throw new Error(data.error || data.message || 'Unable to send ebook email');
+  }
+
+  return true;
 }
 
 exports.handler = async (event) => {
@@ -99,12 +163,22 @@ exports.handler = async (event) => {
       fileName: downloadProduct.fileName,
       downloadUrl: `/.netlify/functions/download-product?token=${encodeURIComponent(downloadToken)}`,
     }];
+    const deliveryEmail = String(body.deliverTo || '').trim().toLowerCase();
+    const emailDelivered = deliveryEmail
+      ? await sendPaidEbookEmail({
+          event,
+          email: deliveryEmail,
+          firstName: intent.metadata?.customerName || '',
+          download: downloads[0],
+        })
+      : false;
 
     return jsonResponse(200, {
       downloadUrl: downloads[0]?.downloadUrl,
       fileName: downloads[0]?.fileName,
       productName: downloads[0]?.productName,
       downloads,
+      emailDelivered,
     });
   } catch (error) {
     console.error('confirm-purchase failed', error);

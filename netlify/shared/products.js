@@ -10,6 +10,17 @@ function normalizeR2FileKey(fileKey) {
 }
 
 const products = {
+  richRelationshipsEbook: {
+    key: 'richRelationshipsEbook',
+    name: 'Rich Relationships Ebook',
+    shortName: 'Rich Relationships',
+    amount: cents(27),
+    currency: 'usd',
+    value: '$27',
+    fileName: process.env.RICH_RELATIONSHIPS_FILE_NAME || 'Rich Relationships.pdf',
+    r2Bucket: process.env.RICH_RELATIONSHIPS_BUCKET || process.env.R2_BUCKET || defaultR2Bucket,
+    r2FileKey: normalizeR2FileKey(process.env.RICH_RELATIONSHIPS_FILE_KEY || `${defaultR2Prefix}/Rich Relationships.pdf`),
+  },
   workFromHomeBundle: {
     key: 'workFromHomeBundle',
     name: 'Work From Anywhere Bundle',
@@ -70,6 +81,10 @@ function calculateCheckoutAmount(productKeys) {
 
 function resolveDownloadProduct(productKeys) {
   const keySet = new Set(productKeys.filter(Boolean));
+  if (keySet.has('richRelationshipsEbook')) {
+    return products.richRelationshipsEbook;
+  }
+
   const hasWebsiteSeo = keySet.has('websiteSeo');
   const hasAiAutomation = keySet.has('aiAutomation');
   const selectedAddOnCount = [hasWebsiteSeo, hasAiAutomation].filter(Boolean).length;

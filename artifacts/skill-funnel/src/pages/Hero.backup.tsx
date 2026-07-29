@@ -402,7 +402,7 @@ export default function Hero() {
           <p className="font-black text-white">The goal is simple: build more ways to earn from anywhere.</p>
         </div>
         <div className="mx-auto mt-8 flex justify-center">
-          <CtaButton>GET THE FREE RICH RELATIONSHIPS EBOOK</CtaButton>
+          <CtaButton>GET THE RICH RELATIONSHIPS EBOOK</CtaButton>
         </div>
       </section>
 
@@ -459,7 +459,7 @@ export default function Hero() {
         </div>
 
         <div className="mx-auto mt-8 flex justify-center">
-          <CtaButton>GET THE FREE RICH RELATIONSHIPS EBOOK</CtaButton>
+          <CtaButton>GET THE RICH RELATIONSHIPS EBOOK</CtaButton>
         </div>
       </section>
 
@@ -485,7 +485,7 @@ export default function Hero() {
         </div>
 
         <div className="mx-auto mt-8 flex justify-center">
-          <CtaButton>GET THE FREE RICH RELATIONSHIPS EBOOK</CtaButton>
+          <CtaButton>GET THE RICH RELATIONSHIPS EBOOK</CtaButton>
         </div>
       </section>
 
@@ -506,7 +506,7 @@ export default function Hero() {
           <div>
             <p className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-[0.08em] text-[#5ab8ff] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
               <Star size={16} fill="currentColor" />
-              Free First Step
+              First Step
             </p>
             <h2 className="max-w-[620px] text-4xl font-black uppercase leading-[1.02] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-5xl">
               Start With Rich Relationships
@@ -516,7 +516,7 @@ export default function Hero() {
               <p>Start with people.</p>
               <p>Learn why relationships create trust.</p>
               <p>See how real problems become useful solutions.</p>
-              <p>Then continue into the questionnaire and free training.</p>
+              <p>Then continue into the questionnaire and training.</p>
             </div>
 
             <div className="mt-9">
@@ -621,7 +621,7 @@ export default function Hero() {
             </div>
 
             <div className="mt-6">
-              <CtaButton>START WITH THE FREE EBOOK</CtaButton>
+              <CtaButton>START WITH THE EBOOK</CtaButton>
             </div>
           </div>
         </div>
@@ -645,7 +645,7 @@ export default function Hero() {
           <p>I AM ready to begin today.</p>
         </div>
         <div className="mx-auto mt-8 flex justify-center">
-              <CtaButton>BEGIN THE FREE PATH</CtaButton>
+              <CtaButton>BEGIN THE PATH</CtaButton>
         </div>
       </section>
 
@@ -665,7 +665,7 @@ export default function Hero() {
           ))}
         </div>
         <div className="mx-auto mt-8 flex justify-center">
-          <CtaButton>GET THE FREE EBOOK</CtaButton>
+          <CtaButton>GET THE EBOOK</CtaButton>
         </div>
       </section>
 
@@ -766,7 +766,7 @@ export default function Hero() {
             <p>Every journey begins with someone deciding to take the first step.</p>
           </div>
           <div className="mx-auto mt-8 flex justify-center">
-            <CtaButton>CONTINUE WITH THE FREE EBOOK</CtaButton>
+            <CtaButton>CONTINUE WITH THE EBOOK</CtaButton>
           </div>
         </div>
       </section>

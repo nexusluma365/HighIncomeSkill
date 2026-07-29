@@ -2,7 +2,6 @@ import { FormEvent, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useFunnel } from '@/hooks/useFunnel';
 import { useToast } from '@/hooks/use-toast';
-import { submitRichRelationshipsLead } from '@/lib/leads';
 import { buildFunnelTrackingPayload, logFunnelEvent } from '@/utils/funnelTracking';
 
 export default function RichRelationships() {
@@ -46,45 +45,19 @@ export default function RichRelationships() {
       }),
     );
 
-    try {
-      await submitRichRelationshipsLead({
-        firstName: cleanFirstName,
-        email: cleanEmail,
-        phone: cleanPhone || undefined,
+    funnel.setVisitorName(cleanFirstName);
+    funnel.setVisitorEmail(cleanEmail);
+    logFunnelEvent(
+      'lead_form_success',
+      buildFunnelTrackingPayload({ ...funnel, visitorName: cleanFirstName, visitorEmail: cleanEmail }, {
+        page: '/ebook',
         source: 'rich-relationships',
-        createdAt: new Date().toISOString(),
-      });
-
-      funnel.setVisitorName(cleanFirstName);
-      funnel.setVisitorEmail(cleanEmail);
-      logFunnelEvent(
-        'lead_form_success',
-        buildFunnelTrackingPayload({ ...funnel, visitorName: cleanFirstName, visitorEmail: cleanEmail }, {
-          page: '/ebook',
-          source: 'rich-relationships',
-          status: 'success',
-        }),
-      );
-      navigate('/goal');
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unable to send your ebook right now.';
-      logFunnelEvent(
-        'lead_form_error',
-        buildFunnelTrackingPayload(funnel, {
-          page: '/ebook',
-          source: 'rich-relationships',
-          status: 'error',
-          metadata: { message },
-        }),
-      );
-      toast({
-        title: 'Ebook was not sent',
-        description: message,
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+        status: 'checkout_redirect',
+        metadata: { phone: cleanPhone },
+      }),
+    );
+    setIsSubmitting(false);
+    navigate('/ebook-checkout');
   }
 
   return (
@@ -95,10 +68,10 @@ export default function RichRelationships() {
       >
         <div className="text-center">
           <p className="mb-4 text-sm font-black uppercase tracking-[0.14em] text-[#0f7ee8] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
-            Free Ebook
+            Rich Relationships Ebook
           </p>
           <h1 className="text-4xl font-black uppercase leading-none text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-5xl">
-            GET THE FREE EBOOK
+            GET THE EBOOK
           </h1>
           <p className="mx-auto mt-4 max-w-[520px] text-base font-semibold leading-relaxed text-[#425d78]">
             Learn how better relationships can improve your life and create new opportunities.
@@ -161,7 +134,7 @@ export default function RichRelationships() {
         </button>
 
         <p className="mt-5 text-center text-sm font-semibold leading-relaxed text-[#5a7088]">
-          Your ebook and training link will be sent to your email. You can unsubscribe at any time.
+          Continue to secure checkout to complete your ebook purchase.
         </p>
       </form>
     </div>

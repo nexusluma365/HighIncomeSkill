@@ -20,8 +20,10 @@ interface StripeCardElement {
   destroy: () => void;
 }
 
+type StripeElementType = 'card' | 'cardNumber' | 'cardExpiry' | 'cardCvc';
+
 interface StripeElements {
-  create: (type: 'card', options?: Record<string, unknown>) => StripeCardElement;
+  create: (type: StripeElementType, options?: Record<string, unknown>) => StripeCardElement;
 }
 
 interface StripeClient {

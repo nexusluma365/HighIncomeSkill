@@ -31,7 +31,7 @@ function TrainingVideo() {
         <div>
           <PlayCircle className="mx-auto mb-4 h-14 w-14 text-[#0f7ee8]" strokeWidth={2.2} />
           <p className="text-xl font-black uppercase tracking-[0.08em] text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
-            UPLOAD YOUR FREE TRAINING VIDEO
+            UPLOAD YOUR TRAINING VIDEO
           </p>
         </div>
       </div>
@@ -106,13 +106,13 @@ export default function Training() {
       <div className="mx-auto w-full max-w-[1100px] border border-[#143a5f] bg-[#061322] p-5 shadow-[0_22px_60px_rgba(0,0,0,0.32)] sm:p-8 lg:p-10">
         <header className="mb-7 flex items-center justify-center">
           <div className="rounded-[3px] border border-[#2f74ad]/60 bg-white/5 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
-            Free Training
+            Training
           </div>
         </header>
 
         <div className="mx-auto max-w-[720px] text-center">
           <p className="text-sm font-black uppercase tracking-[0.14em] text-[#5ab8ff] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
-            YOUR FREE TRAINING IS READY
+            YOUR TRAINING IS READY
           </p>
           <h1 className="mt-4 text-4xl font-black uppercase leading-[1.04] tracking-[0.02em] text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-5xl">
             BECOME THE PERSON{' '}

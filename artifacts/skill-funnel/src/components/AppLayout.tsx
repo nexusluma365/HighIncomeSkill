@@ -8,6 +8,7 @@ import ErrorBoundary from './ErrorBoundary';
 const routes = [
   '/',
   '/ebook',
+  '/ebook-checkout',
   '/goal',
   '/challenge',
   '/personalized',
@@ -32,8 +33,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const showProgressBar = stepIndex > 0 && stepIndex <= finalProgressStep;
   const progress = stepIndex > 0 ? stepIndex / finalProgressStep : 0;
   const isHome = location === '/';
-  const isWideExperience = location === '/upsell' || location === '/thankyou' || location === '/training';
-  const shouldUseScreenBoundary = location !== '/upsell';
+  const isWideExperience = location === '/upsell' || location === '/ebook-checkout' || location === '/thankyou' || location === '/training';
+  const shouldUseScreenBoundary = location !== '/upsell' && location !== '/ebook-checkout';
   const screen = shouldUseScreenBoundary ? <ErrorBoundary key={location}>{children}</ErrorBoundary> : children;
 
   return (

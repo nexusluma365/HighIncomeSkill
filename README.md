@@ -224,7 +224,7 @@ If you use the direct Google Sheets API instead of Apps Script:
 
 If you are using the Google Apps Script webhook instead of service account auth, replace your Apps Script code with `google-apps-script/session-row-logger.gs` and deploy a new web app version. The script keeps each visitor session on one row and updates separate columns for each step. If the `Q1` tab still has the old vertical event-log headers, the script archives those rows to `Q1 Legacy Event Rows` and resets `Q1` to the new horizontal session layout.
 
-With the Apps Script webhook, each visitor session is kept on one row and each step updates its own column. With direct service account Sheets logging, rows are appended for lead capture, free-offer continuation, checkout opens, Stripe PaymentIntent creation, confirmed purchases, download preparation, and download clicks.
+With the Apps Script webhook, each visitor session is kept on one row and each step updates its own column. With direct service account Sheets logging, rows are appended for lead capture, offer continuation, checkout opens, Stripe PaymentIntent creation, confirmed purchases, download preparation, and download clicks.
 
 ## Current Limitations
 
