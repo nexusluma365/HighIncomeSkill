@@ -235,7 +235,7 @@ export default function EbookCheckout() {
   // by the time this runs.
   function goToNextStep() {
     setStage('redirecting');
-    navigate('/training');
+    navigate('/thankyou');
   }
 
   async function submitPayment() {
