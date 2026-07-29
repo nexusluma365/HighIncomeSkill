@@ -1,69 +1,28 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Download, LockKeyhole, ShieldCheck, Sparkles } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowRight, MailCheck, ShieldCheck, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useFunnel } from '@/hooks/useFunnel';
-
-interface DownloadItem {
-  productKey: string;
-  productName: string;
-  fileName: string;
-  downloadUrl: string;
-}
-
-function readStoredDownloads() {
-  try {
-    if (sessionStorage.getItem('payment_confirmed') !== 'true') {
-      return [];
-    }
-
-    const rawDownloads = sessionStorage.getItem('purchase_downloads');
-    if (rawDownloads) {
-      const parsed = JSON.parse(rawDownloads);
-      if (Array.isArray(parsed)) {
-        return (parsed as DownloadItem[]).filter((item) => item.downloadUrl && item.downloadUrl !== '#');
-      }
-    }
-  } catch {
-    return [];
-  }
-
-  return [];
-}
+import { useLocation } from 'wouter';
 
 export default function ThankYou() {
-  const { purchaseDownloads } = useFunnel();
-  const [activeDownloadKey, setActiveDownloadKey] = useState('');
+  const [, navigate] = useLocation();
   const [confettiPieces, setConfettiPieces] = useState<
     { id: number; left: string; delay: number; duration: number; color: string }[]
   >([]);
 
   useEffect(() => {
-    const pieces = Array.from({ length: 50 }).map((_, i) => ({
+    const pieces = Array.from({ length: 42 }).map((_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       delay: Math.random() * 2,
-      duration: 1.5 + Math.random() * 2,
+      duration: 1.5 + Math.random() * 2.4,
       color: ['#0f7ee8', '#2458d8', '#ffffff', '#6bd1ff'][Math.floor(Math.random() * 4)],
     }));
     setConfettiPieces(pieces);
   }, []);
 
-  const downloads = useMemo(() => {
-    const confirmedDownloads = purchaseDownloads.filter((item) => item.downloadUrl && item.downloadUrl !== '#');
-    if (confirmedDownloads.length > 0) return confirmedDownloads;
-    const stored = readStoredDownloads();
-    if (stored.length > 0) return stored;
-    return [];
-  }, [purchaseDownloads]);
-  const hasConfirmedDownloads = downloads.length > 0;
-  const beginDownload = (item: DownloadItem) => {
-    setActiveDownloadKey(item.productKey);
-    window.location.assign(item.downloadUrl);
-  };
-
   return (
-    <div className="relative flex min-h-screen flex-col pb-12 pt-8">
-      {hasConfirmedDownloads && confettiPieces.map((piece) => (
+    <div className="relative flex min-h-screen flex-col justify-center overflow-hidden px-4 py-8 sm:px-6">
+      {confettiPieces.map((piece) => (
         <motion.div
           key={piece.id}
           initial={{ y: -50, opacity: 1, rotate: 0 }}
@@ -83,76 +42,57 @@ export default function ThankYou() {
         />
       ))}
 
-      {!hasConfirmedDownloads ? (
-        <section className="relative z-10 mx-auto flex w-full max-w-[720px] flex-col items-center rounded-[8px] border border-[#d7e6f4] bg-white px-6 py-10 text-center shadow-[0_22px_60px_rgba(6,19,34,0.28)] sm:px-10 sm:py-12">
-          <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-full bg-[#07192f] text-white">
-            <LockKeyhole size={32} />
+      <section className="relative z-10 mx-auto w-full max-w-[980px] overflow-hidden rounded-[8px] border border-[#d7e6f4] bg-white text-center shadow-[0_22px_60px_rgba(6,19,34,0.28)]">
+        <div className="bg-[#eef7ff] px-5 py-8 sm:px-10 sm:py-12">
+          <div className="mx-auto mb-5 grid h-20 w-20 place-items-center rounded-full bg-[#0f7ee8] text-white shadow-[0_16px_34px_rgba(15,126,232,0.3)]">
+            <ShieldCheck size={42} />
           </div>
-          <p className="text-sm font-black uppercase tracking-[0.16em] text-[#0f7ee8]">Purchase Required</p>
-          <h1 className="mt-3 text-4xl font-black uppercase leading-tight tracking-[-0.03em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-6xl">
-            No Confirmed Payment Found
-          </h1>
-          <p className="mx-auto mt-5 max-w-[520px] text-base font-semibold leading-relaxed text-[#425d78]">
-            Downloads are only available after a successful checkout. Return to the offer page and complete payment to unlock your file.
+          <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0f7ee8]">
+            Payment Confirmed
           </p>
-          <a
-            href="/offer"
-            className="mt-7 inline-flex min-h-[56px] items-center justify-center rounded-[4px] bg-[#0f7ee8] px-8 text-base font-black uppercase tracking-[0.06em] text-white shadow-[0_8px_24px_rgba(15,126,232,0.35)] transition hover:bg-[#1594ff] [font-family:Oswald,Impact,Arial_Narrow,sans-serif]"
-          >
-            Return To Offer
-          </a>
-        </section>
-      ) : (
-      <section className="relative z-10 mx-auto w-full max-w-[900px] overflow-hidden rounded-[8px] border border-[#d7e6f4] bg-white shadow-[0_22px_60px_rgba(6,19,34,0.28)]">
-        <div className="bg-[#eef7ff] px-6 py-8 text-center sm:px-10 sm:py-12">
-          <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-full bg-[#0f7ee8] text-white shadow-[0_16px_34px_rgba(15,126,232,0.3)]">
-            <ShieldCheck size={34} />
+          <h1 className="mx-auto mt-4 max-w-[820px] text-4xl font-black uppercase leading-[0.98] tracking-[-0.03em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-6xl">
+            Welcome! Your Rich Relationships Ebook Is On Its Way.
+          </h1>
+          <div className="mx-auto mt-6 max-w-[620px] space-y-3 text-base font-semibold leading-relaxed text-[#425d78] sm:text-lg">
+            <p>We&apos;ve sent your ebook to your email.</p>
+            <p>Can&apos;t find it? Check your Spam or Promotions folder.</p>
           </div>
-          <p className="text-sm font-black uppercase tracking-[0.16em] text-[#0f7ee8]">Payment confirmed</p>
-          <h1 className="mt-3 text-5xl font-black uppercase leading-none tracking-[-0.04em] text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-7xl">
-            WELCOME. YOU JUST MADE YOUR NEXT MOVE.
-          </h1>
-          <p className="mx-auto mt-5 max-w-[620px] text-lg font-semibold leading-relaxed text-[#425d78]">
-            Your access is ready. Check your email for your receipt and login details.
-          </p>
         </div>
 
-        <div className="p-6 sm:p-10">
-          <div className="grid gap-4">
-            {downloads.map((item) => (
-              <button
-                key={item.productKey}
-                type="button"
-                onClick={() => beginDownload(item)}
-                className="group flex min-h-[96px] w-full cursor-pointer items-center gap-4 rounded-[8px] bg-[#0f7ee8] px-4 py-5 text-left text-white shadow-[0_16px_34px_rgba(15,126,232,0.26)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] active:translate-y-0 sm:justify-between sm:gap-5 sm:px-6"
-                aria-label={`Download ${item.productName}`}
-              >
-                <span className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[8px] bg-white/16 sm:h-14 sm:w-14">
-                    <Download size={28} />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-2xl font-black uppercase leading-[1.05] tracking-[0.01em] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-3xl">
-                      {activeDownloadKey === item.productKey ? 'Preparing Access' : 'ACCESS MY WORK FROM ANYWHERE ROADMAP'}
-                    </span>
-                    <span className="mt-1 block text-sm font-bold leading-snug text-[#d7ecff] sm:text-base">{item.productName}</span>
-                    <span className="mt-1 block break-words text-xs font-semibold leading-snug text-[#c7e6ff] sm:text-sm">{item.fileName}</span>
-                  </span>
-                </span>
-                <span className="hidden text-4xl font-black transition group-hover:translate-x-1 sm:block">→</span>
-              </button>
-            ))}
+        <div className="px-5 py-8 sm:px-10 sm:py-10">
+          <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#07192f] text-white">
+            <MailCheck size={34} />
           </div>
+          <p className="mt-6 text-sm font-black uppercase tracking-[0.16em] text-[#0f7ee8]">
+            One Last Step...
+          </p>
+          <h2 className="mx-auto mt-3 max-w-[760px] text-3xl font-black uppercase leading-tight text-[#07192f] [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-5xl">
+            Now That You Have The Rich Relationship Ebook
+          </h2>
+          <p className="mx-auto mt-5 max-w-[700px] text-xl font-black leading-relaxed text-[#07192f]">
+            Learn How To Turn Your New Relationships Into Paying Customers.
+          </p>
+          <p className="mx-auto mt-4 max-w-[720px] text-base font-semibold leading-relaxed text-[#425d78] sm:text-lg">
+            Turn conversations into clients, relationships into opportunities, and opportunities into income.
+          </p>
 
-          <div className="mt-6 flex items-start gap-3 rounded-[8px] border border-[#d7e6f4] bg-[#f8fbff] p-5">
+          <button
+            type="button"
+            onClick={() => navigate('/training')}
+            className="group mt-8 inline-flex min-h-[72px] w-full max-w-[760px] items-center justify-center gap-3 rounded-[8px] bg-[#0f7ee8] px-5 py-4 text-center text-xl font-black uppercase leading-tight tracking-[0.02em] text-white shadow-[0_16px_34px_rgba(15,126,232,0.26)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] active:translate-y-0 [font-family:Oswald,Impact,Arial_Narrow,sans-serif] sm:text-3xl"
+          >
+            <span>YES! SHOW ME HOW TO TURN THESE RELATIONSHIPS INTO Paying Customers</span>
+            <ArrowRight className="hidden shrink-0 transition group-hover:translate-x-1 sm:block" size={34} />
+          </button>
+
+          <div className="mx-auto mt-6 flex max-w-[760px] items-start gap-3 rounded-[8px] border border-[#d7e6f4] bg-[#f8fbff] p-5 text-left">
             <Sparkles className="mt-0.5 shrink-0 text-[#0f7ee8]" size={24} />
             <p className="text-sm font-semibold leading-relaxed text-[#425d78]">
-              Click the download button above, save the zip file to your computer, then open it and start with the first file inside. Your roadmap is ready when you are.
+              Watch the next video to see how relationships can become real conversations, clear offers, and paying customers.
             </p>
           </div>
         </div>
       </section>
-      )}
     </div>
   );
 }
