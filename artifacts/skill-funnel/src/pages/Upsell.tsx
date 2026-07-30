@@ -6,7 +6,7 @@ import {
   LoaderCircle,
   LockKeyhole,
 } from 'lucide-react';
-import productImage from '@/assets/media/digital-bundle-combined.png';
+import productImage from '@/assets/media/digital-bundle-combined-transparent.png';
 import { useFunnel } from '@/hooks/useFunnel';
 import {
   buildFunnelTrackingPayload,
@@ -146,11 +146,6 @@ export default function Upsell() {
   return (
     <main className="min-h-screen bg-white text-[#082b36]">
       <section className="relative overflow-hidden bg-[#062b35] px-5 py-12 text-white sm:px-8 sm:py-16 lg:py-20">
-        <div
-          aria-hidden="true"
-          className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[#e8d46c]/10 blur-3xl"
-        />
-
         <div className="relative mx-auto grid max-w-[1120px] items-center gap-10 lg:grid-cols-[1.04fr_0.96fr]">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#e8d46c]/30 bg-[#e8d46c]/10 px-4 py-2">
@@ -181,7 +176,7 @@ export default function Upsell() {
             <img
               src={productImage}
               alt="Work From Anywhere Bundle with digital tools, templates, prompts, and training"
-              className="h-auto w-full object-contain drop-shadow-[0_24px_35px_rgba(0,0,0,0.3)]"
+              className="h-auto w-full bg-transparent object-contain [filter:drop-shadow(0_34px_26px_rgba(0,0,0,0.32))_drop-shadow(0_10px_16px_rgba(15,126,232,0.18))]"
             />
           </div>
         </div>
@@ -269,7 +264,7 @@ export default function Upsell() {
               onClick={acceptOffer}
               disabled={isProcessing}
               aria-describedby="upsell-charge-disclosure"
-              className="group flex min-h-[76px] w-full items-center justify-center rounded-xl bg-[#ff3145] px-5 py-5 text-center text-base font-black uppercase leading-tight text-white shadow-[0_18px_40px_rgba(255,49,69,0.28)] transition hover:-translate-y-0.5 hover:bg-[#ff4052] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 sm:text-lg"
+              className="group flex min-h-[76px] w-full items-center justify-center rounded-xl bg-[#0f7ee8] px-5 py-5 text-center text-base font-black uppercase leading-tight text-white shadow-[0_18px_40px_rgba(15,126,232,0.28)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 sm:text-lg"
             >
               {isProcessing ? (
                 <span className="flex items-center justify-center gap-3">
