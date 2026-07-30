@@ -103,7 +103,7 @@ export default function Training() {
 
   return (
     <section className="flex min-h-full flex-col justify-center py-4 sm:py-8">
-      <div className="mx-auto w-full max-w-[1100px] border border-[#143a5f] bg-[#061322] p-5 shadow-[0_22px_60px_rgba(0,0,0,0.32)] sm:p-8 lg:p-10">
+      <div className="mx-auto w-full max-w-[1100px] bg-black p-5 sm:p-8 lg:p-10">
         <header className="mb-7 flex items-center justify-center">
           <div className="rounded-[3px] border border-[#2f74ad]/60 bg-white/5 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white [font-family:Oswald,Impact,Arial_Narrow,sans-serif]">
             Training
