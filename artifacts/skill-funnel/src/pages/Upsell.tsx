@@ -192,7 +192,7 @@ export default function Upsell() {
       <section className="px-5 py-12 sm:px-8 lg:py-16">
         <div className="mx-auto max-w-[980px]">
           <div className="text-center">
-            <p className="text-sm font-black uppercase tracking-[0.12em] text-[#ff3145]">
+            <p className="text-sm font-black uppercase tracking-[0.12em] text-[#22c55e]">
               Complete the next step
             </p>
 
@@ -214,7 +214,7 @@ export default function Upsell() {
                 key={item}
                 className="flex min-h-[88px] items-center gap-4 rounded-xl border border-[#dcecee] bg-[#f7fbfc] px-5 py-5"
               >
-                <CheckCircle2 className="h-6 w-6 shrink-0 text-[#c4a92f]" />
+                <CheckCircle2 className="h-6 w-6 shrink-0 text-[#22c55e]" />
 
                 <p className="text-sm font-black leading-snug text-[#123b46] sm:text-base">
                   {item}
