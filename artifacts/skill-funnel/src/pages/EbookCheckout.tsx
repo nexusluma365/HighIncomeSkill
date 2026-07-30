@@ -119,7 +119,7 @@ function isValidEmail(value: string) {
 type PaymentStage = 'idle' | 'paying' | 'delivering' | 'redirecting';
 
 const STAGE_LABEL: Record<PaymentStage, string> = {
-  idle: 'Send me This Ebook',
+  idle: `Send me This Ebook - ${productPrice}`,
   paying: 'Confirming Payment...',
   delivering: 'Emailing Your Ebook...',
   redirecting: 'Redirecting...',
@@ -409,9 +409,19 @@ export default function EbookCheckout() {
               You're one step away from building{' '}
               <span className="text-[#f0a93a]">stronger relationships</span> and a better future.
             </p>
+            <div className="mt-5 inline-flex items-center gap-3 rounded-[8px] border border-[#f0a93a]/30 bg-[#2a1d0f]/80 px-4 py-3 text-left">
+              <span className="text-xs font-black uppercase tracking-[0.12em] text-[#f0a93a]">
+                Today only
+              </span>
+              <span className="text-2xl font-black text-white">{productPrice}</span>
+              <span className="text-sm font-semibold text-white/60">Rich Relationships Ebook</span>
+            </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <span className="mr-1 text-sm font-medium text-white/70">Secure payment</span>
+              <span className="mr-1 rounded-full bg-white/10 px-3 py-1 text-sm font-black text-white">
+                Total due today: {productPrice}
+              </span>
               {CARD_BRANDS.map((brand) => (
                 <span
                   key={brand.name}
@@ -473,6 +483,11 @@ export default function EbookCheckout() {
                   {errorMessage}
                 </div>
               )}
+
+              <div className="flex items-center justify-between rounded-[8px] border border-white/12 bg-[#151515] px-4 py-3 text-sm font-semibold text-white/70">
+                <span>Rich Relationships Ebook</span>
+                <span className="text-base font-black text-white">{productPrice}</span>
+              </div>
 
               <button
                 type="button"
