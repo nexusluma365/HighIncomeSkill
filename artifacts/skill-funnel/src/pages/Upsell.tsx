@@ -189,11 +189,11 @@ export default function Upsell() {
               type="button"
               onClick={acceptOffer}
               disabled={isProcessing}
-              className="mx-auto mt-7 flex min-h-[64px] w-full max-w-[520px] items-center justify-center rounded-xl bg-[#0f7ee8] px-5 py-4 text-center text-base font-black uppercase leading-tight text-white shadow-[0_18px_40px_rgba(15,126,232,0.28)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 sm:text-lg"
+              className="mx-auto mt-7 flex min-h-[64px] w-full max-w-[520px] animate-[hero-cta-pulse_2.8s_ease-in-out_infinite] items-center justify-center rounded-xl bg-[#0f7ee8] px-5 py-4 text-center text-base font-black uppercase leading-tight text-white shadow-[0_18px_40px_rgba(15,126,232,0.28)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 sm:text-lg"
             >
               {isProcessing ? 'Processing My Access...' : 'Click Here To Conitnue'}
             </button>
-            <p className="mx-auto mt-4 max-w-[560px] text-center text-[10px] font-medium leading-relaxed text-white/45 sm:text-[11px]">
+            <p className="mx-auto mt-4 max-w-[560px] text-center text-[9px] font-medium leading-relaxed text-white/28 sm:text-[10px]">
               By clicking the button above, you authorize us to automatically charge the payment method used for your original order an additional $97 for the Work From Anywhere Bundle. Your click confirms your agreement to this additional charge. You will receive immediate access after the payment is approved. All sales are final, except where a refund or cancellation right is required by applicable law.
             </p>
           </div>
