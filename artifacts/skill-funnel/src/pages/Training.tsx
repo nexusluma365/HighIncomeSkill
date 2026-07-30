@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { PlayCircle } from 'lucide-react';
 import Button from '@/components/Button';
@@ -24,6 +24,7 @@ function getTrainingVideo(url?: string): { type: VideoType; src: string } {
 
 function TrainingVideo() {
   const video = getTrainingVideo(import.meta.env.VITE_TRAINING_VIDEO_URL);
+  const funnel = useFunnel();
 
   if (video.type === 'missing') {
     return (
@@ -46,11 +47,14 @@ function TrainingVideo() {
         playsInline
         className="aspect-video w-full bg-black"
         onPlay={() => {
-          logFunnelEvent('training_video_play', {
-            page: '/training',
-            source: 'rich-relationships',
-            status: 'played',
-          });
+          logFunnelEvent(
+            'training_video_play',
+            buildFunnelTrackingPayload(funnel, {
+              page: '/training',
+              source: 'rich-relationships',
+              status: 'played',
+            }),
+          );
         }}
       />
     );
@@ -64,11 +68,14 @@ function TrainingVideo() {
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowFullScreen
       onLoad={() => {
-        logFunnelEvent('training_video_play', {
-          page: '/training',
-          source: 'rich-relationships',
-          status: 'loaded',
-        });
+        logFunnelEvent(
+          'training_video_play',
+          buildFunnelTrackingPayload(funnel, {
+            page: '/training',
+            source: 'rich-relationships',
+            status: 'loaded',
+          }),
+        );
       }}
     />
   );
@@ -77,8 +84,13 @@ function TrainingVideo() {
 export default function Training() {
   const [, navigate] = useLocation();
   const funnel = useFunnel();
+  const trainingStartedAtRef = useRef<number>(Date.now());
+  const lastReportedSecondsRef = useRef(0);
 
   useEffect(() => {
+    trainingStartedAtRef.current = Date.now();
+    lastReportedSecondsRef.current = 0;
+
     logFunnelEvent(
       'training_page_view',
       buildFunnelTrackingPayload(funnel, {
@@ -87,6 +99,55 @@ export default function Training() {
         status: 'viewed',
       }),
     );
+
+    function reportTrainingEngagement(reason: string) {
+      const secondsOnTrainingPage = Math.max(
+        0,
+        Math.round((Date.now() - trainingStartedAtRef.current) / 1000),
+      );
+
+      if (secondsOnTrainingPage <= lastReportedSecondsRef.current && reason !== 'page_exit') {
+        return;
+      }
+
+      lastReportedSecondsRef.current = secondsOnTrainingPage;
+      logFunnelEvent(
+        'training_video_engagement',
+        buildFunnelTrackingPayload(funnel, {
+          page: '/training',
+          source: 'rich-relationships',
+          status: reason,
+          metadata: {
+            secondsOnTrainingPage,
+            reason,
+          },
+        }),
+      );
+    }
+
+    const interval = window.setInterval(() => {
+      reportTrainingEngagement('heartbeat');
+    }, 15000);
+
+    function handleVisibilityChange() {
+      if (document.visibilityState === 'hidden') {
+        reportTrainingEngagement('page_hidden');
+      }
+    }
+
+    function handlePageHide() {
+      reportTrainingEngagement('page_exit');
+    }
+
+    window.addEventListener('pagehide', handlePageHide);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.clearInterval(interval);
+      reportTrainingEngagement('page_exit');
+      window.removeEventListener('pagehide', handlePageHide);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   function handleClick() {
