@@ -193,6 +193,9 @@ export default function Upsell() {
             >
               {isProcessing ? 'Processing My Access...' : 'Click Here To Conitnue'}
             </button>
+            <p className="mx-auto mt-4 max-w-[560px] text-center text-[10px] font-medium leading-relaxed text-white/45 sm:text-[11px]">
+              By clicking the button above, you authorize us to automatically charge the payment method used for your original order an additional $97 for the Work From Anywhere Bundle. Your click confirms your agreement to this additional charge. You will receive immediate access after the payment is approved. All sales are final, except where a refund or cancellation right is required by applicable law.
+            </p>
           </div>
         </div>
       </section>
