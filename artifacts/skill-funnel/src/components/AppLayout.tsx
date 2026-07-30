@@ -17,6 +17,7 @@ const routes = [
   '/lesson',
   '/training',
   '/upsell',
+  '/download',
   '/thankyou',
 ];
 
@@ -33,7 +34,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const showProgressBar = stepIndex > 0 && stepIndex <= finalProgressStep;
   const progress = stepIndex > 0 ? stepIndex / finalProgressStep : 0;
   const isHome = location === '/';
-  const isWideExperience = location === '/upsell' || location === '/ebook-checkout' || location === '/thankyou' || location === '/training';
+  const isWideExperience = location === '/upsell' || location === '/download' || location === '/ebook-checkout' || location === '/thankyou' || location === '/training';
   const shouldUseScreenBoundary = location !== '/upsell' && location !== '/ebook-checkout';
   const screen = shouldUseScreenBoundary ? <ErrorBoundary key={location}>{children}</ErrorBoundary> : children;
 

@@ -262,6 +262,7 @@ export default function EbookCheckout() {
     sessionStorage.removeItem('payment_confirmed');
     sessionStorage.removeItem('purchase_downloads');
     sessionStorage.removeItem('selected_product_keys');
+    sessionStorage.removeItem('original_payment_intent_id');
     logFunnelEvent(
       'ebook_checkout_payment_started',
       buildFunnelTrackingPayload({ ...funnel, visitorName: cleanName, visitorEmail: cleanEmail, selectedProductKeys: [productKey] }, {
@@ -365,6 +366,7 @@ export default function EbookCheckout() {
       sessionStorage.setItem('selected_product_keys', JSON.stringify([productKey]));
       sessionStorage.setItem('purchase_downloads', JSON.stringify(confirmData.downloads));
       sessionStorage.setItem('payment_confirmed', 'true');
+      sessionStorage.setItem('original_payment_intent_id', paymentIntent.id);
 
       // --- Stage 3: next step ------------------------------------------
       goToNextStep();

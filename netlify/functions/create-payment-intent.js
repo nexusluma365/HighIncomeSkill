@@ -23,6 +23,17 @@ async function stripeRequest(path, params) {
   return data;
 }
 
+async function createCustomer({ name, email, sessionId }) {
+  if (!email) return null;
+
+  return stripeRequest('customers', {
+    name: name || '',
+    email,
+    'metadata[sessionId]': sessionId || '',
+    'metadata[source]': 'rich_relationships_checkout',
+  });
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return jsonResponse(405, { error: 'Method not allowed' });
@@ -46,6 +57,14 @@ exports.handler = async (event) => {
     const amount = calculateCheckoutAmount(productKeys);
     const downloadProduct = resolveDownloadProduct(productKeys);
     const downloadProductName = getDownloadProductName(productKeys, downloadProduct);
+    const shouldSavePaymentMethod = productKeys.includes('richRelationshipsEbook');
+    const customer = shouldSavePaymentMethod
+      ? await createCustomer({
+          name: body.name || '',
+          email: body.email || '',
+          sessionId: body.sessionId || '',
+        })
+      : null;
 
     const metadata = {
       productKey: product.key,
@@ -55,6 +74,7 @@ exports.handler = async (event) => {
       downloadProductName,
       customerName: body.name || '',
       customerEmail: body.email || '',
+      stripeCustomerId: customer?.id || '',
       sessionId: body.sessionId || '',
     };
 
@@ -64,6 +84,8 @@ exports.handler = async (event) => {
       description: cartName,
       receipt_email: body.email || '',
       'automatic_payment_methods[enabled]': 'true',
+      ...(customer?.id ? { customer: customer.id } : {}),
+      ...(shouldSavePaymentMethod ? { setup_future_usage: 'off_session' } : {}),
       'metadata[productKey]': metadata.productKey,
       'metadata[productName]': metadata.productName,
       'metadata[productKeys]': metadata.productKeys,
@@ -71,6 +93,7 @@ exports.handler = async (event) => {
       'metadata[downloadProductName]': metadata.downloadProductName,
       'metadata[customerName]': metadata.customerName,
       'metadata[customerEmail]': metadata.customerEmail,
+      'metadata[stripeCustomerId]': metadata.stripeCustomerId,
       'metadata[sessionId]': metadata.sessionId,
     };
 

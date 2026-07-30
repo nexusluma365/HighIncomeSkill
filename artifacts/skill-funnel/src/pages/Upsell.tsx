@@ -10,6 +10,7 @@ import productImage from '@/assets/media/digital-bundle-combined-transparent.png
 import { useFunnel } from '@/hooks/useFunnel';
 import {
   buildFunnelTrackingPayload,
+  getFunnelSessionId,
   logFunnelEvent,
 } from '@/utils/funnelTracking';
 
@@ -29,9 +30,10 @@ const includedTools = [
 export default function Upsell() {
   const [, navigate] = useLocation();
   const funnel = useFunnel();
-  const { setSelectedProductKeys, setUpsellAccepted } = funnel;
+  const { setPurchaseDownloads, setSelectedProductKeys, setUpsellAccepted } = funnel;
 
   const [isProcessing, setIsProcessing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const hasPaidForRichRelationships =
@@ -59,50 +61,47 @@ export default function Upsell() {
     if (isProcessing) return;
 
     setIsProcessing(true);
+    setErrorMessage('');
 
     try {
       const selectedKeys = [
         'richRelationshipsEbook',
         offerProductKey,
       ];
+      const originalPaymentIntentId = sessionStorage.getItem('original_payment_intent_id') || '';
+      const sessionId = getFunnelSessionId();
 
-      /*
-       * IMPORTANT:
-       * Connect your secure one-click Stripe upsell endpoint here.
-       *
-       * The backend should:
-       * 1. Verify the original paid order.
-       * 2. Retrieve the authorized Stripe customer/payment method.
-       * 3. Charge exactly $97.
-       * 4. Return a verified success response.
-       *
-       * Example:
-       *
-       * const response = await fetch('/api/accept-upsell', {
-       *   method: 'POST',
-       *   headers: {
-       *     'Content-Type': 'application/json',
-       *   },
-       *   body: JSON.stringify({
-       *     productKey: offerProductKey,
-       *     amount: 9700,
-       *     currency: 'usd',
-       *   }),
-       * });
-       *
-       * if (!response.ok) {
-       *   throw new Error('The additional purchase could not be completed.');
-       * }
-       */
+      if (!originalPaymentIntentId) {
+        throw new Error('We could not find your original payment reference. Please return to your purchase email or contact support.');
+      }
+
+      const response = await fetch('/.netlify/functions/accept-upsell', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          originalPaymentIntentId,
+          productKey: offerProductKey,
+          amount: 9700,
+          currency: 'usd',
+          sessionId,
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !Array.isArray(data.downloads)) {
+        throw new Error(data.error || 'The Digital Skills Bundle upgrade could not be completed.');
+      }
 
       setUpsellAccepted(true);
       setSelectedProductKeys(selectedKeys);
+      setPurchaseDownloads(data.downloads);
 
       sessionStorage.setItem(
         'selected_product_keys',
         JSON.stringify(selectedKeys),
       );
+      sessionStorage.setItem('purchase_downloads', JSON.stringify(data.downloads));
       sessionStorage.setItem('upsell_accepted', 'true');
+      sessionStorage.setItem('upsell_payment_intent_id', data.paymentIntentId || '');
 
       logFunnelEvent(
         'one_click_upsell_accepted',
@@ -119,13 +118,21 @@ export default function Upsell() {
             productName: offerProductName,
             amount: offerAmount,
             status: 'accepted',
+            metadata: {
+              paymentIntentId: data.paymentIntentId || '',
+              downloadProductKeys: data.downloads.map((download: { productKey: string }) => download.productKey),
+            },
           },
         ),
       );
 
-      navigate('/thankyou');
+      navigate('/download');
     } catch (error) {
       console.error('Upsell purchase failed:', error);
+      const message = error instanceof Error
+        ? error.message
+        : 'The Digital Skills Bundle upgrade could not be completed.';
+      setErrorMessage(message);
 
       logFunnelEvent(
         'one_click_upsell_failed',
@@ -273,7 +280,7 @@ export default function Upsell() {
                 </span>
               ) : (
                 <span className="flex items-center justify-center gap-3">
-                  Yes-Show Me How To Turn Relationships Into Paying Clients
+                  Give me The Digital Bundle
                   <ArrowRight className="hidden h-6 w-6 shrink-0 transition-transform group-hover:translate-x-1 sm:block" />
                 </span>
               )}
@@ -286,6 +293,12 @@ export default function Upsell() {
                 Secure one-click order upgrade
               </p>
             </div>
+
+            {errorMessage && (
+              <div className="mx-auto mt-5 max-w-[720px] rounded-xl border border-red-300/30 bg-red-500/12 px-5 py-4 text-sm font-bold leading-relaxed text-red-100">
+                {errorMessage}
+              </div>
+            )}
 
             <p
               id="upsell-charge-disclosure"

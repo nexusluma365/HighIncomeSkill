@@ -20,6 +20,7 @@ import Future from '@/pages/Future';
 import Lesson from '@/pages/Lesson';
 import Upsell from '@/pages/Upsell';
 import ThankYou from '@/pages/ThankYou';
+import Download from '@/pages/Download';
 import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
@@ -66,6 +67,7 @@ function Router() {
           <Route path="/faq" component={RedirectToCheckout} />
           <Route path="/offer" component={RedirectToCheckout} />
           <Route path="/upsell" component={Upsell} />
+          <Route path="/download" component={Download} />
           <Route path="/thankyou" component={ThankYou} />
           <Route component={NotFound} />
         </Switch>
