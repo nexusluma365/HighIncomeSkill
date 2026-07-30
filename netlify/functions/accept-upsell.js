@@ -2,7 +2,7 @@ const { products, getDownloadProductName } = require('../shared/products');
 const { appendSheetRow, jsonResponse } = require('../shared/google-sheets');
 const { signDownloadToken } = require('../shared/download-token');
 
-const downloadTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
+const downloadTokenTtlMs = 90 * 1000;
 const originalProductKey = 'richRelationshipsEbook';
 const upsellProductKey = 'workFromHomeBundle';
 

@@ -1,9 +1,26 @@
-import { useEffect, useMemo } from 'react';
+import { MouseEvent, useEffect, useMemo, useRef } from 'react';
 import { Download as DownloadIcon, ShieldCheck } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { useFunnel } from '@/hooks/useFunnel';
 import type { PurchaseDownload } from '@/context/FunnelContext';
 import { buildFunnelTrackingPayload, logFunnelEvent } from '@/utils/funnelTracking';
+
+const downloadLinkExpiresMs = 90 * 1000;
+const returnHomeAfterDownloadStartMs = 2500;
+
+function clearDownloadSession() {
+  [
+    'payment_confirmed',
+    'purchase_downloads',
+    'selected_product_keys',
+    'upsell_accepted',
+    'original_payment_intent_id',
+    'upsell_payment_intent_id',
+  ].forEach((key) => sessionStorage.removeItem(key));
+
+  sessionStorage.removeItem('nexus_luma_funnel_session_id');
+  localStorage.removeItem('nexus_luma_funnel_session_id');
+}
 
 function getStoredDownloads() {
   try {
@@ -19,6 +36,7 @@ function getStoredDownloads() {
 export default function Download() {
   const [, navigate] = useLocation();
   const funnel = useFunnel();
+  const returnHomeTimerRef = useRef<number | null>(null);
   const downloads = useMemo(() => {
     const bundleDownloads = funnel.purchaseDownloads.filter((download) => download.productKey === 'workFromHomeBundle');
     if (bundleDownloads.length > 0) return bundleDownloads;
@@ -43,10 +61,35 @@ export default function Download() {
         status: 'viewed',
       }),
     );
+
+    const expirationTimer = window.setTimeout(() => {
+      logFunnelEvent(
+        'digital_bundle_download_link_expired',
+        buildFunnelTrackingPayload(funnel, {
+          page: '/download',
+          source: 'one_click_upsell',
+          productKey: bundleDownload.productKey,
+          productName: bundleDownload.productName,
+          status: 'expired',
+        }),
+      );
+      clearDownloadSession();
+      navigate('/', { replace: true });
+    }, downloadLinkExpiresMs);
+
+    return () => {
+      window.clearTimeout(expirationTimer);
+      if (returnHomeTimerRef.current) {
+        window.clearTimeout(returnHomeTimerRef.current);
+      }
+    };
   }, [bundleDownload]);
 
-  function handleDownloadClick() {
-    if (!bundleDownload) return;
+  function handleDownloadClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (!bundleDownload) {
+      event.preventDefault();
+      return;
+    }
 
     logFunnelEvent(
       'digital_bundle_download_click',
@@ -58,6 +101,15 @@ export default function Download() {
         status: 'clicked',
       }),
     );
+
+    if (returnHomeTimerRef.current) {
+      window.clearTimeout(returnHomeTimerRef.current);
+    }
+
+    returnHomeTimerRef.current = window.setTimeout(() => {
+      clearDownloadSession();
+      navigate('/', { replace: true });
+    }, returnHomeAfterDownloadStartMs);
   }
 
   if (!bundleDownload) return null;
@@ -89,13 +141,19 @@ export default function Download() {
           <a
             href={bundleDownload.downloadUrl}
             onClick={handleDownloadClick}
+            target="digital-bundle-download-frame"
             className="mx-auto inline-flex min-h-[76px] w-full max-w-[720px] items-center justify-center gap-3 rounded-xl bg-[#0f7ee8] px-5 py-5 text-center text-base font-black uppercase leading-tight text-white shadow-[0_18px_40px_rgba(15,126,232,0.28)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] sm:text-xl"
           >
             <DownloadIcon className="h-6 w-6 shrink-0" />
             Download MY DIGITAL SKILLS BUNDLE
           </a>
+          <iframe
+            name="digital-bundle-download-frame"
+            title="Digital Skills Bundle download"
+            className="hidden"
+          />
           <p className="mx-auto mt-5 max-w-[620px] text-sm font-semibold leading-relaxed text-[#5d7580]">
-            If the download does not begin, press the button again. Your secure claim link is time limited.
+            Your secure claim link expires in 1 minute and 30 seconds. If it expires, you will need to start a new session.
           </p>
         </div>
       </section>
