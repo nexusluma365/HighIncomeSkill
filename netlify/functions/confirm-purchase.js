@@ -2,6 +2,8 @@ const { getProducts, calculateCheckoutAmount, resolveDownloadProduct, getDownloa
 const { appendSheetRow, jsonResponse } = require('../shared/google-sheets');
 const { signDownloadToken } = require('../shared/download-token');
 
+const unsuccessfulPaymentMessage = 'Sorry your payment Was unsuccessful please try Again';
+
 const downloadTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
 
 function getOrigin(event) {
@@ -182,6 +184,6 @@ exports.handler = async (event) => {
     });
   } catch (error) {
     console.error('confirm-purchase failed', error);
-    return jsonResponse(500, { error: 'Unable to confirm your download. Please refresh or contact support with your receipt.' });
+    return jsonResponse(500, { error: unsuccessfulPaymentMessage });
   }
 };

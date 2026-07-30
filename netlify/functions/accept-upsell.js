@@ -5,6 +5,7 @@ const { signDownloadToken } = require('../shared/download-token');
 const downloadTokenTtlMs = 90 * 1000;
 const originalProductKey = 'richRelationshipsEbook';
 const upsellProductKey = 'workFromHomeBundle';
+const unsuccessfulPaymentMessage = 'Sorry your payment Was unsuccessful please try Again';
 
 async function stripeRequest(path, params) {
   if (!process.env.STRIPE_SECRET_KEY) {
@@ -165,6 +166,6 @@ exports.handler = async (event) => {
     });
   } catch (error) {
     console.error('accept-upsell failed', error);
-    return jsonResponse(500, { error: 'The Digital Skills Bundle upgrade could not be completed. Please try again or contact support.' });
+    return jsonResponse(500, { error: unsuccessfulPaymentMessage });
   }
 };

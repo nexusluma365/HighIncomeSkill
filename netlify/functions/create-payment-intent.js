@@ -1,6 +1,8 @@
 const { getProducts, calculateCheckoutAmount, resolveDownloadProduct, getDownloadProductName } = require('../shared/products');
 const { appendSheetRow, jsonResponse } = require('../shared/google-sheets');
 
+const unsuccessfulPaymentMessage = 'Sorry your payment Was unsuccessful please try Again';
+
 async function stripeRequest(path, params) {
   if (!process.env.STRIPE_SECRET_KEY) {
     throw new Error('Missing STRIPE_SECRET_KEY');
@@ -126,6 +128,6 @@ exports.handler = async (event) => {
     });
   } catch (error) {
     console.error('create-payment-intent failed', error);
-    return jsonResponse(500, { error: 'Payment setup failed. Please try again or contact support.' });
+    return jsonResponse(500, { error: unsuccessfulPaymentMessage });
   }
 };

@@ -17,6 +17,7 @@ import {
 const offerProductKey = 'workFromHomeBundle';
 const offerProductName = 'Work From Anywhere Bundle';
 const offerAmount = '$97';
+const unsuccessfulPaymentMessage = 'Sorry your payment Was unsuccessful please try Again';
 
 const includedTools = [
   'A clear roadmap for turning conversations into paid opportunities',
@@ -88,7 +89,7 @@ export default function Upsell() {
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !Array.isArray(data.downloads)) {
-        throw new Error(data.error || 'The Digital Skills Bundle upgrade could not be completed.');
+        throw new Error(unsuccessfulPaymentMessage);
       }
 
       setUpsellAccepted(true);
@@ -129,10 +130,7 @@ export default function Upsell() {
       navigate('/download');
     } catch (error) {
       console.error('Upsell purchase failed:', error);
-      const message = error instanceof Error
-        ? error.message
-        : 'The Digital Skills Bundle upgrade could not be completed.';
-      setErrorMessage(message);
+      setErrorMessage(unsuccessfulPaymentMessage);
 
       logFunnelEvent(
         'one_click_upsell_failed',

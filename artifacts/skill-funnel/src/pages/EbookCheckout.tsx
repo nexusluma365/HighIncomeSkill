@@ -47,6 +47,7 @@ interface EbookStripeClient {
 const productKey = 'richRelationshipsEbook';
 const productName = 'Rich Relationships Ebook';
 const productPrice = '$27';
+const unsuccessfulPaymentMessage = 'Sorry your payment Was unsuccessful please try Again';
 
 let stripeScriptPromise: Promise<EbookStripeClient> | null = null;
 
@@ -95,6 +96,9 @@ function loadStripe(publishableKey: string) {
 function paymentFailureMessage(error?: { message?: string; type?: string; code?: string; decline_code?: string }) {
   const raw = `${error?.message || ''} ${error?.code || ''} ${error?.decline_code || ''}`.toLowerCase();
   if (
+    raw.includes('payment_intent') ||
+    raw.includes('similar object exists') ||
+    raw.includes('live mode key') ||
     error?.type === 'card_error' ||
     error?.type === 'validation_error' ||
     raw.includes('declin') ||
@@ -103,9 +107,9 @@ function paymentFailureMessage(error?: { message?: string; type?: string; code?:
     raw.includes('expired') ||
     raw.includes('cvc')
   ) {
-    return 'Sorry, payment did not go through. Please try again or use another card.';
+    return unsuccessfulPaymentMessage;
   }
-  return error?.message || 'Payment could not be completed. Please try again.';
+  return unsuccessfulPaymentMessage;
 }
 
 function isValidEmail(value: string) {
@@ -289,7 +293,7 @@ export default function EbookCheckout() {
       });
       const createData = await createResponse.json().catch(() => ({}));
       if (!createResponse.ok || !createData.clientSecret) {
-        throw new Error(createData.error || 'Payment setup failed.');
+        throw new Error(unsuccessfulPaymentMessage);
       }
 
       const { error, paymentIntent } = await stripe.confirmCardPayment(createData.clientSecret, {
@@ -321,7 +325,7 @@ export default function EbookCheckout() {
       }
 
       if (!paymentIntent || paymentIntent.status !== 'succeeded') {
-        setErrorMessage('Payment was not confirmed. Please try again.');
+        setErrorMessage(unsuccessfulPaymentMessage);
         triggerButtonShake();
         setStage('idle');
         return;
@@ -343,7 +347,7 @@ export default function EbookCheckout() {
       });
       const confirmData = await confirmResponse.json().catch(() => ({}));
       if (!confirmResponse.ok || !Array.isArray(confirmData.downloads)) {
-        throw new Error(confirmData.error || 'Purchase confirmed, but your download could not be prepared.');
+        throw new Error(unsuccessfulPaymentMessage);
       }
 
       setSelectedProductKeys([productKey]);
@@ -371,7 +375,7 @@ export default function EbookCheckout() {
       // --- Stage 3: next step ------------------------------------------
       goToNextStep();
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Unexpected payment error.');
+      setErrorMessage(unsuccessfulPaymentMessage);
       triggerButtonShake();
       setStage('idle');
     }
