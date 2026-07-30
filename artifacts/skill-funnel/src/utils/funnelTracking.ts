@@ -19,6 +19,87 @@ interface TrackingExtra {
   metadata?: Record<string, unknown>;
 }
 
+type GoogleAnalyticsValue = string | number | boolean;
+type GoogleAnalyticsParams = Record<string, GoogleAnalyticsValue>;
+
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+    __nexusLumaGaLoaded?: string;
+  }
+}
+
+function getGoogleAnalyticsMeasurementId() {
+  return String(import.meta.env.VITE_GA_MEASUREMENT_ID || '').trim();
+}
+
+export function loadGoogleAnalytics() {
+  const measurementId = getGoogleAnalyticsMeasurementId();
+  if (!measurementId || typeof window === 'undefined') return false;
+  if (window.__nexusLumaGaLoaded === measurementId) return true;
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || ((...args: unknown[]) => {
+    window.dataLayer?.push(args);
+  });
+
+  if (!document.querySelector(`script[data-ga-measurement-id="${measurementId}"]`)) {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+    script.dataset.gaMeasurementId = measurementId;
+    document.head.appendChild(script);
+  }
+
+  window.gtag('js', new Date());
+  window.gtag('config', measurementId, {
+    send_page_view: false,
+  });
+  window.__nexusLumaGaLoaded = measurementId;
+  return true;
+}
+
+function toGoogleAnalyticsParams(payload: Record<string, unknown>) {
+  const params: GoogleAnalyticsParams = {};
+
+  Object.entries(payload).forEach(([key, value]) => {
+    if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+      params[key] = value;
+    }
+  });
+
+  const metadata = payload.metadata;
+  if (metadata && typeof metadata === 'object' && !Array.isArray(metadata)) {
+    Object.entries(metadata as Record<string, unknown>).forEach(([key, value]) => {
+      if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+        params[`metadata_${key}`] = value;
+      }
+    });
+  }
+
+  return params;
+}
+
+export function logGoogleAnalyticsEvent(eventName: string, payload: Record<string, unknown>) {
+  if (!loadGoogleAnalytics() || !window.gtag) return;
+
+  const params = toGoogleAnalyticsParams(payload);
+  params.event_category = typeof payload.source === 'string' ? payload.source : 'skill_funnel';
+
+  if (eventName === 'page_view') {
+    window.gtag('event', 'page_view', {
+      ...params,
+      page_path: typeof payload.page === 'string' ? payload.page : window.location.pathname,
+      page_location: window.location.href,
+      page_title: document.title,
+    });
+    return;
+  }
+
+  window.gtag('event', eventName, params);
+}
+
 export function getFunnelSessionId() {
   const storageKey = 'nexus_luma_funnel_session_id';
   const fallbackKey = '__nexusLumaFunnelSessionId';
@@ -72,6 +153,8 @@ export function buildFunnelTrackingPayload(funnel: FunnelTrackingState, extra: T
 }
 
 export function logFunnelEvent(eventName: string, payload: Record<string, unknown>) {
+  logGoogleAnalyticsEvent(eventName, payload);
+
   let body: string | Blob = '';
   try {
     body = JSON.stringify({ eventName, payload, ...payload });

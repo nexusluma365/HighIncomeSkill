@@ -1,7 +1,7 @@
 const { products, formatPrice } = require('../shared/products');
 const { jsonResponse } = require('../shared/google-sheets');
 
-const defaultStripePublishableKey = 'pk_test_51TeycBPJOp8s8XsSvgsYs2KtFZt1F2fUg9W32bxS2rDcORtp4F89PUj54Dz1WJbhPS1i8vnouVLeSiUX9cWfzp4v00RLV2KMcT';
+const defaultStripePublishableKey = 'pk_live_51TeycBPJOp8s8XsSjWLZD8n3JweuczqhYYgoJKLkiNfogQUnveNxlB3YMOM8GPrBAd8YCWYNXxVv4vKdgcoftxoR00IsTaLRDD';
 
 exports.handler = async () => {
   return jsonResponse(200, {
