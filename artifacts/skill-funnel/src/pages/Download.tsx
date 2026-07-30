@@ -73,11 +73,16 @@ export default function Download() {
             Upgrade Confirmed
           </p>
           <h1 className="mx-auto mt-4 max-w-[780px] text-4xl font-black uppercase leading-tight text-[#073443] sm:text-5xl">
-            Your Digital Skills Bundle Is Ready
+            Your Upgrade Is Complete!
           </h1>
-          <p className="mx-auto mt-5 max-w-[680px] text-base font-semibold leading-relaxed text-[#31505a] sm:text-lg">
-            Your $97 upgrade was approved. Use the button below to claim your bundle download.
-          </p>
+          <div className="mx-auto mt-5 max-w-[720px] space-y-4 text-base font-semibold leading-relaxed text-[#31505a] sm:text-lg">
+            <p>
+              You now have everything you need to turn your new relationships into valuable skills, powerful offers, and paying clients.
+            </p>
+            <p>
+              Your complete Digital Skills Bundle is ready. Click below to unlock your tools and start building.
+            </p>
+          </div>
         </div>
 
         <div className="px-5 py-9 sm:px-10 sm:py-12">
@@ -87,7 +92,7 @@ export default function Download() {
             className="mx-auto inline-flex min-h-[76px] w-full max-w-[720px] items-center justify-center gap-3 rounded-xl bg-[#0f7ee8] px-5 py-5 text-center text-base font-black uppercase leading-tight text-white shadow-[0_18px_40px_rgba(15,126,232,0.28)] transition hover:-translate-y-0.5 hover:bg-[#1594ff] sm:text-xl"
           >
             <DownloadIcon className="h-6 w-6 shrink-0" />
-            Press Here To Claim Your Digital Skills Bundle
+            Download MY DIGITAL SKILLS BUNDLE
           </a>
           <p className="mx-auto mt-5 max-w-[620px] text-sm font-semibold leading-relaxed text-[#5d7580]">
             If the download does not begin, press the button again. Your secure claim link is time limited.
