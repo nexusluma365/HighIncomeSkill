@@ -1,45 +1,41 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
-import { CheckCircle2 } from 'lucide-react';
+import {
+  ArrowRight,
+  CheckCircle2,
+  LoaderCircle,
+  LockKeyhole,
+} from 'lucide-react';
 import productImage from '@/assets/media/digital-bundle-combined.png';
 import { useFunnel } from '@/hooks/useFunnel';
-import { buildFunnelTrackingPayload, logFunnelEvent } from '@/utils/funnelTracking';
+import {
+  buildFunnelTrackingPayload,
+  logFunnelEvent,
+} from '@/utils/funnelTracking';
 
 const offerProductKey = 'workFromHomeBundle';
 const offerProductName = 'Work From Anywhere Bundle';
-const offerAmount = '$47';
+const offerAmount = '$97';
 
-const bonuses = [
-  'Complete Digital Skills Roadmap',
-  'Client-ready Website + SEO path',
-  'AI automation prompts and workflows',
-  'Templates, scripts, and resource library',
-  'Step-by-step launch blueprint',
-  'Lifetime access to the training bundle',
+const includedTools = [
+  'A clear roadmap for turning conversations into paid opportunities',
+  'Client-ready website, funnel, and digital-service paths',
+  'AI prompts and workflows that remove the guesswork',
+  'Ready-to-use offer templates, scripts, and checklists',
+  'A step-by-step plan for finding and helping your first client',
+  'Lifetime access to the complete digital training bundle',
 ];
-
-function UpgradeButton({ onClick }: { onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="mx-auto flex min-h-[64px] w-full max-w-[760px] items-center justify-center bg-[#ff3145] px-5 py-4 text-center text-sm font-black uppercase leading-tight text-white shadow-[0_16px_32px_rgba(255,49,69,0.2)] transition hover:-translate-y-0.5 hover:bg-[#ff4052] active:translate-y-0 sm:text-base"
-    >
-      <span>
-        <span className="block">Yes! I Want The Work From Anywhere Bundle For Just $47</span>
-        <span className="mt-1 block">Click Here For Lifetime Access, Templates, AI Prompts, And Launch Blueprint</span>
-      </span>
-    </button>
-  );
-}
 
 export default function Upsell() {
   const [, navigate] = useLocation();
   const funnel = useFunnel();
   const { setSelectedProductKeys, setUpsellAccepted } = funnel;
 
+  const [isProcessing, setIsProcessing] = useState(false);
+
   useEffect(() => {
-    const hasPaidForRichRelationships = sessionStorage.getItem('payment_confirmed') === 'true';
+    const hasPaidForRichRelationships =
+      sessionStorage.getItem('payment_confirmed') === 'true';
 
     if (!hasPaidForRichRelationships) {
       navigate('/ebook', { replace: true });
@@ -50,7 +46,7 @@ export default function Upsell() {
       'one_click_upsell_view',
       buildFunnelTrackingPayload(funnel, {
         page: '/upsell',
-        source: 'post_training',
+        source: 'post_purchase',
         productKey: offerProductKey,
         productName: offerProductName,
         amount: offerAmount,
@@ -59,137 +55,258 @@ export default function Upsell() {
     );
   }, []);
 
-  function acceptOffer() {
-    const selectedKeys = ['richRelationshipsEbook', offerProductKey];
+  async function acceptOffer() {
+    if (isProcessing) return;
 
-    setUpsellAccepted(true);
-    setSelectedProductKeys(selectedKeys);
-    sessionStorage.setItem('selected_product_keys', JSON.stringify(selectedKeys));
-    sessionStorage.setItem('upsell_accepted', 'true');
+    setIsProcessing(true);
 
-    logFunnelEvent(
-      'one_click_upsell_accepted',
-      buildFunnelTrackingPayload({ ...funnel, upsellAccepted: true, selectedProductKeys: selectedKeys }, {
-        page: '/upsell',
-        source: 'post_training',
-        productKey: offerProductKey,
-        productName: offerProductName,
-        amount: offerAmount,
-        status: 'accepted',
-      }),
-    );
+    try {
+      const selectedKeys = [
+        'richRelationshipsEbook',
+        offerProductKey,
+      ];
 
-    navigate('/thankyou');
+      /*
+       * IMPORTANT:
+       * Connect your secure one-click Stripe upsell endpoint here.
+       *
+       * The backend should:
+       * 1. Verify the original paid order.
+       * 2. Retrieve the authorized Stripe customer/payment method.
+       * 3. Charge exactly $97.
+       * 4. Return a verified success response.
+       *
+       * Example:
+       *
+       * const response = await fetch('/api/accept-upsell', {
+       *   method: 'POST',
+       *   headers: {
+       *     'Content-Type': 'application/json',
+       *   },
+       *   body: JSON.stringify({
+       *     productKey: offerProductKey,
+       *     amount: 9700,
+       *     currency: 'usd',
+       *   }),
+       * });
+       *
+       * if (!response.ok) {
+       *   throw new Error('The additional purchase could not be completed.');
+       * }
+       */
+
+      setUpsellAccepted(true);
+      setSelectedProductKeys(selectedKeys);
+
+      sessionStorage.setItem(
+        'selected_product_keys',
+        JSON.stringify(selectedKeys),
+      );
+      sessionStorage.setItem('upsell_accepted', 'true');
+
+      logFunnelEvent(
+        'one_click_upsell_accepted',
+        buildFunnelTrackingPayload(
+          {
+            ...funnel,
+            upsellAccepted: true,
+            selectedProductKeys: selectedKeys,
+          },
+          {
+            page: '/upsell',
+            source: 'post_purchase',
+            productKey: offerProductKey,
+            productName: offerProductName,
+            amount: offerAmount,
+            status: 'accepted',
+          },
+        ),
+      );
+
+      navigate('/thankyou');
+    } catch (error) {
+      console.error('Upsell purchase failed:', error);
+
+      logFunnelEvent(
+        'one_click_upsell_failed',
+        buildFunnelTrackingPayload(funnel, {
+          page: '/upsell',
+          source: 'post_purchase',
+          productKey: offerProductKey,
+          productName: offerProductName,
+          amount: offerAmount,
+          status: 'failed',
+        }),
+      );
+
+      setIsProcessing(false);
+    }
   }
 
   return (
-    <div className="min-h-screen bg-white text-[#082b36]">
-      <section className="bg-[#062b35] px-5 py-7 sm:px-8">
-        <UpgradeButton onClick={acceptOffer} />
-      </section>
+    <main className="min-h-screen bg-white text-[#082b36]">
+      <section className="relative overflow-hidden bg-[#062b35] px-5 py-12 text-white sm:px-8 sm:py-16 lg:py-20">
+        <div
+          aria-hidden="true"
+          className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[#e8d46c]/10 blur-3xl"
+        />
 
-      <section className="px-5 py-12 sm:px-8 lg:py-16">
-        <div className="mx-auto grid max-w-[1120px] items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative mx-auto grid max-w-[1120px] items-center gap-10 lg:grid-cols-[1.04fr_0.96fr]">
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.12em] text-[#ff3145]">
-              Special one-time upgrade
-            </p>
-            <h1 className="mt-4 text-4xl font-black uppercase leading-[1.02] text-[#073443] sm:text-5xl">
-              For Just $47 You Get The Complete Work From Anywhere Bundle
-            </h1>
-            <div className="mt-6 space-y-4 text-base font-semibold leading-relaxed text-[#1d3d46]">
-              <p>
-                You just finished the Rich Relationships training. Now add the practical digital skill system that helps you turn conversations into clear offers, useful assets, and paid opportunities.
-              </p>
-              <p>
-                This upgrade gives you the roadmap, templates, prompts, and client paths in one place so you can move from learning to building without guessing what to do next.
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#e8d46c]/30 bg-[#e8d46c]/10 px-4 py-2">
+              <CheckCircle2 className="h-4 w-4 text-[#e8d46c]" />
+
+              <p className="text-xs font-black uppercase tracking-[0.13em] text-[#f4e797] sm:text-sm">
+                Your ebook is on the way
               </p>
             </div>
+
+            <h1 className="mt-6 max-w-[720px] text-4xl font-black uppercase leading-[0.98] sm:text-5xl lg:text-[60px]">
+              Now Turn Your New Relationships Into Paying Clients
+            </h1>
+
+            <p className="mt-6 max-w-[680px] text-lg font-semibold leading-relaxed text-white/85 sm:text-xl">
+              The ebook shows you how to build stronger relationships. This
+              complete system gives you the tools to turn those relationships
+              into real offers, paying clients, and new ways to earn.
+            </p>
+
+            <p className="mt-5 max-w-[680px] text-base font-bold leading-relaxed text-[#f4e797] sm:text-lg">
+              No starting from scratch. No wondering what to offer. No guessing
+              what to do next.
+            </p>
           </div>
 
-          <div className="mx-auto w-full max-w-[560px]">
+          <div className="mx-auto w-full max-w-[520px]">
             <img
               src={productImage}
-              alt="Work From Anywhere Bundle product preview"
-              className="h-auto w-full object-contain"
+              alt="Work From Anywhere Bundle with digital tools, templates, prompts, and training"
+              className="h-auto w-full object-contain drop-shadow-[0_24px_35px_rgba(0,0,0,0.3)]"
             />
           </div>
         </div>
       </section>
 
-      <section className="bg-[#e8f4f6] px-5 py-14 sm:px-8">
+      <section className="px-5 py-12 sm:px-8 lg:py-16">
         <div className="mx-auto max-w-[980px]">
-          <h2 className="text-center text-3xl font-black uppercase leading-tight text-[#073443] sm:text-4xl">
-            Upgrade To The Work From Anywhere Experience And Get:
-          </h2>
+          <div className="text-center">
+            <p className="text-sm font-black uppercase tracking-[0.12em] text-[#ff3145]">
+              Complete the next step
+            </p>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {bonuses.map((bonus) => (
-              <div key={bonus} className="flex min-h-[70px] items-center gap-3 bg-white px-5 py-4 shadow-[0_12px_24px_rgba(8,43,54,0.08)]">
-                <CheckCircle2 className="h-6 w-6 shrink-0 text-[#dfc760]" />
-                <p className="text-sm font-black leading-snug text-[#123b46] sm:text-base">{bonus}</p>
+            <h2 className="mx-auto mt-4 max-w-[850px] text-3xl font-black uppercase leading-tight text-[#073443] sm:text-4xl">
+              You Built The Relationship. Now You Need A Simple Way To Create
+              The Opportunity.
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-[760px] text-base font-semibold leading-relaxed text-[#31505a] sm:text-lg">
+              Get the roadmap, tools, prompts, and ready-to-use resources that
+              help you move naturally from meeting the right people to offering
+              something valuable they can pay you for.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {includedTools.map((item) => (
+              <div
+                key={item}
+                className="flex min-h-[88px] items-center gap-4 rounded-xl border border-[#dcecee] bg-[#f7fbfc] px-5 py-5"
+              >
+                <CheckCircle2 className="h-6 w-6 shrink-0 text-[#c4a92f]" />
+
+                <p className="text-sm font-black leading-snug text-[#123b46] sm:text-base">
+                  {item}
+                </p>
               </div>
             ))}
           </div>
-
-          <p className="mt-10 text-center text-xl font-black uppercase leading-tight text-[#073443]">
-            Get the system that turns relationship momentum into a skill-based income path.
-          </p>
-          <p className="mt-3 text-center text-sm font-black text-[#1d3d46]">
-            When you upgrade as a Work From Anywhere member
-          </p>
-
-          <div className="mt-7">
-            <UpgradeButton onClick={acceptOffer} />
-          </div>
         </div>
       </section>
 
-      <section className="bg-[#062b35] px-5 py-14 text-white sm:px-8 lg:py-16">
-        <div className="mx-auto grid max-w-[1120px] items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-          <div>
-            <h2 className="text-3xl font-black uppercase leading-tight text-[#e8d46c] sm:text-4xl">
-              Bundle Access Warning
-            </h2>
-            <p className="mt-6 max-w-[560px] text-base font-semibold leading-relaxed text-white/82">
-              This upgrade is shown only after your Rich Relationships purchase and training step. Once you leave this page, the $47 member upgrade may not be available again in this flow.
+      <section className="bg-[#eaf5f6] px-5 py-12 sm:px-8 lg:py-16">
+        <div className="mx-auto max-w-[920px] text-center">
+          <h2 className="text-3xl font-black uppercase leading-tight text-[#073443] sm:text-4xl">
+            Everything Is Already Laid Out For You
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-[760px] text-base font-semibold leading-relaxed text-[#31505a] sm:text-lg">
+            Choose what you want to offer, follow the steps, use the included
+            templates, and start turning the relationships you build into
+            income-producing opportunities.
+          </p>
+
+          <div className="mx-auto mt-8 max-w-[780px] rounded-2xl bg-white px-6 py-7 shadow-[0_18px_50px_rgba(8,43,54,0.1)] sm:px-9">
+            <p className="text-xl font-black uppercase leading-tight text-[#073443] sm:text-2xl">
+              Your Relationships Open The Door.
             </p>
-            <div className="mt-8 max-w-[560px] bg-[#f1d96f] p-4 text-center text-[#082b36]">
-              <button
-                type="button"
-                onClick={acceptOffer}
-                className="w-full text-sm font-black uppercase leading-tight transition hover:opacity-80 sm:text-base"
-              >
-                Yes! I Want The Work From Anywhere Experience
-                <span className="mt-1 block text-xs font-bold normal-case sm:text-sm">
-                  Click here for lifetime access, templates, prompts, and launch blueprint.
-                </span>
-              </button>
-            </div>
+
+            <p className="mt-2 text-xl font-black uppercase leading-tight text-[#c0a229] sm:text-2xl">
+              These Tools Show You What To Do Next.
+            </p>
           </div>
-
-          <img
-            src={productImage}
-            alt="Digital product bundle preview"
-            className="mx-auto h-auto w-full max-w-[560px] object-contain"
-          />
         </div>
       </section>
 
-      <section className="px-5 py-14 text-center sm:px-8">
-        <p className="text-sm font-black uppercase text-[#ff3145]">
-          For those who skip to the bottom, here is the summary:
-        </p>
-        <h2 className="mx-auto mt-4 max-w-[900px] text-3xl font-black uppercase leading-tight text-[#073443] sm:text-4xl">
-          Everything You Get When You Upgrade Today
-        </h2>
-        <p className="mx-auto mt-5 max-w-[760px] text-base font-semibold leading-relaxed text-[#1d3d46]">
-          Lifetime access to the Work From Anywhere Bundle, client path templates, AI automation resources, scripts, prompts, checklists, and a clear action plan for turning your new relationship skills into real offers.
-        </p>
-        <div className="mt-8">
-          <UpgradeButton onClick={acceptOffer} />
+      <section className="bg-[#062b35] px-5 py-14 text-white sm:px-8 lg:py-20">
+        <div className="mx-auto max-w-[900px] text-center">
+          <p className="text-sm font-black uppercase tracking-[0.12em] text-[#e8d46c]">
+            One simple next step
+          </p>
+
+          <h2 className="mx-auto mt-4 max-w-[820px] text-3xl font-black uppercase leading-tight sm:text-4xl lg:text-5xl">
+            Turn What You Learned Into Something You Can Use
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-[720px] text-base font-semibold leading-relaxed text-white/80 sm:text-lg">
+            Add the complete system to your purchase and get immediate access
+            to the tools that help turn conversations into clients, offers, and
+            income.
+          </p>
+
+          <div className="mx-auto mt-9 max-w-[780px]">
+            <button
+              type="button"
+              onClick={acceptOffer}
+              disabled={isProcessing}
+              aria-describedby="upsell-charge-disclosure"
+              className="group flex min-h-[76px] w-full items-center justify-center rounded-xl bg-[#ff3145] px-5 py-5 text-center text-base font-black uppercase leading-tight text-white shadow-[0_18px_40px_rgba(255,49,69,0.28)] transition hover:-translate-y-0.5 hover:bg-[#ff4052] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 sm:text-lg"
+            >
+              {isProcessing ? (
+                <span className="flex items-center justify-center gap-3">
+                  <LoaderCircle className="h-5 w-5 animate-spin" />
+                  Processing My Access...
+                </span>
+              ) : (
+                <span className="flex items-center justify-center gap-3">
+                  Yes-Show Me How To Turn Relationships Into Paying Clients
+                  <ArrowRight className="hidden h-6 w-6 shrink-0 transition-transform group-hover:translate-x-1 sm:block" />
+                </span>
+              )}
+            </button>
+
+            <div className="mt-4 flex items-center justify-center gap-2 text-white/70">
+              <LockKeyhole className="h-4 w-4 shrink-0" />
+
+              <p className="text-xs font-bold">
+                Secure one-click order upgrade
+              </p>
+            </div>
+
+            <p
+              id="upsell-charge-disclosure"
+              className="mx-auto mt-4 max-w-[720px] text-[11px] font-medium leading-relaxed text-white/60 sm:text-xs"
+            >
+              By clicking the button above, you authorize us to automatically
+              charge the payment method used for your original order an
+              additional $97 for the Work From Anywhere Bundle. Your click
+              confirms your agreement to this additional charge. You will
+              receive immediate access after the payment is approved. All sales
+              are final, except where a refund or cancellation right is
+              required by applicable law.
+            </p>
+          </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
